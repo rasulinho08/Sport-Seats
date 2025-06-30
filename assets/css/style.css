@@ -1,6 +1,6 @@
 /* CSS Custom Properties */
 :root {
-    --primary-color: #1E40AF;
+    --primary-color: green;
     --primary-dark: #1E3A8A;
     --secondary-color: #059669;
     --accent-color: #DC2626;
@@ -647,7 +647,7 @@ section {
     border-radius: var(--border-radius);
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.2);
-    color: white;
+    color: rgb(0, 0, 0);
     transition: var(--transition);
 }
 
@@ -1194,4 +1194,3 @@ section {
 
 .hidden { display: none; }
 .visible { display: block; }
-
