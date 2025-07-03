@@ -1,8 +1,8 @@
-;
+// Sample Events Data
 const sampleEvents = [
     {
         id: 1,
-        title: "Lakers vs Warriors",
+        title: "",
         sport: "basketball",
         venue: "Crypto.com Arena",
         date: "2025-07-15",
@@ -69,13 +69,13 @@ const sampleEvents = [
 ];
 
 // DOM Elements
-const navToggle = document.getElementById('nav-toggle');
-const navMenu = document.getElementById('nav-menu');
-const eventsGrid = document.getElementById('events-grid');
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const navLinks = document.getElementById('nav-links');
+const eventsList = document.getElementById('events-list');
 const heroSearch = document.getElementById('hero-search');
 const sportFilter = document.getElementById('sport-filter');
 const dateFilter = document.getElementById('date-filter');
-const toastContainer = document.getElementById('toast-container');
+const toastWrapper = document.getElementById('toast-wrapper');
 
 // State
 let currentEvents = sampleEvents.filter(event => event.featured);
@@ -95,11 +95,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // Navigation functionality
 function initializeNavigation() {
     // Mobile menu toggle
-    if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-            const icon = navToggle.querySelector('i');
-            if (navMenu.classList.contains('active')) {
+    if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
                 icon.classList.replace('fa-bars', 'fa-times');
             } else {
                 icon.classList.replace('fa-times', 'fa-bars');
@@ -108,7 +108,7 @@ function initializeNavigation() {
     }
 
     // Smooth scrolling for navigation links
-    document.querySelectorAll('.nav-link').forEach(link => {
+    document.querySelectorAll('.nav-item').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
@@ -121,12 +121,12 @@ function initializeNavigation() {
                 });
                 
                 // Close mobile menu
-                navMenu.classList.remove('active');
-                const icon = navToggle.querySelector('i');
+                navLinks.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
                 icon.classList.replace('fa-times', 'fa-bars');
                 
                 // Update active link
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
                 this.classList.add('active');
             }
         });
@@ -134,7 +134,7 @@ function initializeNavigation() {
 
     // Navbar scroll effect
     window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
+        const navbar = document.querySelector('.main-nav');
         if (window.scrollY > 100) {
             navbar.style.background = 'rgba(255, 255, 255, 0.98)';
             navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
@@ -160,7 +160,7 @@ function initializeSearch() {
     }
 
     // Search button
-    document.querySelector('.btn-search')?.addEventListener('click', function(e) {
+    document.querySelector('.search-btn')?.addEventListener('click', function(e) {
         e.preventDefault();
         handleSearch();
         showToast('Searching for events...', 'success');
@@ -210,10 +210,10 @@ function checkDateFilter(eventDate, filter) {
 
 // Event rendering
 function renderEvents() {
-    if (!eventsGrid) return;
+    if (!eventsList) return;
 
     if (filteredEvents.length === 0) {
-        eventsGrid.innerHTML = `
+        eventsList.innerHTML = `
             <div class="no-events">
                 <i class="fas fa-search" style="font-size: 3rem; color: var(--neutral-light); margin-bottom: 1rem;"></i>
                 <h3>No events found</h3>
@@ -223,7 +223,7 @@ function renderEvents() {
         return;
     }
 
-    eventsGrid.innerHTML = filteredEvents.map(event => `
+    eventsList.innerHTML = filteredEvents.map(event => `
         <div class="event-card fade-in-up" onclick="viewEvent(${event.id})">
             <div class="event-image">
                 <img src="${event.image}" alt="${event.title}" loading="lazy">
@@ -251,7 +251,7 @@ function renderEvents() {
 // Modal functionality
 function initializeModals() {
     // Close modal when clicking outside
-    document.querySelectorAll('.modal').forEach(modal => {
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
         modal.addEventListener('click', function(e) {
             if (e.target === this) {
                 closeModal(this.id);
@@ -262,7 +262,7 @@ function initializeModals() {
     // Close modal with Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            document.querySelectorAll('.modal.active').forEach(modal => {
+            document.querySelectorAll('.modal-overlay.active').forEach(modal => {
                 closeModal(modal.id);
             });
         }
@@ -367,7 +367,7 @@ function initializeForms() {
 
 // Category cards functionality
 function initializeCategoryCards() {
-    document.querySelectorAll('.category-card').forEach(card => {
+    document.querySelectorAll('.category-item').forEach(card => {
         card.addEventListener('click', function() {
             const sport = this.dataset.sport;
             if (sport) {
@@ -434,7 +434,7 @@ function showToast(message, type = 'success') {
         </button>
     `;
     
-    toastContainer.appendChild(toast);
+    toastWrapper.appendChild(toast);
     
     // Show toast
     setTimeout(() => toast.classList.add('show'), 100);
@@ -465,19 +465,19 @@ function initializeScrollAnimations() {
     }, observerOptions);
 
     // Observe elements for animation
-    document.querySelectorAll('.feature-card, .category-card, .event-card').forEach(el => {
+    document.querySelectorAll('.feature-item, .category-item, .event-card').forEach(el => {
         observer.observe(el);
     });
 }
 
 // UI updates for logged in user
 function updateUIForLoggedInUser(email) {
-    const navActions = document.querySelector('.nav-actions');
-    if (navActions) {
-        navActions.innerHTML = `
+    const navButtons = document.querySelector('.nav-buttons');
+    if (navButtons) {
+        navButtons.innerHTML = `
             <div class="user-menu">
                 <span class="user-email">${email}</span>
-                <button class="btn-secondary" onclick="logout()">Logout</button>
+                <button class="btn-outline" onclick="logout()">Logout</button>
             </div>
         `;
     }
@@ -485,13 +485,13 @@ function updateUIForLoggedInUser(email) {
 
 function logout() {
     showToast('Logged out successfully!', 'success');
-    // Reset nav actions
-    const navActions = document.querySelector('.nav-actions');
-    if (navActions) {
-        navActions.innerHTML = `
-            <button class="btn-secondary" onclick="openModal('loginModal')">Login</button>
+    // Reset nav buttons
+    const navButtons = document.querySelector('.nav-buttons');
+    if (navButtons) {
+        navButtons.innerHTML = `
+            <button class="btn-outline" onclick="openModal('loginModal')">Login</button>
             <button class="btn-primary" onclick="openModal('registerModal')">Sign Up</button>
-            <button class="nav-toggle" id="nav-toggle">
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
         `;
