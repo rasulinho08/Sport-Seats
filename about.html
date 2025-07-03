@@ -1,1 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About SportsSeat - Premium Sports Ticketing Platform</title>
+    <meta
+        name="description"
+        content="Learn about SportsSeat - our mission to revolutionize sports ticketing with interactive seat selection and premium experiences."
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-ticket-alt"></i>
+                <span>SportsSeat</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#events" class="nav-link">Events</a>
+                <a href="#venues" class="nav-link">Venues</a>
+                <a href="about.html" class="nav-link active">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-secondary" onclick="openModal('loginModal')">Login</button>
+                <button class="btn-primary" onclick="openModal('registerModal')">Sign Up</button>
+                <button class="nav-toggle" id="nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
 
+    <section class="hero" id="about-hero">
+        <div class="hero-background">
+            <img src="assets/images/stadium-crowd.jpg" alt="Excited stadium crowd" class="hero-image" />
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="container">
+                <h1 class="hero-title">
+                    Our Story
+                    <span class="highlight">Passion for Sports, Perfection in Seating</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Revolutionizing the way fans experience live sports through innovative technology and unparalleled service.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid" style="grid-template-columns: 1fr 1fr; align-items: center; gap: 4rem;">
+                <div class="feature-card" style="box-shadow: none; padding: 0;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--neutral-dark);">Our Mission</h2>
+                    <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8;">
+                        At SportsSeat, we believe every fan deserves the perfect seat to enjoy their favorite sports. Founded in 2020 by a team of sports enthusiasts and tech innovators, we set out to transform the ticket-buying experience.
+                    </p>
+                    <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8;">
+                        Our platform combines cutting-edge interactive seat selection with real-time inventory to give you complete control over your game day experience. No more guessing about views or scrambling for last-minute tickets.
+                    </p>
+                </div>
+                <div class="feature-card" style="box-shadow: none; padding: 0;">
+                    <img src="assets/images/team-huddle.jpg" alt="SportsSeat team working together" style="border-radius: var(--border-radius-lg); box-shadow: var(--shadow-lg); width: 100%;" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="features" style="background: var(--background-light);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Core Values</h2>
+                <p>These principles guide everything we do at SportsSeat</p>
+            </div>
+            <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: var(--gradient-primary); border-radius: 50%; width: 80px; height: 80px; margin: 0 auto 1.5rem;">
+                        <i class="fas fa-users" style="font-size: 2rem;"></i>
+                    </div>
+                    <h3>Fan First</h3>
+                    <p>We prioritize fan experience above all, ensuring fair pricing, transparent fees, and exceptional service.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: var(--gradient-primary); border-radius: 50%; width: 80px; height: 80px; margin: 0 auto 1.5rem;">
+                        <i class="fas fa-lightbulb" style="font-size: 2rem;"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>Continually pushing boundaries with features like 3D seat views and augmented reality stadium previews.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: var(--gradient-primary); border-radius: 50%; width: 80px; height: 80px; margin: 0 auto 1.5rem;">
+                        <i class="fas fa-shield-alt" style="font-size: 2rem;"></i>
+                    </div>
+                    <h3>Integrity</h3>
+                    <p>Verified tickets, secure transactions, and honest representations of every seat in the house.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: var(--gradient-primary); border-radius: 50%; width: 80px; height: 80px; margin: 0 auto 1.5rem;">
+                        <i class="fas fa-heart" style="font-size: 2rem;"></i>
+                    </div>
+                    <h3>Passion</h3>
+                    <p>We're fans just like you, dedicated to preserving the magic of live sports experiences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="sports-categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Partners</h2>
+                <p>Trusted by the best in sports</p>
+            </div>
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 3rem; align-items: center;">
+                <img src="assets/images/nfl-logo.png" alt="NFL" style="height: 60px; width: auto; opacity: 0.7; transition: var(--transition);" />
+                <img src="assets/images/nba-logo.png" alt="NBA" style="height: 60px; width: auto; opacity: 0.7; transition: var(--transition);" />
+                <img src="assets/images/mlb-logo.png" alt="MLB" style="height: 60px; width: auto; opacity: 0.7; transition: var(--transition);" />
+                <img src="assets/images/nhl-logo.png" alt="NHL" style="height: 60px; width: auto; opacity: 0.7; transition: var(--transition);" />
+                <img src="assets/images/mls-logo.png" alt="MLS" style="height: 60px; width: auto; opacity: 0.7; transition: var(--transition);" />
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content" style="text-align: center;">
+                <div class="newsletter-text" style="margin: 0 auto 2rem;">
+                    <h2>Ready to Experience Sports Differently?</h2>
+                    <p>Join over 500,000 fans who've found their perfect seats with SportsSeat.</p>
+                </div>
+                <div class="newsletter-form" style="max-width: none;">
+                    <div style="display: flex; gap: 1rem; justify-content: center;">
+                        <button class="btn-primary" onclick="openModal('registerModal')">Sign Up Now</button>
+                        <button class="btn-outline">Browse Events</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>SportsSeat</span>
+                    </div>
+                    <p>Your premier destination for sports tickets with interactive seat selection and real-time availability.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#events">Browse Events</a></li>
+                        <li><a href="#venues">Venues</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Sports</h3>
+                    <ul>
+                        <li><a href="#" data-sport="football">Football</a></li>
+                        <li><a href="#" data-sport="basketball">Basketball</a></li>
+                        <li><a href="#" data-sport="baseball">Baseball</a></li>
+                        <li><a href="#" data-sport="soccer">Soccer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Ticket Transfer</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SportsSeat. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
