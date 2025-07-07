@@ -225,20 +225,20 @@ const sampleEvents = [
 
 
 // DOM Elements
-const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-const navLinks = document.getElementById('nav-links');
-const eventsList = document.getElementById('events-list');
-const heroSearch = document.getElementById('hero-search');
-const sportFilter = document.getElementById('sport-filter');
-const dateFilter = document.getElementById('date-filter');
-const toastWrapper = document.getElementById('toast-wrapper');
+const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+const navLinks = document.getElementById("nav-links");
+const eventsList = document.getElementById("events-list");
+const heroSearch = document.getElementById("hero-search");
+const sportFilter = document.getElementById("sport-filter");
+const dateFilter = document.getElementById("date-filter");
+const toastWrapper = document.getElementById("toast-wrapper");
 
 // State
 let currentEvents = sampleEvents.filter(event => event.featured);
 let filteredEvents = [...currentEvents];
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function() {
     initializeNavigation();
     initializeSearch();
     initializeModals();
@@ -252,51 +252,58 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeNavigation() {
     // Mobile menu toggle
     if (mobileMenuBtn && navLinks) {
-        mobileMenuBtn.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-            const icon = mobileMenuBtn.querySelector('i');
-            if (navLinks.classList.contains('active')) {
-                icon.classList.replace('fa-bars', 'fa-times');
+        mobileMenuBtn.addEventListener("click", function() {
+            navLinks.classList.toggle("active");
+            const icon = mobileMenuBtn.querySelector("i");
+            if (navLinks.classList.contains("active")) {
+                icon.classList.replace("fa-bars", "fa-times");
             } else {
-                icon.classList.replace('fa-times', 'fa-bars');
+                icon.classList.replace("fa-times", "fa-bars");
             }
         });
     }
 
     // Smooth scrolling for navigation links
-    document.querySelectorAll('.nav-item').forEach(link => {
-        link.addEventListener('click', function(e) {
+    document.querySelectorAll(".nav-item").forEach(link => {
+        link.addEventListener("click", function(e) {
             e.preventDefault();
-            const targetId = this.getAttribute('href');
+            const targetId = this.getAttribute("href");
+            
+            // Handle external links (like about.html)
+            if (targetId.startsWith("about.html")) {
+                window.location.href = targetId;
+                return;
+            }
+
             const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
                 targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                    behavior: "smooth",
+                    block: "start"
                 });
                 
                 // Close mobile menu
-                navLinks.classList.remove('active');
-                const icon = mobileMenuBtn.querySelector('i');
-                icon.classList.replace('fa-times', 'fa-bars');
+                navLinks.classList.remove("active");
+                const icon = mobileMenuBtn.querySelector("i");
+                icon.classList.replace("fa-times", "fa-bars");
                 
                 // Update active link
-                document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
+                document.querySelectorAll(".nav-item").forEach(l => l.classList.remove("active"));
+                this.classList.add("active");
             }
         });
     });
 
     // Navbar scroll effect
-    window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.main-nav');
+    window.addEventListener("scroll", function() {
+        const navbar = document.querySelector(".main-nav");
         if (window.scrollY > 100) {
-            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            navbar.style.background = "rgba(255, 255, 255, 0.98)";
+            navbar.style.boxShadow = "0 2px 20px rgba(0, 0, 0, 0.1)";
         } else {
-            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-            navbar.style.boxShadow = 'none';
+            navbar.style.background = "rgba(255, 255, 255, 0.95)";
+            navbar.style.boxShadow = "none";
         }
     });
 }
@@ -304,29 +311,29 @@ function initializeNavigation() {
 // Search functionality
 function initializeSearch() {
     if (heroSearch) {
-        heroSearch.addEventListener('input', debounce(handleSearch, 300));
+        heroSearch.addEventListener("input", debounce(handleSearch, 300));
     }
     
     if (sportFilter) {
-        sportFilter.addEventListener('change', handleSearch);
+        sportFilter.addEventListener("change", handleSearch);
     }
     
     if (dateFilter) {
-        dateFilter.addEventListener('change', handleSearch);
+        dateFilter.addEventListener("change", handleSearch);
     }
 
     // Search button
-    document.querySelector('.search-btn')?.addEventListener('click', function(e) {
+    document.querySelector(".search-btn")?.addEventListener("click", function(e) {
         e.preventDefault();
         handleSearch();
-        showToast('Searching for events...', 'success');
+        showToast("Searching for events...", "success");
     });
 }
 
 function handleSearch() {
-    const searchTerm = heroSearch?.value.toLowerCase() || '';
-    const selectedSport = sportFilter?.value || '';
-    const selectedDate = dateFilter?.value || '';
+    const searchTerm = heroSearch?.value.toLowerCase() || "";
+    const selectedSport = sportFilter?.value || "";
+    const selectedDate = dateFilter?.value || "";
 
     filteredEvents = currentEvents.filter(event => {
         const matchesSearch = event.title.toLowerCase().includes(searchTerm) ||
@@ -345,17 +352,17 @@ function checkDateFilter(eventDate, filter) {
     const eventDateObj = new Date(eventDate);
     
     switch (filter) {
-        case 'today':
+        case "today":
             return eventDateObj.toDateString() === today.toDateString();
-        case 'tomorrow':
+        case "tomorrow":
             const tomorrow = new Date(today);
             tomorrow.setDate(tomorrow.getDate() + 1);
             return eventDateObj.toDateString() === tomorrow.toDateString();
-        case 'week':
+        case "week":
             const weekFromNow = new Date(today);
             weekFromNow.setDate(weekFromNow.getDate() + 7);
             return eventDateObj >= today && eventDateObj <= weekFromNow;
-        case 'month':
+        case "month":
             const monthFromNow = new Date(today);
             monthFromNow.setMonth(monthFromNow.getMonth() + 1);
             return eventDateObj >= today && eventDateObj <= monthFromNow;
@@ -401,14 +408,14 @@ function renderEvents() {
                 </div>
             </div>
         </div>
-    `).join('');
+    `).join("");
 }
 
 // Modal functionality
 function initializeModals() {
     // Close modal when clicking outside
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-        modal.addEventListener('click', function(e) {
+    document.querySelectorAll(".modal-overlay").forEach(modal => {
+        modal.addEventListener("click", function(e) {
             if (e.target === this) {
                 closeModal(this.id);
             }
@@ -416,9 +423,9 @@ function initializeModals() {
     });
 
     // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+            document.querySelectorAll(".modal-overlay.active").forEach(modal => {
                 closeModal(modal.id);
             });
         }
@@ -428,16 +435,16 @@ function initializeModals() {
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
     }
 }
 
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
+        modal.classList.remove("active");
+        document.body.style.overflow = "";
     }
 }
 
@@ -449,54 +456,54 @@ function switchModal(fromModalId, toModalId) {
 // Form handling
 function initializeForms() {
     // Login form
-    const loginForm = document.getElementById('login-form');
+    const loginForm = document.getElementById("login-form");
     if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener("submit", function(e) {
             e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
             
             if (email && password) {
-                showToast('Login successful! Welcome back.', 'success');
-                closeModal('loginModal');
+                showToast("Login successful! Welcome back.", "success");
+                closeModal("loginModal");
                 // Simulate login success
                 setTimeout(() => {
                     updateUIForLoggedInUser(email);
                 }, 500);
             } else {
-                showToast('Please fill in all fields.', 'error');
+                showToast("Please fill in all fields.", "error");
             }
         });
     }
 
     // Register form
-    const registerForm = document.getElementById('register-form');
+    const registerForm = document.getElementById("register-form");
     if (registerForm) {
-        registerForm.addEventListener('submit', function(e) {
+        registerForm.addEventListener("submit", function(e) {
             e.preventDefault();
-            const firstName = document.getElementById('register-firstname').value;
-            const lastName = document.getElementById('register-lastname').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('register-confirm').value;
+            const firstName = document.getElementById("register-firstname").value;
+            const lastName = document.getElementById("register-lastname").value;
+            const email = document.getElementById("register-email").value;
+            const password = document.getElementById("register-password").value;
+            const confirmPassword = document.getElementById("register-confirm").value;
             
             if (!firstName || !lastName || !email || !password || !confirmPassword) {
-                showToast('Please fill in all fields.', 'error');
+                showToast("Please fill in all fields.", "error");
                 return;
             }
             
             if (password !== confirmPassword) {
-                showToast('Passwords do not match.', 'error');
+                showToast("Passwords do not match.", "error");
                 return;
             }
             
             if (password.length < 6) {
-                showToast('Password must be at least 6 characters.', 'error');
+                showToast("Password must be at least 6 characters.", "error");
                 return;
             }
             
-            showToast('Account created successfully! Welcome to SportsSeat.', 'success');
-            closeModal('registerModal');
+            showToast("Account created successfully! Welcome to SportsSeat.", "success");
+            closeModal("registerModal");
             // Simulate registration success
             setTimeout(() => {
                 updateUIForLoggedInUser(email);
@@ -505,17 +512,17 @@ function initializeForms() {
     }
 
     // Newsletter form
-    const newsletterForm = document.getElementById('newsletter-form');
+    const newsletterForm = document.getElementById("newsletter-form");
     if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
+        newsletterForm.addEventListener("submit", function(e) {
             e.preventDefault();
-            const email = this.querySelector('input[type="email"]').value;
+            const email = this.querySelector("input[type="email"]").value;
             
             if (email) {
-                showToast('Thank you for subscribing to our newsletter!', 'success');
+                showToast("Thank you for subscribing to our newsletter!", "success");
                 this.reset();
             } else {
-                showToast('Please enter a valid email address.', 'error');
+                showToast("Please enter a valid email address.", "error");
             }
         });
     }
@@ -523,8 +530,8 @@ function initializeForms() {
 
 // Category cards functionality
 function initializeCategoryCards() {
-    document.querySelectorAll('.category-item').forEach(card => {
-        card.addEventListener('click', function() {
+    document.querySelectorAll(".category-item").forEach(card => {
+        card.addEventListener("click", function() {
             const sport = this.dataset.sport;
             if (sport) {
                 // Update sport filter
@@ -532,17 +539,17 @@ function initializeCategoryCards() {
                     sportFilter.value = sport;
                 }
                 // Clear other filters
-                if (heroSearch) heroSearch.value = '';
-                if (dateFilter) dateFilter.value = '';
+                if (heroSearch) heroSearch.value = "";
+                if (dateFilter) dateFilter.value = "";
                 
                 handleSearch();
                 
                 // Scroll to events section
-                document.getElementById('events')?.scrollIntoView({
-                    behavior: 'smooth'
+                document.getElementById("events")?.scrollIntoView({
+                    behavior: "smooth"
                 });
                 
-                showToast(`Showing ${sport} events`, 'success');
+                showToast(`Showing ${sport} events`, "success");
             }
         });
     });
@@ -552,18 +559,18 @@ function initializeCategoryCards() {
 function viewEvent(eventId) {
     const event = sampleEvents.find(e => e.id === eventId);
     if (event) {
-        showToast(`Viewing ${event.title} details...`, 'success');
+        showToast(`Viewing ${event.title} details...`, "success");
         // In a real app, this would navigate to event details page
-        console.log('Viewing event:', event);
+        console.log("Viewing event:", event);
     }
 }
 
 function bookEvent(eventId) {
     const event = sampleEvents.find(e => e.id === eventId);
     if (event) {
-        showToast(`Booking ${event.title}...`, 'success');
+        showToast(`Booking ${event.title}...`, "success");
         // In a real app, this would open booking flow
-        console.log('Booking event:', event);
+        console.log("Booking event:", event);
     }
 }
 
@@ -573,16 +580,16 @@ function loadMoreEvents() {
     currentEvents = [...currentEvents, ...moreEvents];
     filteredEvents = [...currentEvents];
     renderEvents();
-    showToast('More events loaded!', 'success');
+    showToast("More events loaded!", "success");
 }
 
 // Toast notifications
-function showToast(message, type = 'success') {
-    const toast = document.createElement('div');
+function showToast(message, type = "success") {
+    const toast = document.createElement("div");
     toast.className = `toast ${type}`;
     toast.innerHTML = `
         <div class="toast-icon">
-            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <i class="fas ${type === "success" ? "fa-check-circle" : "fa-exclamation-circle"}"></i>
         </div>
         <div class="toast-message">${message}</div>
         <button class="toast-close" onclick="removeToast(this)">
@@ -593,15 +600,15 @@ function showToast(message, type = 'success') {
     toastWrapper.appendChild(toast);
     
     // Show toast
-    setTimeout(() => toast.classList.add('show'), 100);
+    setTimeout(() => toast.classList.add("show"), 100);
     
     // Auto remove after 5 seconds
-    setTimeout(() => removeToast(toast.querySelector('.toast-close')), 5000);
+    setTimeout(() => removeToast(toast.querySelector(".toast-close")), 5000);
 }
 
 function removeToast(closeButton) {
-    const toast = closeButton.closest('.toast');
-    toast.classList.remove('show');
+    const toast = closeButton.closest(".toast");
+    toast.classList.remove("show");
     setTimeout(() => toast.remove(), 300);
 }
 
@@ -609,26 +616,26 @@ function removeToast(closeButton) {
 function initializeScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: "0px 0px -50px 0px"
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in-up');
+                entry.target.classList.add("fade-in-up");
             }
         });
     }, observerOptions);
 
     // Observe elements for animation
-    document.querySelectorAll('.feature-item, .category-item, .event-card').forEach(el => {
+    document.querySelectorAll(".feature-item, .category-item, .event-card").forEach(el => {
         observer.observe(el);
     });
 }
 
 // UI updates for logged in user
 function updateUIForLoggedInUser(email) {
-    const navButtons = document.querySelector('.nav-buttons');
+    const navButtons = document.querySelector(".nav-buttons");
     if (navButtons) {
         navButtons.innerHTML = `
             <div class="user-menu">
@@ -640,13 +647,13 @@ function updateUIForLoggedInUser(email) {
 }
 
 function logout() {
-    showToast('Logged out successfully!', 'success');
+    showToast("Logged out successfully!", "success");
     // Reset nav buttons
-    const navButtons = document.querySelector('.nav-buttons');
+    const navButtons = document.querySelector(".nav-buttons");
     if (navButtons) {
         navButtons.innerHTML = `
-            <button class="btn-outline" onclick="openModal('loginModal')">Login</button>
-            <button class="btn-primary" onclick="openModal('registerModal')">Sign Up</button>
+            <button class="btn-outline" onclick="openModal(\'loginModal\')">Login</button>
+            <button class="btn-primary" onclick="openModal(\'registerModal\')">Sign Up</button>
             <button class="mobile-menu-btn" id="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
@@ -672,24 +679,24 @@ function debounce(func, wait) {
 function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { 
-        month: 'short', 
-        day: 'numeric',
-        weekday: 'short'
+        month: "short", 
+        day: "numeric",
+        weekday: "short"
     };
-    return date.toLocaleDateString('en-US', options);
+    return date.toLocaleDateString("en-US", options);
 }
 
 // Performance optimization
 function lazyLoadImages() {
-    const images = document.querySelectorAll('img[loading="lazy"]');
+    const images = document.querySelectorAll("img[loading="lazy"]");
     
-    if ('IntersectionObserver' in window) {
+    if ("IntersectionObserver" in window) {
         const imageObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
                     img.src = img.dataset.src || img.src;
-                    img.classList.remove('lazy');
+                    img.classList.remove("lazy");
                     imageObserver.unobserve(img);
                 }
             });
@@ -700,24 +707,25 @@ function lazyLoadImages() {
 }
 
 // Initialize lazy loading
-document.addEventListener('DOMContentLoaded', lazyLoadImages);
+document.addEventListener("DOMContentLoaded", lazyLoadImages);
 
 // Error handling
-window.addEventListener('error', function(e) {
-    console.error('JavaScript error:', e.error);
-    showToast('Something went wrong. Please try again.', 'error');
+window.addEventListener("error", function(e) {
+    console.error("JavaScript error:", e.error);
+    showToast("Something went wrong. Please try again.", "error");
 });
 
 // Service worker registration (for PWA features)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js')
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function() {
+        navigator.serviceWorker.register("/sw.js")
             .then(registration => {
-                console.log('SW registered: ', registration);
+                console.log("SW registered: ", registration);
             })
             .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
+                console.log("SW registration failed: ", registrationError);
             });
     });
 }
+
 
