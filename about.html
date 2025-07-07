@@ -1,1 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsSeat - About Us</title>
+    <meta name="description" content="Learn about SportsSeat, your premier destination for premium sports tickets with interactive seat selection.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-ticket-alt"></i>
+                <span>SportsSeat</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#events" class="nav-link">Events</a>
+                <a href="index.html#venues" class="nav-link">Venues</a>
+                <a href="about.html" class="nav-link active">About</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-secondary" onclick="openModal('loginModal')">Login</button>
+                <button class="btn-primary" onclick="openModal('registerModal')">Sign Up</button>
+                <button class="nav-toggle" id="nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
 
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About SportsSeat</h2>
+                <p>Discover our mission to revolutionize sports ticketing</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Story</h3>
+                    <p>SportsSeat was founded with a passion for bringing fans closer to the action. Launched in 2023, our mission is to transform the sports ticketing experience by combining cutting-edge technology with a fan-first approach. We believe every fan deserves the perfect seat to cheer for their team.</p>
+                    <h3>Our Mission</h3>
+                    <p>Our goal is to make finding and booking sports tickets seamless, transparent, and exciting. With our interactive 3D seat maps, real-time availability, and secure booking process, we empower fans to choose their ideal seats with confidence. Whether you're a die-hard supporter or a casual attendee, SportsSeat is here to enhance your live sports experience.</p>
+                    <h3>Why We Stand Out</h3>
+                    <p>From NFL showdowns to NBA thrillers, we cover a wide range of sports and events across the country. Our platform is designed to provide unparalleled convenience, from browsing events to receiving mobile tickets instantly. With 24/7 customer support and a commitment to security, SportsSeat is your trusted partner for unforgettable game days.</p>
+                </div>
+                <div class="about-image">
+                    <img src="assets/images/stadium-crowd.jpg" alt="Excited sports fans in stadium" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>SportsSeat</span>
+                    </div>
+                    <p>Your premier destination for sports tickets with interactive seat selection and real-time availability.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html#events">Browse Events</a></li>
+                        <li><a href="index.html#venues">Venues</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Sports</h3>
+                    <ul>
+                        <li><a href="#" data-sport="football">Football</a></li>
+                        <li><a href="#" data-sport="basketball">Basketball</a></li>
+                        <li><a href="#" data-sport="baseball">Baseball</a></li>
+                        <li><a href="#" data-sport="soccer">Soccer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Ticket Transfer</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 SportsSeat. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Welcome Back</h2>
+                <button class="modal-close" onclick="closeModal('loginModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Sign In</button>
+                </form>
+                <div class="modal-footer">
+                    <p>Don't have an account? <a href="#" onclick="switchModal('loginModal', 'registerModal')">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Account</h2>
+                <button class="modal-close" onclick="closeModal('registerModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="register-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="register-firstname">First Name</label>
+                            <input type="text" id="register-firstname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-lastname">Last Name</label>
+                            <input type="text" id="register-lastname" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email Address</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm">Confirm Password</label>
+                        <input type="password" id="register-confirm" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox" required>
+                            <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Create Account</button>
+                </form>
+                <div class="modal-footer">
+                    <p>Already have an account? <a href="#" onclick="switchModal('registerModal', 'loginModal')">Sign in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
