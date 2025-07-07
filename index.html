@@ -13,51 +13,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
+    <nav class="main-nav">
+        <div class="nav-wrapper">
+            <a href="index.html" class="brand-logo">
                 <i class="fas fa-ticket-alt"></i>
                 <span>SportsSeat</span>
+            </a>
+            <div class="nav-links">
+                <a href="#home" class="nav-item active">Home</a>
+                <a href="#events" class="nav-item">Events</a>
+                <a href="#venues" class="nav-item">Venues</a>
+                <a href="about.html" class="nav-item">About</a>
+                <a href="#contact" class="nav-item">Contact</a>
             </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="#home" class="nav-link active">Home</a>
-                <a href="#events" class="nav-link">Events</a>
-                <a href="#venues" class="nav-link">Venues</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-            <div class="nav-actions">
-                <button class="btn-secondary" onclick="openModal('loginModal')">Login</button>
+            <div class="nav-buttons">
+                <button class="btn-outline" onclick="openModal('loginModal')">Login</button>
                 <button class="btn-primary" onclick="openModal('registerModal')">Sign Up</button>
-                <button class="nav-toggle" id="nav-toggle">
+                <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
     </nav>
 
-    <section class="hero" id="home">
-        <div class="hero-background">
-            <img src="assets/images/view-empty-football-stadium.jpg" alt="Modern Stadium" class="hero-image">
+    <section class="hero-section" id="home">
+        <div class="hero-bg">
+            <img src="assets/images/view-empty-football-stadium.jpg" alt="Modern Stadium" class="hero-img">
             <div class="hero-overlay"></div>
         </div>
         <div class="hero-content">
-            <div class="container">
-                <h1 class="hero-title">
+            <div class="content-wrapper">
+                <h1 class="hero-heading">
                     Experience Sports Like Never Before
-                    <span class="highlight">Choose Your Perfect Seat</span>
+                    <span class="highlight-text">Choose Your Perfect Seat</span>
                 </h1>
-                <p class="hero-subtitle">
+                <p class="hero-description">
                     Interactive seat selection, real-time availability, and instant booking for the biggest sporting events.
                 </p>
-                <div class="hero-search">
-                    <div class="search-container">
-                        <div class="search-field">
+                <div class="search-section">
+                    <div class="search-box">
+                        <div class="search-input">
                             <i class="fas fa-search"></i>
                             <input type="text" placeholder="Search events, teams, or venues..." id="hero-search">
                         </div>
-                        <div class="search-filters">
-                            <select class="filter-select" id="sport-filter">
+                        <div class="filter-options">
+                            <select class="filter-dropdown" id="sport-filter">
                                 <option value="">All Sports</option>
                                 <option value="football">Football</option>
                                 <option value="basketball">Basketball</option>
@@ -65,7 +65,7 @@
                                 <option value="soccer">Soccer</option>
                                 <option value="hockey">Hockey</option>
                             </select>
-                            <select class="filter-select" id="date-filter">
+                            <select class="filter-dropdown" id="date-filter">
                                 <option value="">Any Date</option>
                                 <option value="today">Today</option>
                                 <option value="tomorrow">Tomorrow</option>
@@ -79,60 +79,60 @@
                         </button>
                     </div>
                 </div>
-                <div class="hero-stats">
-                    <div class="stat">
+                <div class="stats-section">
+                    <div class="stat-item">
                         <span class="stat-number">500K+</span>
-                        <span class="stat-label">Happy Fans</span>
+                        <span class="stat-text">Happy Fans</span>
                     </div>
-                    <div class="stat">
+                    <div class="stat-item">
                         <span class="stat-number">1000+</span>
-                        <span class="stat-label">Events</span>
+                        <span class="stat-text">Events</span>
                     </div>
-                    <div class="stat">
+                    <div class="stat-item">
                         <span class="stat-number">50+</span>
-                        <span class="stat-label">Venues</span>
+                        <span class="stat-text">Venues</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="featured-events" id="events">
-        <div class="container">
-            <div class="section-header">
+    <section class="events-section" id="events">
+        <div class="content-wrapper">
+            <div class="section-title">
                 <h2>Featured Events</h2>
                 <p>Don't miss these exciting upcoming games</p>
             </div>
-            <div class="events-grid" id="events-grid">
+            <div class="events-list" id="events-grid">
             </div>
-            <div class="section-footer">
+            <div class="section-actions">
                 <button class="btn-outline" onclick="loadMoreEvents()">View All Events</button>
             </div>
         </div>
     </section>
 
     <section class="sports-categories">
-        <div class="container">
-            <div class="section-header">
+        <div class="content-wrapper">
+            <div class="section-title">
                 <h2>Browse by Sport</h2>
                 <p>Find tickets for your favorite sports</p>
             </div>
-            <div class="categories-grid">
-                <div class="category-card" data-sport="football">
+            <div class="categories-list">
+                <div class="category-item" data-sport="football">
                     <div class="category-icon">
                         <i class="fas fa-football-ball"></i>
                     </div>
                     <h3>Football</h3>
                     <p>NFL & College Games</p>
-                    <span class="event-count">120+ Events</span>
+                    <span class="event-badge">120+ Events</span>
                 </div>
-                <div class="category-card" data-sport="basketball">
+                <div class="category-item" data-sport="basketball">
                     <div class="category-icon">
                         <i class="fas fa-basketball-ball"></i>
                     </div>
                     <h3>Basketball</h3>
                     <p>NBA & NCAA Games</p>
-                    <span class="event-count">85+ Events</span>
+                    <span class="event-badge">85+ Events</span>
                 </div>
                 <div class="category-card" data-sport="baseball">
                     <div class="category-icon">
@@ -170,13 +170,13 @@
         </div>
     </section>
 
-    <section class="features">
-        <div class="container">
-            <div class="section-header">
+    <section class="features-section">
+        <div class="content-wrapper">
+            <div class="section-title">
                 <h2>Why Choose SportsSeat?</h2>
                 <p>The ultimate sports ticketing experience</p>
             </div>
-            <div class="features-grid">
+            <div class="features-list">
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-map-marked-alt"></i>
@@ -209,16 +209,16 @@
         </div>
     </section>
 
-    <section class="newsletter">
-        <div class="container">
+    <section class="newsletter-section">
+        <div class="content-wrapper">
             <div class="newsletter-content">
-                <div class="newsletter-text">
+                <div class="newsletter-info">
                     <h2>Never Miss a Game</h2>
                     <p>Get notified about upcoming events, exclusive presales, and special offers.</p>
                 </div>
                 <div class="newsletter-form">
                     <form id="newsletter-form">
-                        <div class="form-group">
+                        <div class="form-row">
                             <input type="email" placeholder="Enter your email address" required>
                             <button type="submit" class="btn-primary">Subscribe</button>
                         </div>
@@ -228,10 +228,10 @@
         </div>
     </section>
 
-    <footer class="footer">
-        <div class="container">
+    <footer class="main-footer">
+        <div class="content-wrapper">
             <div class="footer-content">
-                <div class="footer-section">
+                <div class="footer-info">
                     <div class="footer-brand">
                         <i class="fas fa-ticket-alt"></i>
                         <span>SportsSeat</span>
@@ -283,11 +283,11 @@
         </div>
     </footer>
 
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-box">
             <div class="modal-header">
                 <h2>Welcome Back</h2>
-                <button class="modal-close" onclick="closeModal('loginModal')">
+                <button class="close-btn" onclick="closeModal('loginModal')">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -306,22 +306,22 @@
                             <input type="checkbox">
                             <span>Remember me</span>
                         </label>
-                        <a href="#" class="forgot-password">Forgot password?</a>
+                        <a href="#" class="forgot-link">Forgot password?</a>
                     </div>
                     <button type="submit" class="btn-primary btn-full">Sign In</button>
                 </form>
                 <div class="modal-footer">
-                    <p>Don't have an account? <a href="#" onclick="switchModal('loginModal', 'registerModal')">Sign up</a></p>
+                    <p>Don\'t have an account? <a href="#" onclick="switchModal(\'loginModal\', \'registerModal\')">Sign up</a></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal" id="registerModal">
-        <div class="modal-content">
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal-box">
             <div class="modal-header">
                 <h2>Create Account</h2>
-                <button class="modal-close" onclick="closeModal('registerModal')">
+                <button class="close-btn" onclick="closeModal('registerModal')">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -358,13 +358,13 @@
                     <button type="submit" class="btn-primary btn-full">Create Account</button>
                 </form>
                 <div class="modal-footer">
-                    <p>Already have an account? <a href="#" onclick="switchModal('registerModal', 'loginModal')">Sign in</a></p>
+                    <p>Already have an account? <a href="#" onclick="switchModal(\'registerModal\', \'loginModal\')">Sign in</a></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="toast-container" id="toast-container"></div>
+    <div class="toast-wrapper" id="toast-container"></div>
 
     <script src="assets/js/main.js"></script>
 </body>
