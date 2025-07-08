@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsSeat Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-wrapper">
+            <div class="brand-logo">
+                <i class="fas fa-ticket-alt"></i>
+                <span>SportsSeat</span>
+            </div>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="index.html#events" class="nav-item">Events</a>
+                <a href="about.html" class="nav-item">About</a>
+                <a href="index.html#contact" class="nav-item">Contact</a>
+                <a href="shop.html" class="nav-item active">Shop</a>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-outline" onclick="openModal('loginModal')">Login</button>
+                <button class="btn-primary" onclick="openModal('registerModal')">Sign Up</button>
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle mobile menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Shop Hero Section -->
+    <section class="hero-section" style="padding-top: 120px; background: var(--gradient-primary);">
+        <div class="hero-content">
+            <div class="content-wrapper">
+                <h1 class="hero-heading">
+                    Gear Up for Greatness
+                    <span class="highlight-text">Explore Our Sports Merchandise</span>
+                </h1>
+                <p class="hero-description">
+                    Find the best sportswear, equipment, and accessories to elevate your game.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Content Section -->
+    <section class="shop-section">
+        <div class="content-wrapper">
+            <div class="shop-layout">
+                <!-- Filters Sidebar -->
+                <aside class="shop-filters">
+                    <h3>Categories</h3>
+                    <ul class="category-list">
+                        <li><a href="#" data-category="all" class="active">All Products</a></li>
+                        <li><a href="#" data-category="sportswear">Sportswear & Apparel</a></li>
+                        <li><a href="#" data-category="equipment">Sports Equipment</a></li>
+                        <li><a href="#" data-category="footwear">Footwear</a></li>
+                        <li><a href="#" data-category="nutrition">Nutrition & Supplements</a></li>
+                        <li><a href="#" data-category="tech">Tech & Gadgets</a></li>
+                        <li><a href="#" data-category="services">Services</a></li>
+                        <li><a href="#" data-category="subscriptions">Subscriptions & Collectibles</a></li>
+                        <li><a href="#" data-category="accessories">Accessories</a></li>
+                        <li><a href="#" data-category="merchandise">Branded Merchandise</a></li>
+                    </ul>
+                    <h3>Price Range</h3>
+                    <div class="price-filter">
+                        <input type="range" min="0" max="500" value="500" class="slider" id="price-range" aria-label="Price range filter">
+                        <p>Price: $<span id="price-value">500</span></p>
+                    </div>
+                </aside>
+
+                <!-- Product Listing -->
+                <main class="shop-products">
+                    <div class="product-grid" id="product-grid">
+                        <p>Loading products...</p>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Your Cart</h2>
+                <button class="cart-close" onclick="closeModal('cartModal')" aria-label="Close cart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be populated here -->
+            </div>
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="cart-total-amount" id="cart-total-amount">$0.00</span>
+            </div>
+            <div class="cart-actions">
+                <button class="btn-continue-shopping" onclick="closeModal('cartModal')">Continue Shopping</button>
+                <button class="btn-checkout" onclick="switchModal('cartModal', 'checkoutModal')">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-content">
+            <div class="checkout-header">
+                <h2>Checkout</h2>
+            </div>
+            <form id="checkout-form" class="checkout-form">
+                <div class="form-group">
+                    <label for="checkout-name">Full Name</label>
+                    <input type="text" id="checkout-name" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="checkout-email">Email Address</label>
+                    <input type="email" id="checkout-email" required aria-required="true">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="checkout-card">Card Number</label>
+                        <input type="text" id="checkout-card" required aria-required="true" placeholder="1234 5678 9012 3456">
+                    </div>
+                    <div class="form-group">
+                        <label for="checkout-expiry">Expiry Date</label>
+                        <input type="text" id="checkout-expiry" required aria-required="true" placeholder="MM/YY">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="checkout-cvc">CVC</label>
+                    <input type="text" id="checkout-cvc" required aria-required="true" placeholder="123">
+                </div>
+                <div class="checkout-summary">
+                    <h3>Order Summary</h3>
+                    <div id="checkout-items"></div>
+                    <div class="checkout-total">
+                        <span>Total:</span>
+                        <span id="checkout-total-amount">$0.00</span>
+                    </div>
+                </div>
+                <div class="checkout-actions">
+                    <button type="button" class="btn-back" onclick="switchModal('checkoutModal', 'cartModal')">Back to Cart</button>
+                    <button type="submit" class="btn-pay">Pay Now</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Basket Button -->
+    <div class="basket-float-btn" id="basket-float-btn" onclick="openModal('cartModal')" aria-label="View cart">
+        <i class="fas fa-shopping-basket"></i>
+        <span class="basket-count">0</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="content-wrapper">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="brand-logo">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>SportsSeat</span>
+                    </div>
+                    <p>Your premier destination for sports tickets with interactive seat selection and real-time availability.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html#events">Browse Events</a></li>
+                        <li><a href="index.html#venues">Venues</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Sports</h3>
+                    <ul>
+                        <li><a href="#" data-sport="football">Football</a></li>
+                        <li><a href="#" data-sport="basketball">Basketball</a></li>
+                        <li><a href="#" data-sport="baseball">Baseball</a></li>
+                        <li><a href="#" data-sport="soccer">Soccer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Ticket Transfer</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 SportsSeat. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>Welcome Back</h2>
+                <button class="close-btn" onclick="closeModal('loginModal')" aria-label="Close login modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="input-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" required aria-required="true">
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required aria-required="true">
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" aria-label="Remember me">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Sign In</button>
+                </form>
+                <div class="modal-footer">
+                    <p>Don't have an account? <a href="#" onclick="switchModal('loginModal', 'registerModal')">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>Create Account</h2>
+                <button class="close-btn" onclick="closeModal('registerModal')" aria-label="Close register modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="register-form">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="register-firstname">First Name</label>
+                            <input type="text" id="register-firstname" required aria-required="true">
+                        </div>
+                        <div class="input-group">
+                            <label for="register-lastname">Last Name</label>
+                            <input type="text" id="register-lastname" required aria-required="true">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-email">Email Address</label>
+                        <input type="email" id="register-email" required aria-required="true">
+                    </div>
+                    <div class="input-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required aria-required="true">
+                    </div>
+                    <div class="input-group">
+                        <label for="register-confirm">Confirm Password</label>
+                        <input type="password" id="register-confirm" required aria-required="true">
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required aria-required="true" aria-label="Agree to terms and privacy policy">
+                            <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Create Account</button>
+                </form>
+                <div class="modal-footer">
+                    <p>Already have an account? <a href="#" onclick="switchModal('registerModal', 'loginModal')">Sign in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-wrapper" id="toast-wrapper"></div>
+
+    <script>
+        // Modal functionality
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        function switchModal(currentModalId, targetModalId) {
+            closeModal(currentModalId);
+            setTimeout(() => openModal(targetModalId), 300);
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('cart-modal') || e.target.classList.contains('checkout-modal')) {
+                e.target.classList.remove('active');
+            }
+        });
+
+        // Close modal with escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active, .cart-modal.active, .checkout-modal.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+
+        // Price range slider functionality
+        const priceRange = document.getElementById('price-range');
+        const priceValue = document.getElementById('price-value');
+        if (priceRange && priceValue) {
+            priceRange.oninput = function() {
+                priceValue.textContent = this.value;
+                filterProducts();
+            };
+        }
+
+        // Dummy product data (replace with API fetch later)
+        const products = [
+            { id: 1, name: 'Running Shoes', category: 'footwear', price: 120, image: 'https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Running+Shoes', description: 'High-performance running shoes for all terrains.', sizes: ['S', 'M', 'L', 'XL'] },
+            { id: 2, name: 'Basketball Jersey', category: 'sportswear', price: 50, image: 'https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Basketball+Jersey', description: 'Breathable and comfortable jersey for the court.', sizes: ['S', 'M', 'L', 'XL'] },
+            { id: 3, name: 'Football', category: 'equipment', price: 30, image: 'https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Football', description: 'Durable football for training and matches.' },
+            // ... add remaining products as needed
+        ];
+
+        let currentProducts = [...products];
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function renderProducts(productsToRender) {
+            const productGrid = document.getElementById('product-grid');
+            if (!productGrid) return;
+
+            productGrid.innerHTML = '';
+            if (productsToRender.length === 0) {
+                productGrid.innerHTML = '<p>No products found matching your criteria.</p>';
+                return;
+            }
+
+            productsToRender.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p class="product-price">$${product.price.toFixed(2)}</p>
+                    <p>${product.description}</p>
+                    ${product.sizes ? `
+                        <div class="product-sizes">
+                            <label for="size-${product.id}">Size:</label>
+                            <select id="size-${product.id}" aria-label="Select size for ${product.name}">
+                                ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
+                            </select>
+                        </div>
+                    ` : ''} 
+                    <button class="btn-primary add-to-cart" data-product-id="${product.id}" aria-label="Add ${product.name} to cart">Add to Cart</button>
+                `;
+                productGrid.appendChild(productCard);
+            });
+            attachAddToCartListeners();
+        }
+
+        function filterProducts() {
+            const selectedCategory = document.querySelector('.category-list .active')?.dataset.category || 'all';
+            const maxPrice = parseInt(priceRange.value);
+
+            let filtered = products.filter(product => {
+                const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+                const matchesPrice = product.price <= maxPrice;
+                return matchesCategory && matchesPrice;
+            });
+            renderProducts(filtered);
+        }
+
+        function attachAddToCartListeners() {
+            const buttons = document.querySelectorAll('.add-to-cart');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = parseInt(this.dataset.productId);
+                    const product = products.find(p => p.id === productId);
+                    if (product) {
+                        const selectedSize = product.sizes ? document.getElementById(`size-${productId}`)?.value : null;
+                        addToCart(product, selectedSize);
+                    }
+                });
+            });
+        }
+
+        function addToCart(product, size = null) {
+            const existingItemIndex = cart.findIndex(item => item.id === product.id && item.size === size);
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1, size });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateBasketCount();
+            renderCart();
+            showToast(`${product.name} added to cart!`, 'success');
+        }
+
+        function updateBasketCount() {
+            const basketCount = document.querySelector('.basket-count');
+            if (basketCount) {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                basketCount.textContent = totalItems;
+            }
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotalAmount = document.getElementById('cart-total-amount');
+            const checkoutItems = document.getElementById('checkout-items');
+            const checkoutTotalAmount = document.getElementById('checkout-total-amount');
+            if (!cartItems || !cartTotalAmount || !checkoutItems || !checkoutTotalAmount) return;
+
+            cartItems.innerHTML = '';
+            checkoutItems.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Your cart is empty.</p>';
+                checkoutItems.innerHTML = '<p>Your cart is empty.</p>';
+                cartTotalAmount.textContent = '$0.00';
+                checkoutTotalAmount.textContent = '$0.00';
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-details">
+                            ${item.size ? `Size: ${item.size}<br>` : ''}
+                            Quantity: ${item.quantity}
+                        </div>
+                    </div>
+                    <div class="cart-item-price">$${subtotal.toFixed(2)}</div>
+                    <button class="cart-close" onclick="removeFromCart(${index})" aria-label="Remove ${item.name} from cart">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                cartItems.appendChild(cartItem);
+
+                const checkoutItem = document.createElement('div');
+                checkoutItem.className = 'cart-item';
+                checkoutItem.innerHTML = `
+                    <div class="cart-item-name">${item.name}</div>
+                    <div class="cart-item-details">
+                        ${item.size ? `Size: ${item.size}<br>` : ''}
+                        Quantity: ${item.quantity} x $${item.price.toFixed(2)}
+                    </div>
+                `;
+                checkoutItems.appendChild(checkoutItem);
+            });
+
+            cartTotalAmount.textContent = `$${total.toFixed(2)}`;
+            checkoutTotalAmount.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateBasketCount();
+            renderCart();
+            showToast('Item removed from cart', 'info');
+        }
+
+        // Toast notifications
+        function showToast(message, type = "success") {
+            const toastWrapper = document.getElementById("toast-wrapper");
+            if (!toastWrapper) return;
+
+            const toast = document.createElement("div");
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas ${type === "success" ? "fa-check-circle" : type === "info" ? "fa-info-circle" : "fa-exclamation-circle"}"></i>
+                </div>
+                <div class="toast-message">${message}</div>
+                <button class="toast-close" onclick="removeToast(this)" aria-label="Close notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            toastWrapper.appendChild(toast);
+            setTimeout(() => toast.classList.add("show"), 100);
+            setTimeout(() => removeToast(toast.querySelector(".toast-close")), 5000);
+        }
+
+        function removeToast(closeButton) {
+            const toast = closeButton?.closest(".toast");
+            if (toast) {
+                toast.classList.remove("show");
+                setTimeout(() => toast.remove(), 300);
+            }
+        }
+
+        // Form submission handlers
+        document.getElementById('login-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                // Replace with actual API endpoint
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    showToast('Login successful!', 'success');
+                    closeModal('loginModal');
+                } else {
+                    showToast(result.message || 'Login failed', 'error');
+                }
+            } catch (error) {
+                showToast('An error occurred. Please try again.', 'error');
+            }
+        });
+
+        document.getElementById('register-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const firstName = document.getElementById('register-firstname').value;
+            const lastName = document.getElementById('register-lastname').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm').value;
+
+            if (password !== confirmPassword) {
+                showToast('Passwords do not match', 'error');
+                return;
+            }
+
+            try {
+                // Replace with actual API endpoint
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ firstName, lastName, email, password })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    showToast('Account created successfully!', 'success');
+                    closeModal('registerModal');
+                } else {
+                    showToast(result.message || 'Registration failed', 'error');
+                }
+            } catch (error) {
+                showToast('An error occurred. Please try again.', 'error');
+            }
+        });
+
+        document.getElementById('checkout-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('checkout-name').value;
+            const email = document.getElementById('checkout-email').value;
+            const card = document.getElementById('checkout-card').value;
+            const expiry = document.getElementById('checkout-expiry').value;
+            const cvc = document.getElementById('checkout-cvc').value;
+
+            try {
+                // Replace with actual payment API endpoint
+                const response = await fetch('/api/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, card, expiry, cvc, cart })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    showToast('Payment successful!', 'success');
+                    cart = [];
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateBasketCount();
+                    renderCart();
+                    closeModal('checkoutModal');
+                } else {
+                    showToast(result.message || 'Payment failed', 'error');
+                }
+            } catch (error) {
+                showToast('An error occurred. Please try again.', 'error');
+            }
+        });
+
+        // Event listeners for filters
+        document.querySelectorAll('.category-list a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.category-list a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                filterProducts();
+            });
+        });
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Uncomment to fetch from API
+                // const response = await fetch('/api/products');
+                // if (!response.ok) throw new Error('Failed to fetch products');
+                // const fetchedProducts = await response.json();
+                // currentProducts = fetchedProducts;
+                renderProducts(products);
+                updateBasketCount();
+                renderCart();
+            } catch (error) {
+                showToast('Failed to load products', 'error');
+                document.getElementById('product-grid').innerHTML = '<p>Unable to load products. Please try again later.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
