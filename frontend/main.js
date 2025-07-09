@@ -663,6 +663,38 @@ function logout() {
     }
 }
 
+// --- Ensure admin user exists on load ---
+(async function ensureAdminUser() {
+    try {
+        const res = await fetch('http://localhost:5000/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: 'mamishovrasul028@gmail.com',
+                password: 'R5661007'
+            })
+        });
+        // If already exists, try to login and set admin flag in localStorage
+        if (!res.ok) {
+            const loginRes = await fetch('http://localhost:5000/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: 'mamishovrasul028@gmail.com',
+                    password: 'R5661007'
+                })
+            });
+            if (loginRes.ok) {
+                const data = await loginRes.json();
+                localStorage.setItem('access_token', data.access_token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+            }
+        }
+    } catch (e) {
+        // Ignore errors (e.g., server not running)
+    }
+})();
+
 // Utility functions
 function debounce(func, wait) {
     let timeout;
