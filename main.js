@@ -1,227 +1,4 @@
-// Sample Events Data
-const sampleEvents = [
-{
-    id: 1,
-    title: "FC Barcelona vs Real Madrid",
-    sport: "football",
-    venue: "Camp Nou",
-    date: "2025-07-15",
-    time: "21:00",
-    price: 150,
-    image: "assets/images/barca-vs-real.jpg",
-    featured: true
-},
-{
-    id: 2,
-    title: "Manchester United vs Manchester City",
-    sport: "football",
-    venue: "Old Trafford",
-    date: "2025-07-17",
-    time: "20:30",
-    price: 145,
-    image: "assets/images/manutd-vs-mancity.jpg",
-    featured: true
-},
-{
-    id: 3,
-    title: "Juventus vs AC Milan",
-    sport: "football",
-    venue: "Allianz Stadium",
-    date: "2025-07-19",
-    time: "21:00",
-    price: 135,
-    image: "assets/images/juve-vs-milan.jpg",
-    featured: true
-},
-{
-    id: 4,
-    title: "Bayern Munich vs Borussia Dortmund",
-    sport: "football",
-    venue: "Allianz Arena",
-    date: "2025-07-21",
-    time: "20:00",
-    price: 140,
-    image: "assets/images/bayern-vs-dortmund.jpg",
-    featured: false
-},
-{
-    id: 5,
-    title: "PSG vs Olympique Marseille",
-    sport: "football",
-    venue: "Parc des Princes",
-    date: "2025-07-24",
-    time: "21:00",
-    price: 130,
-    image: "assets/images/psg-vs-marseille.jpg",
-    featured: false
-},
-{
-    id: 6,
-    title: "Golden State Warriors vs Los Angeles Lakers",
-    sport: "basketball",
-    venue: "Chase Center",
-    date: "2025-07-16",
-    time: "19:30",
-    price: 120,
-    image: "assets/images/lakers-vs-warriors.jpg",
-    featured: true
-},
-{
-    id: 7,
-    title: "Boston Celtics vs Miami Heat",
-    sport: "basketball",
-    venue: "TD Garden",
-    date: "2025-07-18",
-    time: "20:00",
-    price: 110,
-    image: "assets/images/celtics-vs-heat.jpg",
-    featured: true
-},
-{
-    id: 8,
-    title: "Real Madrid (Basketball) vs FC Barcelona (Basketball)",
-    sport: "basketball",
-    venue: "WiZink Center",
-    date: "2025-07-20",
-    time: "21:00",
-    price: 90,
-    image: "assets/images/real-vs-barca-basket.jpg",
-    featured: true
-},
-{
-    id: 9,
-    title: "Anadolu Efes vs Fenerbahçe",
-    sport: "basketball",
-    venue: "Sinan Erdem Dome",
-    date: "2025-07-22",
-    time: "20:00",
-    price: 85,
-    image: "assets/images/efes-vs-fener.jpg",
-    featured: false
-},
-{
-    id: 10,
-    title: "Panathinaikos vs Olympiacos",
-    sport: "basketball",
-    venue: "OAKA Arena",
-    date: "2025-07-25",
-    time: "21:00",
-    price: 95,
-    image: "assets/images/pao-vs-oly.jpg",
-    featured: false
-},
-{
-    id: 11,
-    title: "Dallas Cowboys vs Green Bay Packers",
-    sport: "football",
-    venue: "AT&T Stadium",
-    date: "2025-07-14",
-    time: "18:00",
-    price: 125,
-    image: "assets/images/cowboys-vs-packers.jpg",
-    featured: true
-},
-{
-    id: 12,
-    title: "New England Patriots vs Kansas City Chiefs",
-    sport: "football",
-    venue: "Gillette Stadium",
-    date: "2025-07-17",
-    time: "20:00",
-    price: 130,
-    image: "assets/images/patriots-vs-chiefs.jpg",
-    featured: true
-},
-{
-    id: 13,
-    title: "San Francisco 49ers vs Seattle Seahawks",
-    sport: "football",
-    venue: "Levi’s Stadium",
-    date: "2025-07-20",
-    time: "19:30",
-    price: 110,
-    image: "assets/images/49ers-vs-seahawks.jpg",
-    featured: true
-},
-{
-    id: 14,
-    title: "Baltimore Ravens vs Pittsburgh Steelers",
-    sport: "football",
-    venue: "M&T Bank Stadium",
-    date: "2025-07-23",
-    time: "21:00",
-    price: 115,
-    image: "assets/images/ravens-vs-steelers.jpg",
-    featured: false
-},
-{
-    id: 15,
-    title: "New York Giants vs New York Jets",
-    sport: "football",
-    venue: "MetLife Stadium",
-    date: "2025-07-27",
-    time: "20:30",
-    price: 125,
-    image: "assets/images/giants-vs-jets.jpg",
-    featured: false
-},
-{
-    id: 16,
-    title: "Toronto Maple Leafs vs Montreal Canadiens",
-    sport: "hockey",
-    venue: "Scotiabank Arena",
-    date: "2025-07-15",
-    time: "19:30",
-    price: 90,
-    image: "assets/images/leafs-vs-canadiens.jpg",
-    featured: true
-},
-{
-    id: 17,
-    title: "New York Rangers vs Boston Bruins",
-    sport: "hockey",
-    venue: "Madison Square Garden",
-    date: "2025-07-18",
-    time: "20:00",
-    price: 95,
-    image: "assets/images/rangers-vs-bruins.jpg",
-    featured: true
-},
-{
-    id: 18,
-    title: "CSKA Moscow vs SKA Saint Petersburg",
-    sport: "hockey",
-    venue: "CSKA Arena",
-    date: "2025-07-21",
-    time: "18:00",
-    price: 85,
-    image: "assets/images/cska-vs-ska.jpg",
-    featured: true
-},
-{
-    id: 19,
-    title: "Detroit Red Wings vs Chicago Blackhawks",
-    sport: "hockey",
-    venue: "Little Caesars Arena",
-    date: "2025-07-24",
-    time: "19:00",
-    price: 88,
-    image: "assets/images/redwings-vs-blackhawks.jpg",
-    featured: false
-},
-{
-    id: 20,
-    title: "Edmonton Oilers vs Calgary Flames",
-    sport: "hockey",
-    venue: "Rogers Place",
-    date: "2025-07-28",
-    time: "20:00",
-    price: 92,
-    image: "assets/images/oilers-vs-flames.jpg",
-    featured: false
-},
 
-];
 
 
 // DOM Elements
@@ -761,3 +538,37 @@ if ("serviceWorker" in navigator) {
 }
 
 
+// Функция показать email и поменять кнопки
+function updateUIForLoggedInUser(email) {
+    document.getElementById('login-btn').style.display = 'none';
+    document.getElementById('register-btn').style.display = 'none';
+    document.getElementById('user-info').style.display = 'flex';
+
+    // Показать первые буквы email в круге (до @)
+    const firstChar = email.charAt(0).toUpperCase();
+    document.getElementById('user-email-circle').textContent = firstChar;
+}
+
+// Функция сброса UI при логауте
+function updateUIForLoggedOutUser() {
+    document.getElementById('login-btn').style.display = 'inline-block';
+    document.getElementById('register-btn').style.display = 'inline-block';
+    document.getElementById('user-info').style.display = 'none';
+}
+
+// Проверяем localStorage на наличие email
+document.addEventListener('DOMContentLoaded', () => {
+    const loggedInEmail = localStorage.getItem('userEmail');
+    if (loggedInEmail) {
+        updateUIForLoggedInUser(loggedInEmail);
+    } else {
+        updateUIForLoggedOutUser();
+    }
+});
+
+// Logout кнопка
+document.getElementById('logout-btn').addEventListener('click', () => {
+    localStorage.removeItem('userEmail');
+    updateUIForLoggedOutUser();
+    alert('You have been logged out.');
+});

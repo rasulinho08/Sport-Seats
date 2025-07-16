@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - SportsSeat</title>
-    <link rel="stylesheet" href="CSS/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/styles.css">
 </head>
 <body>
     <div class="auth-container">
@@ -19,37 +17,39 @@
                 <label for="register-password">Password</label>
                 <input type="password" id="register-password" required>
             </div>
-            <div class="input-group">
-                <label for="register-confirm">Confirm Password</label>
-                <input type="password" id="register-confirm" required>
-            </div>
-            <button type="submit" class="btn-primary btn-full">Create Account</button>
+            <button type="submit" class="btn-primary btn-full">Sign Up</button>
         </form>
         <p>Already have an account? <a href="login.html">Sign in</a></p>
         <div id="register-message" class="auth-message"></div>
     </div>
     <script>
-    document.getElementById('register-form').onsubmit = async function(e) {
-        e.preventDefault();
-        const email = document.getElementById('register-email').value;
-        const password = document.getElementById('register-password').value;
-        const confirm = document.getElementById('register-confirm').value;
-        if (password !== confirm) {
-            document.getElementById('register-message').textContent = 'Passwords do not match';
-            return;
-        }
-        const res = await fetch('http://localhost:5000/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
+document.getElementById('register-form').onsubmit = async function (e) {
+    e.preventDefault();
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+    const res = await fetch('http://127.0.0.1:5000/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    });
+
+    const message = document.getElementById('register-message');
+
+    try {
         const data = await res.json();
         if (res.ok) {
-            window.location.href = 'login.html';
+            message.textContent = 'Registration successful! Please login.';
+            message.style.color = 'green';
         } else {
-            document.getElementById('register-message').textContent = data.message || 'Registration failed';
+            message.textContent = data.message || 'Registration failed';
+            message.style.color = 'red';
         }
-    };
+    } catch (err) {
+        message.textContent = 'Server error';
+        message.style.color = 'red';
+    }
+};
+
     </script>
 </body>
 </html>

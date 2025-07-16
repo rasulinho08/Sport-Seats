@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportsSeat - Premium Sports Ticketing Platform</title>
-<link rel="stylesheet" href="./CSS/style.css">
+<link rel="stylesheet" href="CSS/styles.css">
     <meta name="description" content="Book premium sports tickets with interactive seat selection. Find the best seats for football, basketball, baseball and more.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="main.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -40,7 +41,7 @@
     <!-- Hero Section -->
     <section class="hero-section" id="home">
         <div class="hero-bg">
-            <img src="assets/images/view-empty-football-stadium.jpg" alt="Modern Stadium" class="hero-img">
+            <img src="" alt="Modern Stadium" class="hero-img">
             <div class="hero-overlay"></div>
         </div>
         <div class="hero-content">
@@ -368,22 +369,35 @@
     <!-- Toast Notifications -->
     <div class="toast-wrapper" id="toast-wrapper"></div>
 
-    <!-- Scripts -->
-    <script src="main.js"></script>
-    <script>
-    // Show Admin Panel link if user is admin (robust, runs after DOM is ready)
-    document.addEventListener('DOMContentLoaded', function() {
-        try {
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
-            if (user.is_admin) {
-                document.getElementById('admin-panel-link').style.display = '';
-            } else {
-                document.getElementById('admin-panel-link').style.display = 'none';
-            }
-        } catch (e) {
-            document.getElementById('admin-panel-link').style.display = 'none';
-        }
+
+
+<script>
+document.getElementById('register-form').onsubmit = async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+    const confirm = document.getElementById('register-confirm').value;
+
+    if (password !== confirm) {
+        alert('Passwords do not match!');
+        return;
+    }
+
+
+    const res = await fetch('http://127.0.0.1:5000/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
     });
-    </script>
+    const data = await res.json();
+    if (res.ok) {
+        alert('Registration successful! Please login.');
+        closeModal('registerModal');
+        openModal('loginModal');
+    } else {
+        alert(data.message || 'Registration failed');
+    }
+};
+</script>
 </body>
 </html>

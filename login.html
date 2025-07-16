@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - SportsSeat</title>
-        <link rel="stylesheet" href="CSS/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/styles.css">
 </head>
 <body>
     <div class="auth-container">
@@ -38,7 +36,11 @@
         if (res.ok) {
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('user', JSON.stringify(data.user));
-            window.location.href = 'index.html';
+            if (data.user.is_admin) {
+                window.location.href = 'admin.html';
+            } else {
+                window.location.href = 'index.html';
+            }
         } else {
             document.getElementById('login-message').textContent = data.message || 'Login failed';
         }
