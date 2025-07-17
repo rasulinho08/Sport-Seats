@@ -2,26 +2,157 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Panel - SportsSeat</title>
-    <link rel="stylesheet" href="CSS/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsSeat Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
     <div class="admin-container">
-        <h1>Admin Panel</h1>
-        <div id="admin-message"></div>
-        <button onclick="logout()">Logout</button>
+        <header class="admin-header">
+            <div class="header-content">
+                <h1><i class="fas fa-tachometer-alt"></i> SportsSeat Admin Panel</h1>
+                <div class="header-actions">
+                    <span class="user-info" id="user-info">Welcome, Admin</span>
+                    <button class="btn btn-danger" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="admin-main">
+            <!-- Dashboard Stats -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="stat-info">
+                        <h3 id="total-events">0</h3>
+                        <p>Total Events</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-star"></i></div>
+                    <div class="stat-info">
+                        <h3 id="featured-events">0</h3>
+                        <p>Featured Events</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                    <div class="stat-info">
+                        <h3 id="upcoming-events">0</h3>
+                        <p>Upcoming Events</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Management -->
+            <section class="event-management">
+                <div class="section-header">
+                    <h2><i class="fas fa-calendar-alt"></i> Event Management</h2>
+                    <button class="btn btn-primary" onclick="openAddEventModal()">
+                        <i class="fas fa-plus"></i> Add New Event
+                    </button>
+                </div>
+                <div class="search-filter">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-events" placeholder="Search events..." oninput="filterEvents()">
+                    </div>
+                    <select id="sport-filter" onchange="filterEvents()">
+                        <option value="">All Sports</option>
+                        <option value="football">Football</option>
+                        <option value="basketball">Basketball</option>
+                        <option value="baseball">Baseball</option>
+                        <option value="hockey">Hockey</option>
+                        <option value="tennis">Tennis</option>
+                    </select>
+                </div>
+                <div class="table-container">
+                    <table class="events-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Sport</th>
+                                <th>Venue</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="events-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Modal -->
+            <div class="modal" id="event-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modal-title">Add New Event</h3>
+                        <span class="close" onclick="closeEventModal()">&times;</span>
+                    </div>
+                    <form id="event-form" onsubmit="saveEvent(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event-title">Event Title</label>
+                                <input type="text" id="event-title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-sport">Sport</label>
+                                <select id="event-sport" required>
+                                    <option value="football">Football</option>
+                                    <option value="basketball">Basketball</option>
+                                    <option value="baseball">Baseball</option>
+                                    <option value="hockey">Hockey</option>
+                                    <option value="tennis">Tennis</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-venue">Venue</label>
+                            <input type="text" id="event-venue" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event-date">Date</label>
+                                <input type="date" id="event-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-time">Time</label>
+                                <input type="time" id="event-time" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-price">Price ($)</label>
+                            <input type="number" id="event-price" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-image">Image URL</label>
+                            <input type="text" id="event-image">
+                            <input type="file" id="event-image-file" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="event-featured">
+                                Featured Event
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeEventModal()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Event</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Notification -->
+            <div class="notification" id="notification"></div>
+        </main>
     </div>
-    <script>
-    // Check if user is admin
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (!user.is_admin) {
-        window.location.href = 'index.html';
-    }
-    function logout() {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('user');
-        window.location.href = 'login.html';
-    }
-    </script>
+    <script src="admin.js"></script>
 </body>
 </html>

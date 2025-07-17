@@ -21,13 +21,13 @@ class ShopManager {
         // Sample product data - in a real app, this would come from an API
         this.products = [
             // Sportswear & Apparel (7 items)
-            { id: 1, name: 'Basketball Jersey', category: 'sportswear', price: 50, image: 'https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Basketball+Jersey', description: 'Breathable and comfortable jersey for the court.', sizes: ['S', 'M', 'L', 'XL'] },
-            { id: 23, name: 'Compression Shorts', category: 'sportswear', price: 35, image: 'https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Compression+Shorts', description: 'Supportive compression shorts for enhanced performance.', sizes: ['S', 'M', 'L', 'XL'] },
-            { id: 30, name: 'Tracksuit', category: 'sportswear', price: 70, image: 'https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Tracksuit', description: 'Comfortable and stylish tracksuit for training or casual wear.', sizes: ['S', 'M', 'L', 'XL'] },
-            { id: 37, name: 'Swim Trunks', category: 'sportswear', price: 40, image: 'https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Swim+Trunks', description: 'Quick-dry swim trunks for aquatic sports.', sizes: ['S', 'M', 'L', 'XL'] },
-            { id: 49, name: 'Running Tights', category: 'sportswear', price: 45, image: 'https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Running+Tights', description: 'Comfortable and supportive running tights.', sizes: ['S', 'M', 'L', 'XL'] },
-            { id: 56, name: 'Sports Bra', category: 'sportswear', price: 30, image: 'https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Sports+Bra', description: 'High-support sports bra for intense workouts.', sizes: ['S', 'M', 'L', 'XL'] },
-            { id: 63, name: 'Hoodie', category: 'sportswear', price: 55, image: 'https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Hoodie', description: 'Warm and comfortable hoodie for casual wear or training.', sizes: ['S', 'M', 'L', 'XL'] },
+            { id: 1, name: 'Basketball Jersey', category: 'sportswear', price: 50, image: 'images/1.jpg', description: 'Breathable and comfortable jersey for the court.', sizes: ['S', 'M', 'L', 'XL'] },
+            { id: 23, name: 'Compression Shorts', category: 'sportswear', price: 35, image: 'images/2.webp', description: 'Supportive compression shorts for enhanced performance.', sizes: ['S', 'M', 'L', 'XL'] },
+            { id: 30, name: 'Tracksuit', category: 'sportswear', price: 70, image: 'images/3.webp', description: 'Comfortable and stylish tracksuit for training or casual wear.', sizes: ['S', 'M', 'L', 'XL'] },
+            { id: 37, name: 'Swim Trunks', category: 'sportswear', price: 40, image: 'images/4.webp', description: 'Quick-dry swim trunks for aquatic sports.', sizes: ['S', 'M', 'L', 'XL'] },
+            { id: 49, name: 'Running Tights', category: 'sportswear', price: 45, image: 'images/5.webp', description: 'Comfortable and supportive running tights.', sizes: ['S', 'M', 'L', 'XL'] },
+            { id: 56, name: 'Sports Bra', category: 'sportswear', price: 30, image: 'images/6.webp', description: 'High-support sports bra for intense workouts.', sizes: ['S', 'M', 'L', 'XL'] },
+            { id: 63, name: 'Hoodie', category: 'sportswear', price: 55, image: 'images/7.jpg', description: 'Warm and comfortable hoodie for casual wear or training.', sizes: ['S', 'M', 'L', 'XL'] },
 
             // Sports Equipment (7 items)
             { id: 3, name: 'Football', category: 'equipment', price: 30, image: 'https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Football', description: 'Durable football for training and matches.' },

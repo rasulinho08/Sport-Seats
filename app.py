@@ -267,3 +267,18 @@ if __name__ == "__main__":
     logger.info("Starting Flask application...")
     app.run(host="0.0.0.0", port=5000, debug=True)
 
+@app.route('/api/events', methods=['POST'])
+def create_event():
+    data = request.get_json()
+    
+    # Example: extract fields
+    title = data.get('title')
+    venue = data.get('venue')
+    date = data.get('date')
+    time = data.get('time')
+    price = data.get('price')
+    
+    # Save event to DB or just log it for now
+    print(f"New event: {title} at {venue} on {date} {time}, ${price}")
+    
+    return jsonify({"message": "Event created successfully"}), 201
