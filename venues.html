@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venues - SportsSeat</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-wrapper">
+            <div class="brand-logo">
+                <i class="fas fa-ticket-alt"></i>
+                <span>SportsSeat</span>
+            </div>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="#events" class="nav-item">Events</a>
+                <a href="venues.html" class="nav-item active">Venues</a>
+                <a href="about.html" class="nav-item">About</a>
+                <a href="shop.html" class="nav-item">Shop</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn-outline">Login</a>
+                <a href="register.html" class="btn-primary">Sign Up</a>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <section class="venues-section" style="padding-top: 120px;">
+        <div class="content-wrapper">
+            <div class="section-title">
+                <h2>Our Partner Venues</h2>
+                <p>Explore the iconic stadiums and arenas where unforgettable moments happen.</p>
+            </div>
+            <div class="venues-list">
+                <div class="venue-item">
+                    <img src="https://i.pinimg.com/564x/4f/92/76/4f92762299690129209424840242137c.jpg" alt="Stadium 1">
+                    <h3>Grand Arena</h3>
+                    <p>A multi-purpose indoor arena located in the heart of the city, known for its electrifying atmosphere during basketball and hockey games.</p>
+                    <div class="venue-details">
+                        <span><i class="fas fa-map-marker-alt"></i> Cityville, USA</span>
+                        <span><i class="fas fa-users"></i> Capacity: 20,000</span>
+                    </div>
+                    <a href="#" class="btn-primary">View Events</a>
+                </div>
+                <div class="venue-item">
+                    <img src="https://i.pinimg.com/564x/3b/1a/7c/3b1a7c3d0f7b0f0f0f0f0f0f0f0f0f0f.jpg" alt="Stadium 2">
+                    <h3>Coliseum Stadium</h3>
+                    <p>Home to major football and soccer matches, this open-air stadium offers panoramic views and a rich history of sporting excellence.</p>
+                    <div class="venue-details">
+                        <span><i class="fas fa-map-marker-alt"></i> Sportstown, USA</span>
+                        <span><i class="fas fa-users"></i> Capacity: 75,000</span>
+                    </div>
+                    <a href="#" class="btn-primary">View Events</a>
+                </div>
+                <div class="venue-item">
+                    <img src="https://i.pinimg.com/564x/0a/8f/2c/0a8f2c2c2c2c2c2c2c2c2c2c2c2c2c2c.jpg" alt="Stadium 3">
+                    <h3>Diamond Park</h3>
+                    <p>A classic baseball park with a modern twist, providing an intimate setting for America's favorite pastime and family-friendly events.</p>
+                    <div class="venue-details">
+                        <span><i class="fas fa-map-marker-alt"></i> Hometown, USA</span>
+                        <span><i class="fas fa-users"></i> Capacity: 40,000</span>
+                    </div>
+                    <a href="#" class="btn-primary">View Events</a>
+                </div>
+                <div class="venue-item">
+                    <img src="https://i.pinimg.com/564x/5e/1f/2a/5e1f2a2a2a2a2a2a2a2a2a2a2a2a2a2a.jpg" alt="Stadium 4">
+                    <h3>Aquatic Center</h3>
+                    <p>State-of-the-art facility for swimming and diving competitions, hosting national and international aquatic events.</p>
+                    <div class="venue-details">
+                        <span><i class="fas fa-map-marker-alt"></i> Coastal City, USA</span>
+                        <span><i class="fas fa-users"></i> Capacity: 10,000</span>
+                    </div>
+                    <a href="#" class="btn-primary">View Events</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+        <div class="content-wrapper">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="brand-logo">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>SportsSeat</span>
+                    </div>
+                    <p>Your premier destination for sports tickets with interactive seat selection and real-time availability.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html#events">Browse Events</a></li>
+                        <li><a href="venues.html">Venues</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Sports</h3>
+                    <ul>
+                        <li><a href="#" data-sport="football">Football</a></li>
+                        <li><a href="#" data-sport="basketball">Basketball</a></li>
+                        <li><a href="#" data-sport="baseball">Baseball</a></li>
+                        <li><a href="#" data-sport="soccer">Soccer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Ticket Transfer</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SportsSeat. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="main.js"></script>
+    <script>
+        // Basic modal functionality for the about page
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add("active");
+            }
+        }
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove("active");
+            }
+        }
+        function switchModal(currentModalId, targetModalId) {
+            closeModal(currentModalId);
+            setTimeout(() => openModal(targetModalId), 300);
+        }
+        // Close modal when clicking outside
+        document.addEventListener("click", function(e) {
+            if (e.target.classList.contains("modal-overlay")) {
+                e.target.classList.remove("active");
+            }
+        });
+        // Close modal with escape key
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape") {
+                document.querySelectorAll(".modal-overlay.active").forEach(modal => {
+                    modal.classList.remove("active");
+                });
+            }
+        });
+        // Mobile menu toggle
+        document.getElementById("mobile-menu-btn").addEventListener("click", function() {
+            const navLinks = document.getElementById("nav-links");
+            navLinks.classList.toggle("active");
+        });
+    </script>
+</body>
+</html>

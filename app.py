@@ -22,8 +22,8 @@ app.config["JWT_SECRET_KEY"] = "super-secret-key-change-in-production"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
 
-# Database configuration
-DATABASE_URL = "postgresql://postgres:postgres2025@localhost:5432/sport-seat"
+# Database configuration - Using SQLite for simplicity instead of PostgreSQL
+DATABASE_URL = "sqlite:///sport_seat.db"
 
 try:
     engine = create_engine(DATABASE_URL, echo=True)
@@ -56,6 +56,10 @@ try:
 except Exception as e:
     logger.error(f"Failed to create tables: {e}")
 
+# In-memory storage for events (for simplicity)
+events = []
+next_event_id = 1
+
 # Routes for serving HTML files
 @app.route("/")
 def index():
@@ -73,7 +77,7 @@ def register_page():
 def admin_page():
     return send_from_directory(".", "admin.html")
 
-# API Routes
+# API Routes for User Management
 @app.route("/api/register", methods=["POST"])
 def register():
     try:
@@ -230,6 +234,109 @@ def delete_user(user_id):
         logger.error(f"Delete user error: {e}")
         return jsonify({"message": "Server error"}), 500
 
+# API Routes for Event Management
+@app.route("/api/events", methods=["GET"])
+def get_events():
+    try:
+        return jsonify({"events": events}), 200
+    except Exception as e:
+        logger.error(f"Get events error: {e}")
+        return jsonify({"message": "Server error"}), 500
+
+@app.route("/api/events", methods=["POST"])
+def create_event():
+    global next_event_id
+    try:
+        data = request.get_json(force=True)
+        
+        if not data:
+            return jsonify({"message": "No data provided"}), 400
+
+        # Check for required fields
+        required_fields = ["title", "sport", "venue", "date", "time", "price"]
+        missing_fields = [field for field in required_fields if field not in data or not data[field]]
+        
+        if missing_fields:
+            return jsonify({"message": f"Missing required fields: {', '.join(missing_fields)}"}), 400
+
+        # Validate price
+        try:
+            price = float(data["price"])
+            if price < 0:
+                return jsonify({"message": "Price must be a positive number"}), 400
+        except (ValueError, TypeError):
+            return jsonify({"message": "Price must be a valid number"}), 400
+
+        event = {
+            "id": next_event_id,
+            "title": data["title"],
+            "sport": data["sport"],
+            "venue": data["venue"],
+            "date": data["date"],
+            "time": data["time"],
+            "price": price,
+            "image": data.get("image", ""),
+            "featured": data.get("featured", False)
+        }
+
+        events.append(event)
+        next_event_id += 1
+
+        logger.info(f"New event created: {event['title']}")
+        return jsonify(event), 201
+        
+    except Exception as e:
+        logger.error(f"Create event error: {e}")
+        return jsonify({"message": f"Failed to create event: {str(e)}"}), 500
+
+@app.route("/api/events/<int:event_id>", methods=["PUT"])
+def update_event(event_id):
+    try:
+        data = request.get_json(force=True)
+        
+        if not data:
+            return jsonify({"message": "No data provided"}), 400
+            
+        for event in events:
+            if event["id"] == event_id:
+                # Validate price if provided
+                if "price" in data:
+                    try:
+                        price = float(data["price"])
+                        if price < 0:
+                            return jsonify({"message": "Price must be a positive number"}), 400
+                        data["price"] = price
+                    except (ValueError, TypeError):
+                        return jsonify({"message": "Price must be a valid number"}), 400
+                
+                event.update(data)
+                logger.info(f"Event updated: {event['title']}")
+                return jsonify(event), 200
+                
+        return jsonify({"message": "Event not found"}), 404
+        
+    except Exception as e:
+        logger.error(f"Update event error: {e}")
+        return jsonify({"message": f"Failed to update event: {str(e)}"}), 500
+
+@app.route("/api/events/<int:event_id>", methods=["DELETE"])
+def delete_event(event_id):
+    global events
+    try:
+        original_length = len(events)
+        events = [event for event in events if event["id"] != event_id]
+        
+        if len(events) == original_length:
+            return jsonify({"message": "Event not found"}), 404
+            
+        logger.info(f"Event deleted: ID {event_id}")
+        return jsonify({"message": "Event deleted successfully"}), 200
+        
+    except Exception as e:
+        logger.error(f"Delete event error: {e}")
+        return jsonify({"message": f"Failed to delete event: {str(e)}"}), 500
+
+# Health check endpoint
 @app.route("/api/health", methods=["GET"])
 def health_check():
     try:
@@ -245,7 +352,8 @@ def health_check():
 
         return jsonify({
             "status": "healthy",
-            "database": db_status
+            "database": db_status,
+            "events_count": len(events)
         }), 200
 
     except Exception as e:
@@ -267,18 +375,3 @@ if __name__ == "__main__":
     logger.info("Starting Flask application...")
     app.run(host="0.0.0.0", port=5000, debug=True)
 
-@app.route('/api/events', methods=['POST'])
-def create_event():
-    data = request.get_json()
-    
-    # Example: extract fields
-    title = data.get('title')
-    venue = data.get('venue')
-    date = data.get('date')
-    time = data.get('time')
-    price = data.get('price')
-    
-    # Save event to DB or just log it for now
-    print(f"New event: {title} at {venue} on {date} {time}, ${price}")
-    
-    return jsonify({"message": "Event created successfully"}), 201
