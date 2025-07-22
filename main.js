@@ -232,59 +232,82 @@ function switchModal(fromModalId, toModalId) {
 
 // Form handling
 function initializeForms() {
-    // Login form
+    // Login form (modal)
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
-        loginForm.addEventListener("submit", function(e) {
+        loginForm.addEventListener("submit", async function(e) {
             e.preventDefault();
             const email = document.getElementById("login-email").value;
             const password = document.getElementById("login-password").value;
-            
-            if (email && password) {
-                showToast("Login successful! Welcome back.", "success");
-                closeModal("loginModal");
-                // Simulate login success
-                setTimeout(() => {
-                    updateUIForLoggedInUser(email);
-                }, 500);
-            } else {
+            if (!email || !password) {
                 showToast("Please fill in all fields.", "error");
+                return;
+            }
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    localStorage.setItem('access_token', data.access_token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    showToast("Login successful! Welcome back.", "success");
+                    closeModal("loginModal");
+                    setTimeout(() => {
+                        updateUIForLoggedInUser(data.user.email);
+                    }, 500);
+                } else {
+                    showToast(data.message || "Login failed.", "error");
+                }
+            } catch (err) {
+                showToast("Server error.", "error");
             }
         });
     }
 
-    // Register form
+    // Register form (modal)
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
-        registerForm.addEventListener("submit", function(e) {
+        registerForm.addEventListener("submit", async function(e) {
             e.preventDefault();
-            const firstName = document.getElementById("register-firstname").value;
-            const lastName = document.getElementById("register-lastname").value;
+            const firstName = document.getElementById("register-firstname")?.value;
+            const lastName = document.getElementById("register-lastname")?.value;
             const email = document.getElementById("register-email").value;
             const password = document.getElementById("register-password").value;
             const confirmPassword = document.getElementById("register-confirm").value;
-            
-            if (!firstName || !lastName || !email || !password || !confirmPassword) {
+            if (!email || !password || !confirmPassword) {
                 showToast("Please fill in all fields.", "error");
                 return;
             }
-            
             if (password !== confirmPassword) {
                 showToast("Passwords do not match.", "error");
                 return;
             }
-            
             if (password.length < 6) {
                 showToast("Password must be at least 6 characters.", "error");
                 return;
             }
-            
-            showToast("Account created successfully! Welcome to SportsSeat.", "success");
-            closeModal("registerModal");
-            // Simulate registration success
-            setTimeout(() => {
-                updateUIForLoggedInUser(email);
-            }, 500);
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    showToast("Account created successfully! Please login.", "success");
+                    closeModal("registerModal");
+                    setTimeout(() => {
+                        openModal("loginModal");
+                    }, 500);
+                } else {
+                    showToast(data.message || "Registration failed.", "error");
+                }
+            } catch (err) {
+                showToast("Server error.", "error");
+            }
         });
     }
 
@@ -293,8 +316,7 @@ function initializeForms() {
     if (newsletterForm) {
         newsletterForm.addEventListener("submit", function(e) {
             e.preventDefault();
-            const email = this.querySelector("input[type="email"]").value;
-            
+            const email = this.querySelector("input[type='email']").value;
             if (email) {
                 showToast("Thank you for subscribing to our newsletter!", "success");
                 this.reset();
@@ -424,13 +446,15 @@ function updateUIForLoggedInUser(email) {
 }
 
 function logout() {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user');
     showToast("Logged out successfully!", "success");
     // Reset nav buttons
     const navButtons = document.querySelector(".nav-buttons");
     if (navButtons) {
         navButtons.innerHTML = `
-            <button class="btn-outline" onclick="openModal(\'loginModal\')">Login</button>
-            <button class="btn-primary" onclick="openModal(\'registerModal\')">Sign Up</button>
+            <a href="login.html" class="btn-outline">Login</a>
+            <a href="register.html" class="btn-primary">Sign Up</a>
             <button class="mobile-menu-btn" id="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
@@ -536,39 +560,3 @@ if ("serviceWorker" in navigator) {
             });
     });
 }
-
-
-// Функция показать email и поменять кнопки
-function updateUIForLoggedInUser(email) {
-    document.getElementById('login-btn').style.display = 'none';
-    document.getElementById('register-btn').style.display = 'none';
-    document.getElementById('user-info').style.display = 'flex';
-
-    // Показать первые буквы email в круге (до @)
-    const firstChar = email.charAt(0).toUpperCase();
-    document.getElementById('user-email-circle').textContent = firstChar;
-}
-
-// Функция сброса UI при логауте
-function updateUIForLoggedOutUser() {
-    document.getElementById('login-btn').style.display = 'inline-block';
-    document.getElementById('register-btn').style.display = 'inline-block';
-    document.getElementById('user-info').style.display = 'none';
-}
-
-// Проверяем localStorage на наличие email
-document.addEventListener('DOMContentLoaded', () => {
-    const loggedInEmail = localStorage.getItem('userEmail');
-    if (loggedInEmail) {
-        updateUIForLoggedInUser(loggedInEmail);
-    } else {
-        updateUIForLoggedOutUser();
-    }
-});
-
-// Logout кнопка
-document.getElementById('logout-btn').addEventListener('click', () => {
-    localStorage.removeItem('userEmail');
-    updateUIForLoggedOutUser();
-    alert('You have been logged out.');
-});

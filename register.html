@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Register - SportsSeat</title>
-    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <div class="auth-container">
@@ -27,15 +27,13 @@ document.getElementById('register-form').onsubmit = async function (e) {
     e.preventDefault();
     const email = document.getElementById('register-email').value;
     const password = document.getElementById('register-password').value;
-    const res = await fetch('http://127.0.0.1:5000/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-    });
-
     const message = document.getElementById('register-message');
-
     try {
+        const res = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
         const data = await res.json();
         if (res.ok) {
             message.textContent = 'Registration successful! Please login.';
@@ -45,7 +43,7 @@ document.getElementById('register-form').onsubmit = async function (e) {
             message.style.color = 'red';
         }
     } catch (err) {
-        message.textContent = 'Server error';
+        message.textContent = 'Server error. Please make sure the backend is running.';
         message.style.color = 'red';
     }
 };

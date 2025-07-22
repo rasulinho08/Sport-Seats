@@ -63,19 +63,31 @@ next_event_id = 1
 # Routes for serving HTML files
 @app.route("/")
 def index():
-    return send_from_directory(".", "index.html")
+    return render_template("index.html")
 
-@app.route("/login.html")
-def login_page():
-    return send_from_directory(".", "login.html")
-
-@app.route("/register.html")
-def register_page():
-    return send_from_directory(".", "register.html")
+@app.route("/about.html")
+def about_page():
+    return render_template("about.html")
 
 @app.route("/admin.html")
 def admin_page():
-    return send_from_directory(".", "admin.html")
+    return render_template("admin.html")
+
+@app.route("/shop.html")
+def shop_page():
+    return render_template("shop.html")
+
+@app.route("/register.html")
+def register_page():
+    return render_template("register.html")
+
+@app.route("/login.html")
+def login_page():
+    return render_template("login.html")
+
+@app.route("/venues.html")
+def venues_page():
+    return render_template("venues.html")
 
 # API Routes for User Management
 @app.route("/api/register", methods=["POST"])

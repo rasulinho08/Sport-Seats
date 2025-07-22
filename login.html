@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login - SportsSeat</title>
-    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <div class="auth-container">
@@ -27,22 +27,27 @@
         e.preventDefault();
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
-        const res = await fetch('http://localhost:5000/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (res.ok) {
-            localStorage.setItem('access_token', data.access_token);
-            localStorage.setItem('user', JSON.stringify(data.user));
-            if (data.user.is_admin) {
-                window.location.href = 'admin.html';
+        const message = document.getElementById('login-message');
+        try {
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                localStorage.setItem('access_token', data.access_token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                if (data.user.is_admin) {
+                    window.location.href = 'admin.html';
+                } else {
+                    window.location.href = 'index.html';
+                }
             } else {
-                window.location.href = 'index.html';
+                message.textContent = data.message || 'Login failed';
             }
-        } else {
-            document.getElementById('login-message').textContent = data.message || 'Login failed';
+        } catch (err) {
+            message.textContent = 'Server error. Please make sure the backend is running.';
         }
     };
     </script>
