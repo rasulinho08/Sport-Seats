@@ -1692,11 +1692,11 @@ height: 334px;
 }
 
 .checkout-content {
-    background: var(--neutral-white);
     border-radius: 12px;
     padding: 2rem;
     max-width: 500px;
     width: 90%;
+    background-color: white;
     max-height: 80vh;
     overflow-y: auto;
 }
