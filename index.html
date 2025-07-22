@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportsSeat - Premium Sports Ticketing Platform</title>
-<link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
     <meta name="description" content="Book premium sports tickets with interactive seat selection. Find the best seats for football, basketball, baseball and more.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <script src="main.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="/static/main.js" defer></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -18,7 +19,7 @@
         <div class="nav-wrapper">
             <div class="brand-logo">
                 <i class="fas fa-ticket-alt"></i>
-                <span>SportsSeat</span>gro
+                <span>SportsSeat</span>
             </div>
             <div class="nav-links" id="nav-links">
                 <a href="#home" class="nav-item active">Home</a>
@@ -259,7 +260,7 @@
                         <li><a href="#" data-sport="football">Football</a></li>
                         <li><a href="#" data-sport="basketball">Basketball</a></li>
                         <li><a href="#" data-sport="baseball">Baseball</a></li>
-                        <li><a href="#" data-sport="soccer">Soccer</a></li>
+22                        <li><a href="#" data-sport="soccer">Soccer</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
@@ -273,7 +274,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 SportsSeat. All rights reserved.</p>
+                <p>© 2025 SportsSeat. All rights reserved.</p>
                 <div class="footer-legal">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
@@ -366,9 +367,34 @@
         </div>
     </div>
 
+    <!-- Chat Widget -->
+    <div class="chat-float-btn" id="chatFloatBtn">
+        <i class="fas fa-comments"></i>
+    </div>
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-content">
+            <div class="chat-header">
+                <h2>Live Support Chat</h2>
+                <button class="chat-close" id="chatCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-body" id="chatMessages">
+                <!-- Messages will be populated by JavaScript -->
+            </div>
+            <div class="chat-footer">
+                <form id="chatForm">
+                    <div class="chat-input-group">
+                        <input type="text" id="chatInput" placeholder="Type your message..." required>
+                        <button type="submit" class="btn-primary">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notifications -->
     <div class="toast-wrapper" id="toast-wrapper"></div>
-
 
 <script>
 document.getElementById('register-form').onsubmit = async function(e) {
@@ -381,7 +407,6 @@ document.getElementById('register-form').onsubmit = async function(e) {
         alert('Passwords do not match!');
         return;
     }
-
 
     const res = await fetch('http://127.0.0.1:5000/api/register', {
         method: 'POST',
