@@ -541,6 +541,7 @@ section {
     justify-content: center;
     gap: 0.5rem;
 }
+
 /* Sports Categories */
 .categories-list {
     display: grid;
@@ -960,6 +961,160 @@ section {
     text-decoration: underline;
 }
 
+/* Chat Widget Styles */
+.chat-float-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition);
+    z-index: 1000;
+}
+
+.chat-float-btn:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-xl);
+}
+
+.chat-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+}
+
+.chat-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-content {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    max-width: 400px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+}
+
+.chat-header {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.chat-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--neutral-dark);
+}
+
+.chat-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--background-light);
+    color: var(--neutral-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.chat-close:hover {
+    background: var(--border-color);
+    color: var(--neutral-dark);
+}
+
+.chat-body {
+    padding: 1.5rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.chat-message {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message.user {
+    align-items: flex-end;
+}
+
+.chat-message.support {
+    align-items: flex-start;
+}
+
+.chat-message-content {
+    max-width: 80%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+}
+
+.chat-message.user .chat-message-content {
+    background: var(--primary-color);
+    color: white;
+}
+
+.chat-message.support .chat-message-content {
+    background: var(--background-light);
+    color: var(--neutral-dark);
+}
+
+.chat-message-timestamp {
+    font-size: 0.75rem;
+    color: var(--neutral-medium);
+    margin-top: 0.25rem;
+}
+
+.chat-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.chat-input-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.chat-input-group input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: white;
+    transition: var(--transition);
+}
+
+.chat-input-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+.chat-input-group button {
+    padding: 0.75rem 1.5rem;
+}
+
 /* Toast Notifications */
 .toast-wrapper {
     position: fixed;
@@ -1170,6 +1325,26 @@ section {
         min-width: auto;
         margin: 0 1rem;
     }
+
+    .chat-float-btn {
+        bottom: 1rem;
+        right: 1rem;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .chat-content {
+        width: 95%;
+    }
+
+    .chat-input-group {
+        flex-direction: column;
+    }
+
+    .chat-input-group button {
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1203,6 +1378,18 @@ section {
     .modal-header,
     .modal-body {
         padding: 1.5rem;
+    }
+
+    .chat-header {
+        padding: 1rem;
+    }
+
+    .chat-body {
+        padding: 1rem;
+    }
+
+    .chat-footer {
+        padding: 1rem;
     }
 }
 
@@ -1250,10 +1437,6 @@ section {
 .visible {
     display: block;
 }
-
-
-
-
 
 /* Shop Styles */
 .shop-section {
@@ -1373,7 +1556,7 @@ section {
 
 .product-card img {
     width: 100%;
-height: 334px;
+    height: 334px;
     object-fit: cover;
     transition: transform 0.3s ease;
 }
@@ -1809,7 +1992,6 @@ height: 334px;
     background: #e11d48;
 }
 
-
 /* Toast Notification Styles */
 .toast-wrapper {
     position: fixed;
@@ -2007,11 +2189,13 @@ height: 334px;
 .auth-footer a:hover {
     text-decoration: underline;
 }
+
 .venues-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
 }
+
 .venue-item {
     background: var(--background-white);
     border-radius: var(--border-radius-lg);
@@ -2019,25 +2203,30 @@ height: 334px;
     overflow: hidden;
     transition: var(--transition);
 }
+
 .venue-item:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-xl);
 }
+
 .venue-item img {
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
+
 .venue-item h3 {
     padding: 1.5rem 1.5rem 0.5rem;
     margin-bottom: 0;
     color: var(--neutral-dark);
 }
+
 .venue-item p {
     padding: 0 1.5rem 1rem;
     color: var(--neutral-medium);
     font-size: 0.95rem;
 }
+
 .venue-details {
     display: flex;
     justify-content: space-between;
@@ -2045,28 +2234,26 @@ height: 334px;
     font-size: 0.9rem;
     color: var(--neutral-medium);
 }
+
 .venue-details span {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
+
 .venue-details i {
     color: var(--primary-color);
 }
+
 .venue-item .btn-primary {
     display: block;
     width: calc(100% - 3rem);
     margin: 0 1.5rem 1.5rem;
     text-align: center;
 }
+
 @media (max-width: 768px) {
     .venues-list {
         grid-template-columns: 1fr;
     }
 }
-
-
-
-
-
-
