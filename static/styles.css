@@ -2244,7 +2244,6 @@ section {
 .venue-details i {
     color: var(--primary-color);
 }
-
 .venue-item .btn-primary {
     display: block;
     width: calc(100% - 3rem);
