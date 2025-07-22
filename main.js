@@ -560,3 +560,30 @@ if ("serviceWorker" in navigator) {
             });
     });
 }
+const socket = io('http://localhost:3000');
+
+document.getElementById('chatFloatBtn').addEventListener('click', () => {
+    document.getElementById('chatModal').classList.add('active');
+});
+
+document.getElementById('chatCloseBtn').addEventListener('click', () => {
+    document.getElementById('chatModal').classList.remove('active');
+});
+
+document.getElementById('chatForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    if (message) {
+        socket.emit('chatMessage', { message, sender: 'user' });
+        addMessage(message, 'user');
+        input.value = '';
+    }
+});
+
+socket.on('chatMessage', (data) => {
+    addMessage(data.message, data.sender);
+});
+
+function addMessage(message, sender) {
+    const chatBody = document.getElementBy
