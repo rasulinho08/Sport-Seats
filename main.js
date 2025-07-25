@@ -38,6 +38,7 @@ let filteredEvents = [...currentEvents];
 
 // Initialize the application
 document.addEventListener("DOMContentLoaded", function() {
+    console.log('Main DOMContentLoaded: Initializing core features');
     initializeNavigation();
     initializeSearch();
     initializeModals();
@@ -56,7 +57,6 @@ const socket = io('http://localhost:3000', {
 
 // Navigation functionality
 function initializeNavigation() {
-    // Mobile menu toggle
     if (mobileMenuBtn && navLinks) {
         mobileMenuBtn.addEventListener("click", function() {
             navLinks.classList.toggle("active");
@@ -69,13 +69,11 @@ function initializeNavigation() {
         });
     }
 
-    // Smooth scrolling for navigation links
     document.querySelectorAll(".nav-item").forEach(link => {
         link.addEventListener("click", function(e) {
             e.preventDefault();
             const targetId = this.getAttribute("href");
             
-            // Handle external links
             if (targetId.startsWith("about.html") || targetId.startsWith("venues.html") || 
                 targetId.startsWith("shop.html") || targetId.startsWith("login.html") || 
                 targetId.startsWith("register.html") || targetId.startsWith("admin.html")) {
@@ -91,19 +89,16 @@ function initializeNavigation() {
                     block: "start"
                 });
                 
-                // Close mobile menu
                 navLinks.classList.remove("active");
                 const icon = mobileMenuBtn.querySelector("i");
                 icon.classList.replace("fa-times", "fa-bars");
                 
-                // Update active link
                 document.querySelectorAll(".nav-item").forEach(l => l.classList.remove("active"));
                 this.classList.add("active");
             }
         });
     });
 
-    // Navbar scroll effect
     window.addEventListener("scroll", function() {
         const navbar = document.querySelector(".main-nav");
         if (window.scrollY > 100) {
@@ -130,7 +125,6 @@ function initializeSearch() {
         dateFilter.addEventListener("change", handleSearch);
     }
 
-    // Search button
     document.querySelector(".search-btn")?.addEventListener("click", function(e) {
         e.preventDefault();
         handleSearch();
@@ -221,7 +215,6 @@ function renderEvents() {
 
 // Modal functionality
 function initializeModals() {
-    // Close modal when clicking outside
     document.querySelectorAll(".modal-overlay").forEach(modal => {
         modal.addEventListener("click", function(e) {
             if (e.target === this) {
@@ -230,7 +223,6 @@ function initializeModals() {
         });
     });
 
-    // Close modal with Escape key
     document.addEventListener("keydown", function(e) {
         if (e.key === "Escape") {
             document.querySelectorAll(".modal-overlay.active").forEach(modal => {
@@ -243,6 +235,7 @@ function initializeModals() {
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
+        console.log(`Opening modal: ${modalId}`);
         modal.classList.add("active");
         document.body.style.overflow = "hidden";
     } else {
@@ -254,6 +247,7 @@ function openModal(modalId) {
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
+        console.log(`Closing modal: ${modalId}`);
         modal.classList.remove("active");
         document.body.style.overflow = "";
     } else {
@@ -268,7 +262,6 @@ function switchModal(fromModalId, toModalId) {
 
 // Form handling
 function initializeForms() {
-    // Login form (modal)
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
         loginForm.addEventListener("submit", async function(e) {
@@ -303,7 +296,6 @@ function initializeForms() {
         });
     }
 
-    // Register form (modal)
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
         registerForm.addEventListener("submit", async function(e) {
@@ -347,7 +339,6 @@ function initializeForms() {
         });
     }
 
-    // Newsletter form
     const newsletterForm = document.getElementById("newsletter-form");
     if (newsletterForm) {
         newsletterForm.addEventListener("submit", function(e) {
@@ -369,17 +360,14 @@ function initializeCategoryCards() {
         card.addEventListener("click", function() {
             const sport = this.dataset.sport;
             if (sport) {
-                // Update sport filter
                 if (sportFilter) {
                     sportFilter.value = sport;
                 }
-                // Clear other filters
                 if (heroSearch) heroSearch.value = "";
                 if (dateFilter) dateFilter.value = "";
                 
                 handleSearch();
                 
-                // Scroll to events section
                 document.getElementById("events")?.scrollIntoView({
                     behavior: "smooth"
                 });
@@ -395,7 +383,6 @@ function viewEvent(eventId) {
     const event = sampleEvents.find(e => e.id === eventId);
     if (event) {
         showToast(`Viewing ${event.title} details...`, "success");
-        // In a real app, this would navigate to event details page
         console.log("Viewing event:", event);
     }
 }
@@ -404,13 +391,11 @@ function bookEvent(eventId) {
     const event = sampleEvents.find(e => e.id === eventId);
     if (event) {
         showToast(`Booking ${event.title}...`, "success");
-        // In a real app, this would open booking flow
         console.log("Booking event:", event);
     }
 }
 
 function loadMoreEvents() {
-    // Add more events to current display
     const moreEvents = sampleEvents.filter(event => !event.featured);
     currentEvents = [...currentEvents, ...moreEvents];
     filteredEvents = [...currentEvents];
@@ -420,6 +405,10 @@ function loadMoreEvents() {
 
 // Toast notifications
 function showToast(message, type = "success") {
+    if (!toastWrapper) {
+        console.error('Toast wrapper not found');
+        return;
+    }
     const toast = document.createElement("div");
     toast.className = `toast ${type}`;
     toast.innerHTML = `
@@ -434,10 +423,8 @@ function showToast(message, type = "success") {
     
     toastWrapper.appendChild(toast);
     
-    // Show toast
     setTimeout(() => toast.classList.add("show"), 100);
     
-    // Auto remove after 5 seconds
     setTimeout(() => removeToast(toast.querySelector(".toast-close")), 5000);
 }
 
@@ -462,7 +449,6 @@ function initializeScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe elements for animation
     document.querySelectorAll(".feature-item, .category-item, .event-card").forEach(el => {
         observer.observe(el);
     });
@@ -486,7 +472,6 @@ function logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
     showToast("Logged out successfully!", "success");
-    // Reset nav buttons
     const navButtons = document.querySelector(".nav-buttons");
     if (navButtons) {
         navButtons.innerHTML = `
@@ -496,13 +481,12 @@ function logout() {
                 <i class="fas fa-bars"></i>
             </button>
         `;
-        // Reinitialize navigation
         initializeNavigation();
     }
 }
 
-// --- Ensure admin user exists on load ---
-(async function ensureAdminUser() {
+// Ensure admin user (optional, comment out if no backend at port 5000)
+/*(async function ensureAdminUser() {
     try {
         const res = await fetch('http://localhost:5000/api/register', {
             method: 'POST',
@@ -512,7 +496,6 @@ function logout() {
                 password: 'R5661007'
             })
         });
-        // If already exists, try to login and set admin flag in localStorage
         if (!res.ok) {
             const loginRes = await fetch('http://localhost:5000/api/login', {
                 method: 'POST',
@@ -530,9 +513,9 @@ function logout() {
             }
         }
     } catch (e) {
-        // Ignore errors (e.g., server not running)
+        console.log('Admin user setup skipped (no backend at port 5000)');
     }
-})();
+})();*/
 
 // Chat functionality
 function initializeChat() {
@@ -542,8 +525,8 @@ function initializeChat() {
     const chatForm = document.getElementById('chatForm');
     const chatMessages = document.getElementById('chatMessages');
 
-    // Debug: Log if elements are found
-    console.log('Chat elements:', {
+    // Debug: Log element presence
+    console.log('Chat elements found:', {
         chatFloatBtn: !!chatFloatBtn,
         chatCloseBtn: !!chatCloseBtn,
         chatModal: !!chatModal,
@@ -551,68 +534,72 @@ function initializeChat() {
         chatMessages: !!chatMessages
     });
 
-    // Check if all required elements exist
-    if (!chatFloatBtn || !chatCloseBtn || !chatModal || !chatForm || !chatMessages) {
-        console.error('One or more chat elements not found in DOM');
-        showToast('Chat feature is unavailable. Please refresh the page.', 'error');
+    // Check for critical elements
+    if (!chatFloatBtn || !chatModal) {
+        console.error('Chat button or modal not found');
+        showToast('Chat feature unavailable. Please refresh the page.', 'error');
         return;
     }
 
-    // Remove any existing listeners to prevent duplicates
+    // Clone button to clear any existing listeners
     const newChatFloatBtn = chatFloatBtn.cloneNode(true);
     chatFloatBtn.parentNode.replaceChild(newChatFloatBtn, chatFloatBtn);
 
-    // Open chat modal
+    // Add click event for chat button
     newChatFloatBtn.addEventListener('click', () => {
-        console.log('Chat button clicked');
+        console.log('Chat button clicked!');
         openModal('chatModal');
     });
 
-    // Close chat modal
-    chatCloseBtn.addEventListener('click', () => {
-        console.log('Chat close button clicked');
-        closeModal('chatModal');
-    });
+    // Add close button event if present
+    if (chatCloseBtn) {
+        chatCloseBtn.addEventListener('click', () => {
+            console.log('Chat close button clicked');
+            closeModal('chatModal');
+        });
+    }
 
-    // Handle form submission
-    chatForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const input = document.getElementById('chatInput');
-        const message = input.value.trim();
-        const user = JSON.parse(localStorage.getItem('user')) || { email: 'Guest' };
+    // Handle form submission if form exists
+    if (chatForm && chatMessages) {
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            const user = JSON.parse(localStorage.getItem('user')) || { email: 'Guest' };
 
-        if (message) {
-            const messageData = {
-                message,
-                sender: user.email === 'mamishovrasul028@gmail.com' ? 'support' : 'user',
-                email: user.email,
-                timestamp: new Date().toISOString()
-            };
-            console.log('Sending message:', messageData);
-            socket.emit('chatMessage', messageData);
-            addMessage(messageData);
-            input.value = '';
-        } else {
-            showToast('Please enter a message.', 'error');
-        }
-    });
+            if (message) {
+                const messageData = {
+                    message,
+                    sender: user.email === 'mamishovrasul028@gmail.com' ? 'support' : 'user',
+                    email: user.email,
+                    timestamp: new Date().toISOString()
+                };
+                console.log('Sending message:', messageData);
+                socket.emit('chatMessage', messageData);
+                addMessage(messageData);
+                input.value = '';
+            } else {
+                showToast('Please enter a message.', 'error');
+            }
+        });
 
-    // Handle incoming messages
-    socket.on('chatMessage', (data) => {
-        console.log('Received message:', data);
-        addMessage(data);
-    });
+        // Handle incoming messages
+        socket.on('chatMessage', (data) => {
+            console.log('Received message:', data);
+            addMessage(data);
+        });
 
-    // Handle connection errors
-    socket.on('connect_error', (err) => {
-        console.error('Socket.IO connection error:', err);
-        showToast('Unable to connect to chat server. Please try again later.', 'error');
-    });
+        // Handle connection errors
+        socket.on('connect_error', (err) => {
+            console.error('Socket.IO connection error:', err);
+            showToast('Unable to connect to chat server. Please try again later.', 'error');
+        });
 
-    // Handle reconnection
-    socket.on('reconnect', () => {
-        showToast('Reconnected to chat server!', 'success');
-    });
+        // Handle reconnection
+        socket.on('reconnect', () => {
+            showToast('Reconnected to chat server!', 'success');
+        });
+    }
 }
 
 // Add message to chat body
@@ -632,12 +619,12 @@ function addMessage(data) {
         </div>
     `;
     chatMessages.appendChild(messageElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to latest message
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 // Initialize chat on DOM load
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, initializing chat');
+    console.log('Chat DOMContentLoaded: Initializing chat');
     initializeChat();
 });
 
