@@ -1,6 +1,3 @@
-
-
-
 // DOM Elements
 const mobileMenuBtn = document.getElementById("mobile-menu-btn");
 const navLinks = document.getElementById("nav-links");
@@ -9,6 +6,31 @@ const heroSearch = document.getElementById("hero-search");
 const sportFilter = document.getElementById("sport-filter");
 const dateFilter = document.getElementById("date-filter");
 const toastWrapper = document.getElementById("toast-wrapper");
+
+// Sample events data (replace with actual API data in production)
+const sampleEvents = [
+    {
+        id: 1,
+        title: "NFL: Patriots vs. Jets",
+        venue: "Gillette Stadium",
+        date: "2025-08-15",
+        sport: "football",
+        price: 99,
+        image: "https://example.com/patriots-jets.jpg",
+        featured: true
+    },
+    {
+        id: 2,
+        title: "NBA: Lakers vs. Celtics",
+        venue: "Staples Center",
+        date: "2025-08-20",
+        sport: "basketball",
+        price: 150,
+        image: "https://example.com/lakers-celtics.jpg",
+        featured: true
+    },
+    // Add more sample events as needed
+];
 
 // State
 let currentEvents = sampleEvents.filter(event => event.featured);
@@ -23,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeCategoryCards();
     renderEvents();
     initializeScrollAnimations();
+    initializeChat(); // Initialize chat functionality
 });
 
 // Navigation functionality
@@ -47,7 +70,7 @@ function initializeNavigation() {
             const targetId = this.getAttribute("href");
             
             // Handle external links (like about.html)
-            if (targetId.startsWith("about.html")) {
+            if (targetId.startsWith("about.html") || targetId.startsWith("venues.html") || targetId.startsWith("shop.html") || targetId.startsWith("login.html") || targetId.startsWith("register.html") || targetId.startsWith("admin.html")) {
                 window.location.href = targetId;
                 return;
             }
@@ -244,7 +267,7 @@ function initializeForms() {
                 return;
             }
             try {
-                const res = await fetch('/api/login', {
+                const res = await fetch('http://localhost:5000/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -290,7 +313,7 @@ function initializeForms() {
                 return;
             }
             try {
-                const res = await fetch('/api/register', {
+                const res = await fetch('http://localhost:5000/api/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -440,6 +463,7 @@ function updateUIForLoggedInUser(email) {
             <div class="user-menu">
                 <span class="user-email">${email}</span>
                 <button class="btn-outline" onclick="logout()">Logout</button>
+                ${email === 'mamishovrasul028@gmail.com' ? '<a href="admin.html" class="btn-outline" id="admin-panel-link" style="margin-left:10px;">Admin Panel</a>' : ''}
             </div>
         `;
     }
@@ -489,12 +513,98 @@ function logout() {
                 const data = await loginRes.json();
                 localStorage.setItem('access_token', data.access_token);
                 localStorage.setItem('user', JSON.stringify(data.user));
+                updateUIForLoggedInUser(data.user.email);
             }
         }
     } catch (e) {
         // Ignore errors (e.g., server not running)
     }
 })();
+
+// Initialize Socket.IO
+const socket = io('http://localhost:3000', {
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000
+});
+
+// Chat functionality
+function initializeChat() {
+    const chatFloatBtn = document.getElementById('chatFloatBtn');
+    const chatCloseBtn = document.getElementById('chatCloseBtn');
+    const chatModal = document.getElementById('chatModal');
+    const chatForm = document.getElementById('chatForm');
+    const chatMessages = document.getElementById('chatMessages');
+
+    // Check if all required elements exist
+    if (!chatFloatBtn || !chatCloseBtn || !chatModal || !chatForm || !chatMessages) {
+        console.error("Chat elements not found in DOM");
+        showToast("Chat feature is unavailable.", "error");
+        return;
+    }
+
+    // Open chat modal
+    chatFloatBtn.addEventListener('click', () => {
+        openModal('chatModal');
+    });
+
+    // Close chat modal
+    chatCloseBtn.addEventListener('click', () => {
+        closeModal('chatModal');
+    });
+
+    // Handle form submission
+    chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.getElementById('chatInput');
+        const message = input.value.trim();
+        const user = JSON.parse(localStorage.getItem('user')) || { email: 'Guest' };
+
+        if (message) {
+            const messageData = {
+                message,
+                sender: user.email === 'mamishovrasul028@gmail.com' ? 'support' : 'user',
+                email: user.email,
+                timestamp: new Date().toISOString()
+            };
+            socket.emit('chatMessage', messageData);
+            addMessage(messageData);
+            input.value = '';
+        }
+    });
+
+    // Handle incoming messages
+    socket.on('chatMessage', (data) => {
+        addMessage(data);
+    });
+
+    // Handle connection errors
+    socket.on('connect_error', () => {
+        showToast("Unable to connect to chat server. Please try again later.", "error");
+    });
+
+    // Handle reconnection
+    socket.on('reconnect', () => {
+        showToast("Reconnected to chat server!", "success");
+    });
+}
+
+// Add message to chat body
+function addMessage(data) {
+    const chatMessages = document.getElementById('chatMessages');
+    if (!chatMessages) return;
+
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('chat-message', data.sender);
+    messageElement.innerHTML = `
+        <div class="chat-message-content">
+            <p>${data.message}</p>
+            <div class="chat-message-timestamp">${formatDate(data.timestamp)}</div>
+        </div>
+    `;
+    chatMessages.appendChild(messageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to latest message
+}
 
 // Utility functions
 function debounce(func, wait) {
@@ -514,14 +624,16 @@ function formatDate(dateString) {
     const options = { 
         month: "short", 
         day: "numeric",
-        weekday: "short"
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit"
     };
     return date.toLocaleDateString("en-US", options);
 }
 
 // Performance optimization
 function lazyLoadImages() {
-    const images = document.querySelectorAll("img[loading="lazy"]");
+    const images = document.querySelectorAll("img[loading='lazy']");
     
     if ("IntersectionObserver" in window) {
         const imageObserver = new IntersectionObserver((entries) => {
@@ -560,30 +672,3 @@ if ("serviceWorker" in navigator) {
             });
     });
 }
-const socket = io('http://localhost:3000');
-
-document.getElementById('chatFloatBtn').addEventListener('click', () => {
-    document.getElementById('chatModal').classList.add('active');
-});
-
-document.getElementById('chatCloseBtn').addEventListener('click', () => {
-    document.getElementById('chatModal').classList.remove('active');
-});
-
-document.getElementById('chatForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const input = document.getElementById('chatInput');
-    const message = input.value.trim();
-    if (message) {
-        socket.emit('chatMessage', { message, sender: 'user' });
-        addMessage(message, 'user');
-        input.value = '';
-    }
-});
-
-socket.on('chatMessage', (data) => {
-    addMessage(data.message, data.sender);
-});
-
-function addMessage(message, sender) {
-    const chatBody = document.getElementBy
