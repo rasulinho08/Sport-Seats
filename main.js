@@ -45,7 +45,13 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeCategoryCards();
     renderEvents();
     initializeScrollAnimations();
-    initializeChat(); // Initialize chat functionality
+});
+
+// Initialize Socket.IO
+const socket = io('http://localhost:3000', {
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000
 });
 
 // Navigation functionality
@@ -69,8 +75,10 @@ function initializeNavigation() {
             e.preventDefault();
             const targetId = this.getAttribute("href");
             
-            // Handle external links (like about.html)
-            if (targetId.startsWith("about.html") || targetId.startsWith("venues.html") || targetId.startsWith("shop.html") || targetId.startsWith("login.html") || targetId.startsWith("register.html") || targetId.startsWith("admin.html")) {
+            // Handle external links
+            if (targetId.startsWith("about.html") || targetId.startsWith("venues.html") || 
+                targetId.startsWith("shop.html") || targetId.startsWith("login.html") || 
+                targetId.startsWith("register.html") || targetId.startsWith("admin.html")) {
                 window.location.href = targetId;
                 return;
             }
@@ -237,6 +245,9 @@ function openModal(modalId) {
     if (modal) {
         modal.classList.add("active");
         document.body.style.overflow = "hidden";
+    } else {
+        console.error(`Modal with ID ${modalId} not found`);
+        showToast("Error opening modal. Please try again.", "error");
     }
 }
 
@@ -245,6 +256,8 @@ function closeModal(modalId) {
     if (modal) {
         modal.classList.remove("active");
         document.body.style.overflow = "";
+    } else {
+        console.error(`Modal with ID ${modalId} not found`);
     }
 }
 
@@ -521,13 +534,6 @@ function logout() {
     }
 })();
 
-// Initialize Socket.IO
-const socket = io('http://localhost:3000', {
-    reconnection: true,
-    reconnectionAttempts: 5,
-    reconnectionDelay: 1000
-});
-
 // Chat functionality
 function initializeChat() {
     const chatFloatBtn = document.getElementById('chatFloatBtn');
@@ -536,20 +542,35 @@ function initializeChat() {
     const chatForm = document.getElementById('chatForm');
     const chatMessages = document.getElementById('chatMessages');
 
+    // Debug: Log if elements are found
+    console.log('Chat elements:', {
+        chatFloatBtn: !!chatFloatBtn,
+        chatCloseBtn: !!chatCloseBtn,
+        chatModal: !!chatModal,
+        chatForm: !!chatForm,
+        chatMessages: !!chatMessages
+    });
+
     // Check if all required elements exist
     if (!chatFloatBtn || !chatCloseBtn || !chatModal || !chatForm || !chatMessages) {
-        console.error("Chat elements not found in DOM");
-        showToast("Chat feature is unavailable.", "error");
+        console.error('One or more chat elements not found in DOM');
+        showToast('Chat feature is unavailable. Please refresh the page.', 'error');
         return;
     }
 
+    // Remove any existing listeners to prevent duplicates
+    const newChatFloatBtn = chatFloatBtn.cloneNode(true);
+    chatFloatBtn.parentNode.replaceChild(newChatFloatBtn, chatFloatBtn);
+
     // Open chat modal
-    chatFloatBtn.addEventListener('click', () => {
+    newChatFloatBtn.addEventListener('click', () => {
+        console.log('Chat button clicked');
         openModal('chatModal');
     });
 
     // Close chat modal
     chatCloseBtn.addEventListener('click', () => {
+        console.log('Chat close button clicked');
         closeModal('chatModal');
     });
 
@@ -567,32 +588,40 @@ function initializeChat() {
                 email: user.email,
                 timestamp: new Date().toISOString()
             };
+            console.log('Sending message:', messageData);
             socket.emit('chatMessage', messageData);
             addMessage(messageData);
             input.value = '';
+        } else {
+            showToast('Please enter a message.', 'error');
         }
     });
 
     // Handle incoming messages
     socket.on('chatMessage', (data) => {
+        console.log('Received message:', data);
         addMessage(data);
     });
 
     // Handle connection errors
-    socket.on('connect_error', () => {
-        showToast("Unable to connect to chat server. Please try again later.", "error");
+    socket.on('connect_error', (err) => {
+        console.error('Socket.IO connection error:', err);
+        showToast('Unable to connect to chat server. Please try again later.', 'error');
     });
 
     // Handle reconnection
     socket.on('reconnect', () => {
-        showToast("Reconnected to chat server!", "success");
+        showToast('Reconnected to chat server!', 'success');
     });
 }
 
 // Add message to chat body
 function addMessage(data) {
     const chatMessages = document.getElementById('chatMessages');
-    if (!chatMessages) return;
+    if (!chatMessages) {
+        console.error('Chat messages container not found');
+        return;
+    }
 
     const messageElement = document.createElement('div');
     messageElement.classList.add('chat-message', data.sender);
@@ -605,6 +634,12 @@ function addMessage(data) {
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to latest message
 }
+
+// Initialize chat on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing chat');
+    initializeChat();
+});
 
 // Utility functions
 function debounce(func, wait) {
