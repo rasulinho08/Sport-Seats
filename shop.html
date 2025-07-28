@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SportsSeat Shop</title>
-<link rel="stylesheet" href="static/styles.css">
+    <title>SportsSeat Enhanced Shop</title>
+    <link rel="stylesheet" href="/static/shop.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -17,262 +17,304 @@
             </div>
             <div class="nav-links" id="nav-links">
                 <a href="index.html" class="nav-item active">Home</a>
-                <a href="#events" class="nav-item">Events</a>
-                <a href="#venues" class="nav-item">Venues</a>
+                <a href="index.html#events" class="nav-item">Events</a>
+                <a href="venues.html" class="nav-item">Venues</a>
                 <a href="about.html" class="nav-item">About</a>
                 <a href="shop.html" class="nav-item">Shop</a>
             </div>
             <div class="nav-buttons">
-                <a href="login.html" class="btn-outline">Login</a>
-                <a href="register.html" class="btn-primary">Sign Up</a>
+                <button class="wishlist-btn" id="wishlist-btn">
+                    <i class="fas fa-heart"></i>
+                    <span class="wishlist-count">0</span>
+                </button>
+                <button class="cart-btn" id="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
                 <button class="mobile-menu-btn" id="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
     </nav>
-    <!-- Shop Hero Section -->
-    <section class="hero-section" style="padding-top: 120px; background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);">
+
+    <!-- Enhanced Hero Section with Dynamic Backgrounds -->
+    <section class="hero-section" id="hero-section">
+        <div class="hero-background-slider">
+            <div class="hero-slide active" data-product-id="1">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&h=1080&fit=crop" alt="Basketball Jersey">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="hero-slide" data-product-id="2">
+                <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=1920&h=1080&fit=crop" alt="Running Shoes">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="hero-slide" data-product-id="3">
+                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&h=1080&fit=crop" alt="Football">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="hero-slide" data-product-id="4">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&h=1080&fit=crop" alt="Smartwatch">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="hero-slide" data-product-id="5">
+                <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=1920&h=1080&fit=crop" alt="Protein Powder">
+                <div class="slide-overlay"></div>
+            </div>
+        </div>
+
         <div class="hero-content">
             <div class="content-wrapper">
                 <h1 class="hero-heading">
                     Gear Up for Greatness
-                    <span class="highlight-text">Explore Our Sports Merchandise</span>
+                    <span class="highlight-text">Discover Premium Sports Equipment</span>
                 </h1>
-                <p class="hero-description">
+                <p class="hero-description" id="hero-description">
                     Find the best sportswear, equipment, and accessories to elevate your game.
                 </p>
+                <div class="hero-actions">
+                    <button class="btn-primary hero-cta" id="hero-cta">Shop Now</button>
+                    <button class="btn-outline hero-learn-more">Learn More</button>
+                </div>
+                
+                <!-- Product Preview Cards -->
+                <div class="hero-product-preview" id="hero-product-preview">
+                    <div class="product-preview-card active" data-product-id="1">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop" alt="Basketball Jersey">
+                        <div class="preview-info">
+                            <h3>Basketball Jersey</h3>
+                            <p class="price">$50.00</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(4.8)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Dots -->
+        <div class="hero-navigation">
+            <div class="hero-dots">
+                <button class="dot active" data-slide="0"></button>
+                <button class="dot" data-slide="1"></button>
+                <button class="dot" data-slide="2"></button>
+                <button class="dot" data-slide="3"></button>
+                <button class="dot" data-slide="4"></button>
+            </div>
+            <div class="hero-controls">
+                <button class="control-btn prev-btn" id="prev-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="control-btn next-btn" id="next-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Shop Content Section -->
-    <section class="shop-section" style="padding: 4rem 0;">
+    <!-- Featured Products Section -->
+    <section class="featured-products" id="featured-products">
         <div class="content-wrapper">
-            <div class="shop-layout">
-                <!-- Filters Sidebar -->
-                <aside class="shop-filters">
-                    <h3>Categories</h3>
-                    <ul class="category-list">
-                        <li><a href="#" data-category="sportswear">Sportswear & Apparel</a></li>
-                        <li><a href="#" data-category="equipment">Sports Equipment</a></li>
-                        <li><a href="#" data-category="footwear">Footwear</a></li>
-                        <li><a href="#" data-category="nutrition">Nutrition & Supplements</a></li>
-                        <li><a href="#" data-category="tech">Tech & Gadgets</a></li>
-                        <li><a href="#" data-category="services">Services</a></li>
-                        <li><a href="#" data-category="subscriptions">Subscriptions & Collectibles</a></li>
-                        <li><a href="#" data-category="accessories">Accessories</a></li>
-                        <li><a href="#" data-category="merchandise">Branded Merchandise</a></li>
-                    </ul>
-
-                    <h3>Price Range</h3>
-                    <div class="price-filter">
-                        <input type="range" min="0" max="500" value="250" class="slider" id="price-range">
-                        <p>Price: $<span id="price-value">250</span></p>
-                    </div>
-
-                    <!-- Add more filters here (e.g., size, brand) -->
-                </aside>
-
-                <!-- Product Listing -->
-                <main class="shop-products">
-                    <div class="product-grid" id="product-grid">
-                        <!-- Example Products -->
-                        <div class="product-card">
-                            <img src="https://images.nike.com/is/image/DotCom/CT2302_100_A_PREM?align=0,1&wid=620&hei=620" alt="Nike Air Max 270" class="product-img">
-                            <h4 class="product-title">Nike Air Max 270</h4>
-                            <p class="product-category">Footwear</p>
-                            <p class="product-price">$129.99</p>
-                            <button class="btn-primary">Add to Basket</button>
-                        </div>
-                        <div class="product-card">
-                            <img src="https://images.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/6e7e4e2e7e2e4e2e8e7e4e2e7e2e4e2e_9366/Tiro_23_League_Training_Pants_Black_HS3535_21_model.jpg" alt="Adidas Tiro 23 League Pants" class="product-img">
-                            <h4 class="product-title">Adidas Tiro 23 League Pants</h4>
-                            <p class="product-category">Sportswear</p>
-                            <p class="product-price">$49.99</p>
-                            <button class="btn-primary">Add to Basket</button>
-                        </div>
-                        <div class="product-card">
-                            <img src="https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_450,h_450/global/083997/01/fnd/EEA/fmt/png/PUMA-Final-6-MS-Football" alt="Puma Final 6 MS Football" class="product-img">
-                            <h4 class="product-title">Puma Final 6 MS Football</h4>
-                            <p class="product-category">Equipment</p>
-                            <p class="product-price">$29.99</p>
-                            <button class="btn-primary">Add to Basket</button>
-                        </div>
-                        <div class="product-card">
-                            <img src="https://images.underarmour.com/is/image/Underarmour/1364835-001_DEFAULT?wid=600&hei=600&fmt=jpg" alt="Under Armour Water Bottle" class="product-img">
-                            <h4 class="product-title">Under Armour Water Bottle</h4>
-                            <p class="product-category">Accessories</p>
-                            <p class="product-price">$19.99</p>
-                            <button class="btn-primary">Add to Basket</button>
-                        </div>
-                        <div class="product-card">
-                            <img src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MYDP2_VW_34FR+watch-44-alum-silver-nc-6s_VW_34FR_WF_CO_GEO_EMEA?wid=940&hei=1112&fmt=png-alpha&.v=1599010410000" alt="Apple Watch Series 6" class="product-img">
-                            <h4 class="product-title">Apple Watch Series 6</h4>
-                            <p class="product-category">Tech & Gadgets</p>
-                            <p class="product-price">$399.99</p>
-                            <button class="btn-primary">Add to Basket</button>
-                        </div>
-                        <div class="product-card">
-                            <img src="https://images.nike.com/is/image/DotCom/AV9759_010_A_PREM?align=0,1&wid=620&hei=620" alt="Nike Heritage86 Cap" class="product-img">
-                            <h4 class="product-title">Nike Heritage86 Cap</h4>
-                            <p class="product-category">Accessories</p>
-                            <p class="product-price">$21.99</p>
-                            <button class="btn-primary">Add to Basket</button>
-                        </div>
-                    </div>
-                </main>
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be dynamically loaded here -->
             </div>
         </div>
     </section>
 
-    <!-- Floating Basket Button -->
-    <div class="basket-float-btn" id="basket-float-btn">
-        <i class="fas fa-shopping-basket"></i>
-        <span class="basket-count">0</span>
+    <!-- Product Detail Modal -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="modal-content product-detail-modal">
+            <button class="close-btn" id="close-product-modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="product-detail-content">
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img id="main-product-image" src="" alt="">
+                        <button class="wishlist-toggle" id="modal-wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="thumbnail-gallery" id="thumbnail-gallery">
+                        <!-- Thumbnails will be loaded here -->
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 id="product-title">Product Title</h2>
+                    <div class="product-rating" id="product-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="rating-text">(4.8 out of 5)</span>
+                        <span class="review-count">124 reviews</span>
+                    </div>
+                    <p class="product-price" id="product-price">$0.00</p>
+                    <p class="product-description" id="product-description">Product description goes here.</p>
+                    
+                    <div class="product-options">
+                        <div class="size-selector" id="size-selector" style="display: none;">
+                            <h4>Size:</h4>
+                            <div class="size-options">
+                                <!-- Size options will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="color-selector" id="color-selector" style="display: none;">
+                            <h4>Color:</h4>
+                            <div class="color-options">
+                                <!-- Color options will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="quantity-selector">
+                            <h4>Quantity:</h4>
+                            <div class="quantity-controls">
+                                <button class="qty-btn minus" id="qty-minus">-</button>
+                                <input type="number" id="quantity-input" value="1" min="1">
+                                <button class="qty-btn plus" id="qty-plus">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <button class="btn-primary add-to-cart" id="add-to-cart-btn">Add to Cart</button>
+                        <button class="btn-outline buy-now" id="buy-now-btn">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reviews Section -->
+            <div class="product-reviews" id="product-reviews">
+                <h3>Customer Reviews</h3>
+                <div class="review-summary">
+                    <div class="rating-breakdown">
+                        <div class="rating-bar">
+                            <span>5 stars</span>
+                            <div class="bar"><div class="fill" style="width: 70%"></div></div>
+                            <span>70%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>4 stars</span>
+                            <div class="bar"><div class="fill" style="width: 20%"></div></div>
+                            <span>20%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>3 stars</span>
+                            <div class="bar"><div class="fill" style="width: 7%"></div></div>
+                            <span>7%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>2 stars</span>
+                            <div class="bar"><div class="fill" style="width: 2%"></div></div>
+                            <span>2%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>1 star</span>
+                            <div class="bar"><div class="fill" style="width: 1%"></div></div>
+                            <span>1%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="add-review">
+                    <h4>Write a Review</h4>
+                    <div class="review-form">
+                        <div class="rating-input">
+                            <span>Your Rating:</span>
+                            <div class="star-rating" id="user-rating">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </div>
+                        </div>
+                        <textarea id="review-text" placeholder="Share your experience with this product..."></textarea>
+                        <button class="btn-primary submit-review" id="submit-review">Submit Review</button>
+                    </div>
+                </div>
+                
+                <div class="reviews-list" id="reviews-list">
+                    <!-- Reviews will be loaded here -->
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Wishlist Modal -->
+    <div class="modal-overlay" id="wishlist-modal">
+        <div class="modal-content wishlist-modal">
+            <div class="modal-header">
+                <h2>My Wishlist</h2>
+                <button class="close-btn" id="close-wishlist-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="wishlist-content" id="wishlist-content">
+                <div class="empty-wishlist" id="empty-wishlist">
+                    <i class="fas fa-heart-broken"></i>
+                    <h3>Your wishlist is empty</h3>
+                    <p>Add some products to your wishlist to see them here.</p>
+                </div>
+                <div class="wishlist-items" id="wishlist-items">
+                    <!-- Wishlist items will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal-overlay" id="cart-modal">
+        <div class="modal-content cart-modal">
+            <div class="modal-header">
+                <h2>Shopping Cart</h2>
+                <button class="close-btn" id="close-cart-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-content" id="cart-content">
+                <div class="empty-cart" id="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Add some products to your cart to see them here.</p>
+                </div>
+                <div class="cart-items" id="cart-items">
+                    <!-- Cart items will be loaded here -->
+                </div>
+                <div class="cart-summary" id="cart-summary" style="display: none;">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="cart-subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span id="cart-shipping">Free</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="cart-total">$0.00</span>
+                    </div>
+                    <button class="btn-primary checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Footer -->
-    <footer class="main-footer">
-        <div class="content-wrapper">
-            <div class="footer-content">
-                <div class="footer-info">
-                    <div class="brand-logo">
-                        <i class="fas fa-ticket-alt"></i>
-                        <span>SportsSeat</span>
-                    </div>
-                    <p>Your premier destination for sports tickets with interactive seat selection and real-time availability.</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="footer-links">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html#events">Browse Events</a></li>
-                        <li><a href="index.html#venues">Venues</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="index.html#contact">Contact</a></li>
-                        <li><a href="shop.html">Shop</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h3>Sports</h3>
-                    <ul>
-                        <li><a href="#" data-sport="football">Football</a></li>
-                        <li><a href="#" data-sport="basketball">Basketball</a></li>
-                        <li><a href="#" data-sport="baseball">Baseball</a></li>
-                        <li><a href="#" data-sport="soccer">Soccer</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h3>Support</h3>
-                    <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Ticket Transfer</a></li>
-                        <li><a href="#">Refund Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 SportsSeat. All rights reserved.</p>
-                <div class="footer-legal">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Cookie Policy</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Login Modal -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h2>Welcome Back</h2>
-                <button class="close-btn" onclick="closeModal('loginModal')" aria-label="Close modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="login-form">
-                    <div class="input-group">
-                        <label for="login-email">Email Address</label>
-                        <input type="email" id="login-email" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="login-password">Password</label>
-                        <input type="password" id="login-password" required>
-                    </div>
-                    <div class="form-options">
-                        <label class="checkbox-label">
-                            <input type="checkbox">
-                            <span>Remember me</span>
-                        </label>
-                        <a href="#" class="forgot-link">Forgot password?</a>
-                    </div>
-                    <button type="submit" class="btn-primary btn-full">Sign In</button>
-                </form>
-                <div class="modal-footer">
-                    <p>Don\\'t have an account? <a href="#" onclick="switchModal('loginModal', 'registerModal')">Sign up</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Register Modal -->
-    <div class="modal-overlay" id="registerModal">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h2>Create Account</h2>
-                <button class="close-btn" onclick="closeModal('registerModal')" aria-label="Close modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="register-form">
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label for="register-firstname">First Name</label>
-                            <input type="text" id="register-firstname" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="register-lastname">Last Name</label>
-                            <input type="text" id="register-lastname" required>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label for="register-email">Email Address</label>
-                        <input type="email" id="register-email" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="register-password">Password</label>
-                        <input type="password" id="register-password" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="register-confirm">Confirm Password</label>
-                        <input type="password" id="register-confirm" required>
-                    </div>
-                    <div class="form-options">
-                        <label class="checkbox-label">
-                            <input type="checkbox" required>
-                            <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
-                        </label>
-                    </div>
-                    <button type="submit" class="btn-primary btn-full">Create Account</button>
-                </form>
-                <div class="modal-footer">
-                    <p>Already have an account? <a href="#" onclick="switchModal('registerModal', 'loginModal')">Sign in</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Toast Notifications -->
-    <div class="toast-wrapper" id="toast-wrapper"></div>
+    <div class="toast-container" id="toast-container"></div>
 
     <script src="shop.js"></script>
+
+</body>
+</html>
+

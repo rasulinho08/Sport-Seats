@@ -29,7 +29,7 @@
                 <a href="shop.html" class="nav-item">Shop</a>
             </div>
             <div class="nav-buttons">
-                <a href="login.html" class="btn-outline">Login</a>
+                <a href="login.html" style="background: var(--accent-color);" class="btn-outline">Login</a>
                 <a href="register.html" class="btn-primary">Sign Up</a>
                 <a href="admin.html" class="btn-outline" id="admin-panel-link" style="display:none; margin-left:10px;">Admin Panel</a>
                 <button class="mobile-menu-btn" id="mobile-menu-btn">
@@ -209,24 +209,234 @@
     </section>
 
     <!-- Newsletter Section -->
-    <section class="newsletter-section">
-        <div class="content-wrapper">
-            <div class="newsletter-content">
-                <div class="newsletter-info">
-                    <h2>Never Miss a Game</h2>
-                    <p>Get notified about upcoming events, exclusive presales, and special offers.</p>
+<!-- Enhanced Newsletter Section -->
+<section class="newsletter-section">
+    <div class="content-wrapper">
+        <div class="newsletter-content">
+            <div class="newsletter-info">
+                <div class="newsletter-badge">
+                    <i class="fas fa-star"></i>
+                    <span>Premium Content</span>
                 </div>
+                <h2>Never Miss a Game</h2>
+                <p>Get real-time updates, exclusive presale access, and personalized content delivered straight to your inbox.</p>
+                
+                <!-- Social Proof -->
+                <div class="social-proof">
+                    <div class="subscriber-count">
+                        <i class="fas fa-users"></i>
+                        <span>Join <strong id="subscriber-count">127,543</strong>+ sports fans!</span>
+                    </div>
+                    <div class="testimonials">
+                        <div class="testimonial active" data-testimonial="0">
+                            <p>"Best sports newsletter I've ever subscribed to!"</p>
+                            <span>- Mike Johnson</span>
+                        </div>
+                        <div class="testimonial" data-testimonial="1">
+                            <p>"Never miss a game thanks to their alerts!"</p>
+                            <span>- Sarah Wilson</span>
+                        </div>
+                        <div class="testimonial" data-testimonial="2">
+                            <p>"Exclusive presale access saved me hundreds!"</p>
+                            <span>- David Chen</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="newsletter-form-container">
+                <!-- Subscription Tiers -->
+                <div class="subscription-tiers">
+                    <div class="tier-option active" data-tier="free">
+                        <div class="tier-header">
+                            <i class="fas fa-envelope"></i>
+                            <span>Free</span>
+                        </div>
+                        <div class="tier-features">
+                            <span>General updates</span>
+                            <span>Event notifications</span>
+                        </div>
+                    </div>
+                    <div class="tier-option" data-tier="premium">
+                        <div class="tier-header">
+                            <i class="fas fa-crown"></i>
+                            <span>Premium</span>
+                            <div class="tier-badge">Popular</div>
+                        </div>
+                        <div class="tier-features">
+                            <span>Early presale access</span>
+                            <span>Exclusive content</span>
+                            <span>Special discounts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter Form -->
                 <div class="newsletter-form">
                     <form id="newsletter-form">
-                        <div class="form-row">
-                            <input type="email" placeholder="Enter your email address" required>
-                            <button type="submit" class="btn-primary">Subscribe</button>
+                        <div class="form-step active" data-step="1">
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="email-input" placeholder="Enter your email address" required>
+                                </div>
+                                <button type="button" class="btn-primary next-step">Continue</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-step" data-step="2">
+                            <div class="step-header">
+                                <h3>Choose Your Interests</h3>
+                                <p>Select your favorite sports to get personalized content</p>
+                            </div>
+                            <div class="interests-grid">
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="football">
+                                    <div class="interest-card">
+                                        <i class="fas fa-football-ball"></i>
+                                        <span>Football</span>
+                                    </div>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="basketball">
+                                    <div class="interest-card">
+                                        <i class="fas fa-basketball-ball"></i>
+                                        <span>Basketball</span>
+                                    </div>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="baseball">
+                                    <div class="interest-card">
+                                        <i class="fas fa-baseball-ball"></i>
+                                        <span>Baseball</span>
+                                    </div>
+                                </label>                      
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="hockey">
+                                    <div class="interest-card">
+                                        <i class="fas fa-hockey-puck"></i>
+                                        <span>Hockey</span>
+                                    </div>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="tennis">
+                                    <div class="interest-card">
+                                        <i class="fas fa-table-tennis"></i>
+                                        <span>Tennis</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-outline prev-step">Back</button>
+                                <button type="button" class="btn-primary next-step">Continue</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-step" data-step="3">
+                            <div class="step-header">
+                                <h3>Notification Preferences</h3>
+                                <p>How often would you like to hear from us?</p>
+                            </div>
+                            <div class="frequency-options">
+                                <label class="frequency-option">
+                                    <input type="radio" name="frequency" value="daily" checked>
+                                    <div class="frequency-card">
+                                        <i class="fas fa-calendar-day"></i>
+                                        <span>Daily</span>
+                                        <small>Get the latest updates every day</small>
+                                    </div>
+                                </label>
+                                <label class="frequency-option">
+                                    <input type="radio" name="frequency" value="weekly">
+                                    <div class="frequency-card">
+                                        <i class="fas fa-calendar-week"></i>
+                                        <span>Weekly</span>
+                                        <small>Weekly digest of top stories</small>
+                                    </div>
+                                </label>
+                                <label class="frequency-option">
+                                    <input type="radio" name="frequency" value="events">
+                                    <div class="frequency-card">
+                                        <i class="fas fa-bell"></i>
+                                        <span>Events Only</span>
+                                        <small>Only when new events are available</small>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-outline prev-step">Back</button>
+                                <button type="submit" class="btn-primary subscribe-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Subscribe Now
+                                </button>
+                            </div>
                         </div>
                     </form>
+                    
+                    <!-- Progress Indicator -->
+                    <div class="progress-indicator">
+                        <div class="progress-step active" data-step="1">
+                            <div class="step-circle">1</div>
+                            <span>Email</span>
+                        </div>
+                        <div class="progress-step" data-step="2">
+                            <div class="step-circle">2</div>
+                            <span>Interests</span>
+                        </div>
+                        <div class="progress-step" data-step="3">
+                            <div class="step-circle">3</div>
+                            <span>Preferences</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    
+    <!-- Success Modal -->
+    <div class="success-modal" id="success-modal">
+        <div class="modal-content">
+            <div class="success-animation">
+                <div class="checkmark">
+                    <i class="fas fa-check"></i>
+                </div>
+            </div>
+            <h3>Welcome to SportsSeat!</h3>
+            <p>You've successfully subscribed to our newsletter. Get ready for exclusive content and early access to the best sports events!</p>
+            
+            <!-- Spin the Wheel Bonus -->
+            <div class="bonus-section">
+                <h4>Spin for Your Welcome Bonus!</h4>
+                <div class="wheel-container">
+                    <div class="wheel" id="bonus-wheel">
+                        <div class="wheel-section" data-prize="10% Off">10% Off</div>
+                        <div class="wheel-section" data-prize="Free Shipping">Free Shipping</div>
+                        <div class="wheel-section" data-prize="15% Off">15% Off</div>
+                        <div class="wheel-section" data-prize="Early Access">Early Access</div>
+                        <div class="wheel-section" data-prize="20% Off">20% Off</div>
+                        <div class="wheel-section" data-prize="VIP Status">VIP Status</div>
+                    </div>
+                    <button class="spin-btn" id="spin-btn">
+                        <i class="fas fa-play"></i>
+                        Spin Now!
+                    </button>
+                </div>
+                <div class="prize-result" id="prize-result" style="display: none;">
+                    <h5>Congratulations!</h5>
+                    <p>You won: <span id="prize-text"></span></p>
+                    <small>Check your email for your discount code!</small>
+                </div>
+            </div>
+            
+            <button class="btn-primary close-modal" id="close-modal">Continue Exploring</button>
+        </div>
+    </div>
+</section>
+
+<!-- Toast Notifications -->
+<div class="toast-container" id="toast-container"></div>
+
+
 
     <!-- Footer -->
     <footer class="main-footer">
@@ -248,10 +458,10 @@
                 <div class="footer-links">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#events">Browse Events</a></li>
-                        <li><a href="#venues">Venues</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="index.html#events">Browse Events</a></li>
+                        <li><a href="venues.html">Venuevs</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
@@ -367,31 +577,274 @@
         </div>
     </div>
 
-    <!-- Chat Widget -->
-    <div class="chat-float-btn" id="chatFloatBtn">
-        <i class="fas fa-comments"></i>
+<!-- Enhanced Chat Widget -->
+<div class="chat-float-btn" id="chatFloatBtn">
+    <i class="fas fa-comments"></i>
+    <div class="chat-notification-badge" id="chatNotificationBadge" style="display: none;">
+        <span id="unreadCount">1</span>
     </div>
-    <div class="chat-modal" id="chatModal">
-        <div class="chat-content">
+    <div class="chat-status-indicator" id="chatStatusIndicator">
+        <div class="status-dot online" id="statusDot"></div>
+    </div>
+</div>
+
+<div class="chat-modal" id="chatModal">
+    <div class="chat-content">
+        <!-- Pre-Chat Form -->
+        <div class="pre-chat-form" id="preChatForm">
             <div class="chat-header">
-                <h2>Live Support Chat</h2>
+                <h2>Start a Conversation</h2>
                 <button class="chat-close" id="chatCloseBtn">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
+            <div class="pre-chat-body">
+                <form id="preChatFormElement">
+                    <div class="form-group">
+                        <label for="userName">Your Name</label>
+                        <input type="text" id="userName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">Email Address</label>
+                        <input type="email" id="userEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="queryType">How can we help you?</label>
+                        <select id="queryType" required>
+                            <option value="">Select a topic</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="billing">Billing Inquiry</option>
+                            <option value="product">Product Information</option>
+                            <option value="general">General Question</option>
+                            <option value="feedback">Feedback</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="initialMessage">Tell us more about your question</label>
+                        <textarea id="initialMessage" placeholder="Describe your question or issue..." rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary start-chat-btn">
+                        <i class="fas fa-comments"></i>
+                        Start Chat
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main Chat Interface -->
+        <div class="chat-interface" id="chatInterface" style="display: none;">
+            <div class="chat-header">
+                <div class="agent-info">
+                    <div class="agent-avatar">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%233b82f6'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-family='Arial'%3ES%3C/text%3E%3C/svg%3E" alt="Support Agent" id="agentAvatar">
+                    </div>
+                    <div class="agent-details">
+                        <h3 id="agentName">Support Agent</h3>
+                        <div class="agent-status">
+                            <div class="status-dot online"></div>
+                            <span id="agentStatus">Online</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button class="chat-action-btn" id="emojiBtn" title="Emojis">
+                        <i class="fas fa-smile"></i>
+                    </button>
+                    <button class="chat-action-btn" id="attachBtn" title="Attach File">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <button class="chat-minimize" id="chatMinimizeBtn" title="Minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="chat-close" id="chatCloseBtn2">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
             <div class="chat-body" id="chatMessages">
                 <!-- Messages will be populated by JavaScript -->
             </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section" id="faqSection">
+                <div class="faq-categories" id="faqCategories">
+                    <!-- FAQ Categories will be populated by JavaScript -->
+                </div>
+                <div class="faq-questions" id="faqQuestions" style="display: none;">
+                    <button class="back-to-categories" id="backToCategories"><i class="fas fa-arrow-left"></i> Back to Categories</button>
+                    <h4 id="faqCategoryTitle"></h4>
+                    <div class="question-list" id="questionList">
+                        <!-- FAQ Questions will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span class="typing-text">Agent is typing...</span>
+            </div>
+
+            <!-- Emoji Picker -->
+            <div class="emoji-picker" id="emojiPicker" style="display: none;">
+                <div class="emoji-grid">
+                    <span class="emoji-item" data-emoji="😊">😊</span>
+                    <span class="emoji-item" data-emoji="😂">😂</span>
+                    <span class="emoji-item" data-emoji="😍">😍</span>
+                    <span class="emoji-item" data-emoji="🤔">🤔</span>
+                    <span class="emoji-item" data-emoji="😢">😢</span>
+                    <span class="emoji-item" data-emoji="😡">😡</span>
+                    <span class="emoji-item" data-emoji="👍">👍</span>
+                    <span class="emoji-item" data-emoji="👎">👎</span>
+                    <span class="emoji-item" data-emoji="❤️">❤️</span>
+                    <span class="emoji-item" data-emoji="🎉">🎉</span>
+                    <span class="emoji-item" data-emoji="🔥">🔥</span>
+                    <span class="emoji-item" data-emoji="💯">💯</span>
+                </div>
+            </div>
+
             <div class="chat-footer">
                 <form id="chatForm">
                     <div class="chat-input-group">
                         <input type="text" id="chatInput" placeholder="Type your message..." required>
-                        <button type="submit" class="btn-primary">Send</button>
+                        <button type="submit" class="btn-primary send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
                     </div>
                 </form>
+                <div class="chat-footer-actions">
+                    <button class="btn-outline" id="showFaqBtn">
+                        <i class="fas fa-question-circle"></i>
+                        FAQs
+                    </button>
+                    <button class="end-chat-btn" id="endChatBtn">
+                        <i class="fas fa-phone-slash"></i>
+                        End Chat
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Ended Screen -->
+        <div class="chat-ended" id="chatEnded" style="display: none;">
+            <div class="chat-header">
+                <h2>Chat Ended</h2>
+                <button class="chat-close" id="chatCloseBtn3">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-ended-body">
+                <div class="chat-ended-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Thank you for contacting us!</h3>
+                <p>We hope we were able to help you today.</p>
+                
+                <!-- Feedback Form -->
+                <div class="feedback-section">
+                    <h4>How was your experience?</h4>
+                    <div class="rating-stars" id="ratingStars">
+                        <i class="fas fa-star" data-rating="1"></i>
+                        <i class="fas fa-star" data-rating="2"></i>
+                        <i class="fas fa-star" data-rating="3"></i>
+                        <i class="fas fa-star" data-rating="4"></i>
+                        <i class="fas fa-star" data-rating="5"></i>
+                    </div>
+                    <textarea id="feedbackComment" placeholder="Tell us about your experience (optional)" rows="3"></textarea>
+                    <button class="btn-primary" id="submitFeedbackBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Feedback
+                    </button>
+                </div>
+                
+                <div class="chat-actions-end">
+                    <button class="btn-outline" id="newChatBtn">
+                        <i class="fas fa-plus"></i>
+                        Start New Chat
+                    </button>
+                    <button class="btn-outline" id="downloadTranscriptBtn">
+                        <i class="fas fa-download"></i>
+                        Download Transcript
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Offline Form -->
+        <div class="offline-form" id="offlineForm" style="display: none;">
+            <div class="chat-header">
+                <h2>We're Currently Offline</h2>
+                <button class="chat-close" id="chatCloseBtn4">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="offline-body">
+                <div class="offline-icon">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <p>Our support team is currently offline. Leave us a message and we'll get back to you as soon as possible!</p>
+                
+                <form id="offlineMessageForm">
+                    <div class="form-group">
+                        <label for="offlineName">Your Name</label>
+                        <input type="text" id="offlineName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="offlineEmail">Email Address</label>
+                        <input type="email" id="offlineEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="offlineSubject">Subject</label>
+                        <input type="text" id="offlineSubject" placeholder="Brief subject line" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="offlineMessage">Message</label>
+                        <textarea id="offlineMessage" placeholder="Tell us how we can help you..." rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Message
+                    </button>
+                </form>
+                
+                <div class="expected-response">
+                    <i class="fas fa-clock"></i>
+                    <span>Expected response time: 2-4 hours</span>
+                </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Proactive Chat Trigger -->
+<div class="proactive-chat-trigger" id="proactiveChatTrigger" style="display: none;">
+    <div class="proactive-message">
+        <div class="proactive-avatar">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%233b82f6'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-family='Arial'%3ES%3C/text%3E%3C/svg%3E" alt="Support">
+        </div>
+        <div class="proactive-content">
+            <div class="proactive-text">
+                <p>Hi there! 👋 Need any help finding what you're looking for?</p>
+            </div>
+            <div class="proactive-actions">
+                <button class="btn-primary btn-sm" id="acceptProactiveChat">Yes, I need help</button>
+                <button class="btn-outline btn-sm" id="dismissProactiveChat">No, thanks</button>
+            </div>
+        </div>
+        <button class="proactive-close" id="closeProactiveChat">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
+
+<!-- Toast Notifications -->
+<div class="toast-container" id="toastContainer"></div>
+
 
     <!-- Toast Notifications -->
     <div class="toast-wrapper" id="toast-wrapper"></div>
@@ -422,6 +875,1571 @@ document.getElementById('register-form').onsubmit = async function(e) {
         alert(data.message || 'Registration failed');
     }
 };
+
+// Enhanced Newsletter Section JavaScript
+
+class NewsletterEnhancer {
+    constructor() {
+        this.currentStep = 1;
+        this.maxSteps = 3;
+        this.selectedTier = 'free';
+        this.testimonialIndex = 0;
+        this.subscriberCount = 127543;
+        
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+        this.startTestimonialRotation();
+        this.animateSubscriberCount();
+    }
+    
+    bindEvents() {
+        // Tier selection
+        document.querySelectorAll('.tier-option').forEach(tier => {
+            tier.addEventListener('click', (e) => this.selectTier(e));
+        });
+        
+        // Form navigation
+        document.querySelectorAll('.next-step').forEach(btn => {
+            btn.addEventListener('click', (e) => this.nextStep(e));
+        });
+        
+        document.querySelectorAll('.prev-step').forEach(btn => {
+            btn.addEventListener('click', (e) => this.prevStep(e));
+        });
+        
+        // Form submission
+        const form = document.getElementById('newsletter-form');
+        if (form) {
+            form.addEventListener('submit', (e) => this.handleSubmit(e));
+        }
+        
+        // Modal controls
+        const closeModal = document.getElementById('close-modal');
+        if (closeModal) {
+            closeModal.addEventListener('click', () => this.closeModal());
+        }
+        
+        // Spin wheel
+        const spinBtn = document.getElementById('spin-btn');
+        if (spinBtn) {
+            spinBtn.addEventListener('click', () => this.spinWheel());
+        }
+        
+        // Interest selection validation
+        document.querySelectorAll('input[name="interests"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => this.validateInterests());
+        });
+    }
+    
+    selectTier(e) {
+        // Remove active class from all tiers
+        document.querySelectorAll('.tier-option').forEach(tier => {
+            tier.classList.remove('active');
+        });
+        
+        // Add active class to selected tier
+        e.currentTarget.classList.add('active');
+        this.selectedTier = e.currentTarget.dataset.tier;
+        
+        // Show tier selection feedback
+        this.showToast(`${this.selectedTier.charAt(0).toUpperCase() + this.selectedTier.slice(1)} tier selected!`, 'success');
+    }
+    
+    nextStep(e) {
+        e.preventDefault();
+        
+        // Validate current step
+        if (!this.validateCurrentStep()) {
+            return;
+        }
+        
+        if (this.currentStep < this.maxSteps) {
+            this.currentStep++;
+            this.updateFormStep();
+            this.updateProgressIndicator();
+        }
+    }
+    
+    prevStep(e) {
+        e.preventDefault();
+        
+        if (this.currentStep > 1) {
+            this.currentStep--;
+            this.updateFormStep();
+            this.updateProgressIndicator();
+        }
+    }
+    
+    validateCurrentStep() {
+        switch (this.currentStep) {
+            case 1:
+                const email = document.getElementById('email-input').value;
+                if (!email || !this.isValidEmail(email)) {
+                    this.showToast('Please enter a valid email address', 'error');
+                    return false;
+                }
+                break;
+            case 2:
+                const selectedInterests = document.querySelectorAll('input[name="interests"]:checked');
+                if (selectedInterests.length === 0) {
+                    this.showToast('Please select at least one interest', 'error');
+                    return false;
+                }
+                break;
+            case 3:
+                const selectedFrequency = document.querySelector('input[name="frequency"]:checked');
+                if (!selectedFrequency) {
+                    this.showToast('Please select a notification frequency', 'error');
+                    return false;
+                }
+                break;
+        }
+        return true;
+    }
+    
+    validateInterests() {
+        const selectedInterests = document.querySelectorAll('input[name="interests"]:checked');
+        const nextBtn = document.querySelector('.form-step[data-step="2"] .next-step');
+        
+        if (selectedInterests.length > 0) {
+            nextBtn.style.opacity = '1';
+            nextBtn.style.pointerEvents = 'all';
+        } else {
+            nextBtn.style.opacity = '0.6';
+            nextBtn.style.pointerEvents = 'none';
+        }
+    }
+    
+    updateFormStep() {
+        // Hide all steps
+        document.querySelectorAll('.form-step').forEach(step => {
+            step.classList.remove('active');
+        });
+        
+        // Show current step
+        const currentStepElement = document.querySelector(`[data-step="${this.currentStep}"]`);
+        if (currentStepElement) {
+            currentStepElement.classList.add('active');
+        }
+    }
+    
+    updateProgressIndicator() {
+        document.querySelectorAll('.progress-step').forEach(step => {
+            step.classList.remove('active');
+        });
+        
+        const currentProgressStep = document.querySelector(`.progress-step[data-step="${this.currentStep}"]`);
+        if (currentProgressStep) {
+            currentProgressStep.classList.add('active');
+        }
+    }
+    
+    handleSubmit(e) {
+        e.preventDefault();
+        
+        if (!this.validateCurrentStep()) {
+            return;
+        }
+        
+        // Collect form data
+        const formData = this.collectFormData();
+        
+        // Simulate API call
+        this.showToast('Processing your subscription...', 'success');
+        
+        setTimeout(() => {
+            this.showSuccessModal(formData);
+            this.incrementSubscriberCount();
+        }, 1500);
+    }
+    
+    collectFormData() {
+        const email = document.getElementById('email-input').value;
+        const interests = Array.from(document.querySelectorAll('input[name="interests"]:checked'))
+            .map(cb => cb.value);
+        const frequency = document.querySelector('input[name="frequency"]:checked').value;
+        
+        return {
+            email,
+            interests,
+            frequency,
+            tier: this.selectedTier,
+            timestamp: new Date().toISOString()
+        };
+    }
+    
+    showSuccessModal(formData) {
+        const modal = document.getElementById('success-modal');
+        if (modal) {
+            modal.classList.add('active');
+            
+            // Store subscription data
+            localStorage.setItem('newsletterSubscription', JSON.stringify(formData));
+        }
+    }
+    
+    closeModal() {
+        const modal = document.getElementById('success-modal');
+        if (modal) {
+            modal.classList.remove('active');
+            
+            // Reset form
+            this.resetForm();
+        }
+    }
+    
+    resetForm() {
+        this.currentStep = 1;
+        this.updateFormStep();
+        this.updateProgressIndicator();
+        
+        // Clear form inputs
+        document.getElementById('newsletter-form').reset();
+        
+        // Reset tier selection
+        document.querySelectorAll('.tier-option').forEach(tier => {
+            tier.classList.remove('active');
+        });
+        document.querySelector('.tier-option[data-tier="free"]').classList.add('active');
+        this.selectedTier = 'free';
+    }
+    
+    spinWheel() {
+        const wheel = document.getElementById('bonus-wheel');
+        const spinBtn = document.getElementById('spin-btn');
+        const prizeResult = document.getElementById('prize-result');
+        
+        if (!wheel || !spinBtn) return;
+        
+        // Disable button during spin
+        spinBtn.disabled = true;
+        spinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Spinning...';
+        
+        // Generate random rotation (multiple full rotations + random position)
+        const randomRotation = 1440 + Math.random() * 360; // 4 full rotations + random
+        wheel.style.transform = `rotate(${randomRotation}deg)`;
+        
+        // Determine prize based on final position
+        setTimeout(() => {
+            const prizes = ['10% Off', 'Free Shipping', '15% Off', 'Early Access', '20% Off', 'VIP Status'];
+            const finalPosition = randomRotation % 360;
+            const prizeIndex = Math.floor(finalPosition / 60);
+            const prize = prizes[prizeIndex];
+            
+            // Show prize result
+            document.getElementById('prize-text').textContent = prize;
+            prizeResult.style.display = 'block';
+            
+            // Re-enable button
+            spinBtn.disabled = false;
+            spinBtn.innerHTML = '<i class="fas fa-redo"></i> Spin Again!';
+            
+            // Store prize in localStorage
+            const subscription = JSON.parse(localStorage.getItem('newsletterSubscription') || '{}');
+            subscription.welcomeBonus = prize;
+            localStorage.setItem('newsletterSubscription', JSON.stringify(subscription));
+            
+            this.showToast(`Congratulations! You won: ${prize}`, 'success');
+        }, 3000);
+    }
+    
+    startTestimonialRotation() {
+        const testimonials = document.querySelectorAll('.testimonial');
+        if (testimonials.length === 0) return;
+        
+        setInterval(() => {
+            // Remove active class from current testimonial
+            testimonials[this.testimonialIndex].classList.remove('active');
+            
+            // Move to next testimonial
+            this.testimonialIndex = (this.testimonialIndex + 1) % testimonials.length;
+            
+            // Add active class to new testimonial
+            testimonials[this.testimonialIndex].classList.add('active');
+        }, 4000);
+    }
+    
+    animateSubscriberCount() {
+        const countElement = document.getElementById('subscriber-count');
+        if (!countElement) return;
+        
+        // Animate count up
+        let currentCount = 0;
+        const targetCount = this.subscriberCount;
+        const increment = targetCount / 100;
+        
+        const countAnimation = setInterval(() => {
+            currentCount += increment;
+            if (currentCount >= targetCount) {
+                currentCount = targetCount;
+                clearInterval(countAnimation);
+            }
+            countElement.textContent = Math.floor(currentCount).toLocaleString();
+        }, 20);
+    }
+    
+    incrementSubscriberCount() {
+        this.subscriberCount++;
+        const countElement = document.getElementById('subscriber-count');
+        if (countElement) {
+            countElement.textContent = this.subscriberCount.toLocaleString();
+        }
+    }
+    
+    isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    showToast(message, type = 'success') {
+        const toastContainer = document.getElementById('toast-container');
+        if (!toastContainer) return;
+        
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        const icon = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+        
+        toast.innerHTML = `
+            <i class="${icon}"></i>
+            <span>${message}</span>
+        `;
+        
+        toastContainer.appendChild(toast);
+        
+        // Trigger animation
+        setTimeout(() => toast.classList.add('show'), 100);
+        
+        // Remove toast after 4 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
+        }, 4000);
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new NewsletterEnhancer();
+});
+
+// Additional utility functions for integration
+window.NewsletterUtils = {
+    // Function to pre-fill email if user is logged in
+    prefillUserEmail: function(email) {
+        const emailInput = document.getElementById('email-input');
+        if (emailInput && email) {
+            emailInput.value = email;
+        }
+    },
+    
+    // Function to get subscription data
+    getSubscriptionData: function() {
+        return JSON.parse(localStorage.getItem('newsletterSubscription') || '{}');
+    },
+    
+    // Function to check if user is subscribed
+    isUserSubscribed: function() {
+        const data = this.getSubscriptionData();
+        return data.email && data.timestamp;
+    },
+    
+    // Function to update subscriber count from server
+    updateSubscriberCount: function(count) {
+        const countElement = document.getElementById('subscriber-count');
+        if (countElement && count) {
+            countElement.textContent = count.toLocaleString();
+        }
+    }
+};
+// Enhanced Chat Widget JavaScript
+
+class EnhancedChatWidget {
+    constructor() {
+        this.isOnline = true;
+        this.currentView = 'pre-chat'; // pre-chat, chat, ended, offline
+        this.chatHistory = [];
+        this.unreadCount = 0;
+        this.userInfo = {};
+        this name: 'Rasul Mamishov',
+            avatar: "data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310b981\'%3E%3C/circle%3E%3Ctext x=\'50\' y=\'60\' text-anchor=\'middle\' fill=\'white\' font-size=\'40\' font-family=\'Arial\'%3ERM%3C/text%3E%3C/svg%3E"his.isTyping = false;
+        this.proactiveTriggered = false;
+        this.chatRating = 0;
+        
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+        this.loadChatHistory();
+        this.setupProactiveChat();
+        this.simulateAgentStatus();
+    }
+    
+    bindEvents() {
+        // Float button
+        document.getElementById('chatFloatBtn').addEventListener('click', () => this.openChat());
+        
+        // Close buttons
+        document.querySelectorAll('[id^="chatCloseBtn"]').forEach(btn => {
+            btn.addEventListener('click', () => this.closeChat());
+        });
+        
+        // Minimize button
+        const minimizeBtn = document.getElementById('chatMinimizeBtn');
+        if (minimizeBtn) {
+            minimizeBtn.addEventListener('click', () => this.minimizeChat());
+        }
+        
+        // Pre-chat form
+        const preChatForm = document.getElementById('preChatFormElement');
+        if (preChatForm) {
+            preChatForm.addEventListener('submit', (e) => this.handlePreChatSubmit(e));
+        }
+        
+        // Chat form
+        const chatForm = document.getElementById('chatForm');
+        if (chatForm) {
+            chatForm.addEventListener('submit', (e) => this.handleChatSubmit(e));
+        }
+        
+        // Offline form
+        const offlineForm = document.getElementById('offlineMessageForm');
+        if (offlineForm) {
+            offlineForm.addEventListener('submit', (e) => this.handleOfflineSubmit(e));
+        }
+        
+        // Emoji picker
+        const emojiBtn = document.getElementById('emojiBtn');
+        if (emojiBtn) {
+            emojiBtn.addEventListener('click', () => this.toggleEmojiPicker());
+        }
+        
+        document.querySelectorAll('.emoji-item').forEach(emoji => {
+            emoji.addEventListener('click', (e) => this.insertEmoji(e.target.dataset.emoji));
+        });
+        
+        // Attach button
+        const attachBtn = document.getElementById('attachBtn');
+        if (attachBtn) {
+            attachBtn.addEventListener('click', () => this.handleFileAttach());
+        }
+        
+        // End chat
+        const endChatBtn = document.getElementById('endChatBtn');
+        if (endChatBtn) {
+            endChatBtn.addEventListener('click', () => this.endChat());
+        }
+        
+        // Rating stars
+        document.querySelectorAll('.rating-stars i').forEach(star => {
+            star.addEventListener('click', (e) => this.setRating(parseInt(e.target.dataset.rating)));
+        });
+        
+        // Feedback submission
+        const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+        if (submitFeedbackBtn) {
+            submitFeedbackBtn.addEventListener('submit', () => this.submitFeedback());
+        }
+        
+        // New chat button
+        const newChatBtn = document.getElementById('newChatBtn');
+        if (newChatBtn) {
+            newChatBtn.addEventListener('click', () => this.startNewChat());
+        }
+        
+        // Download transcript
+        const downloadBtn = document.getElementById('downloadTranscriptBtn');
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', () => this.downloadTranscript());
+        }
+        
+        // Proactive chat
+        const acceptProactive = document.getElementById('acceptProactiveChat');
+        const dismissProactive = document.getElementById('dismissProactiveChat');
+        const closeProactive = document.getElementById('closeProactiveChat');
+        
+        if (acceptProactive) {
+            acceptProactive.addEventListener('click', () => this.acceptProactiveChat());
+        }
+        if (dismissProactive) {
+            dismissProactive.addEventListener('click', () => this.dismissProactiveChat());
+        }
+        if (closeProactive) {
+            closeProactive.addEventListener('click', () => this.dismissProactiveChat());
+        }
+        
+        // Click outside to close emoji picker
+        document.addEventListener('click', (e) => {
+            const emojiPicker = document.getElementById('emojiPicker');
+            const emojiBtn = document.getElementById('emojiBtn');
+            if (emojiPicker && !emojiPicker.contains(e.target) && !emojiBtn.contains(e.target)) {
+                emojiPicker.style.display = 'none';
+            }
+        });
+        
+        // Auto-resize chat input
+        const chatInput = document.getElementById('chatInput');
+        if (chatInput) {
+            chatInput.addEventListener('input', () => this.handleInputChange());
+        }
+    }
+    
+    openChat() {
+        const modal = document.getElementById('chatModal');
+        modal.classList.add('active');
+        
+        if (this.isOnline) {
+            this.showView('pre-chat');
+        } else {
+            this.showView('offline');
+        }
+        
+        this.clearNotifications();
+    }
+    
+    closeChat() {
+        const modal = document.getElementById('chatModal');
+        modal.classList.remove('active');
+    }
+    
+    minimizeChat() {
+        this.closeChat();
+        if (this.unreadCount > 0) {
+            this.showNotificationBadge();
+        }
+    }
+    
+    showView(viewName) {
+        // Hide all views
+        document.getElementById('preChatForm').style.display = 'none';
+        document.getElementById('chatInterface').style.display = 'none';
+        document.getElementById('chatEnded').style.display = 'none';
+        document.getElementById('offlineForm').style.display = 'none';
+        
+        // Show selected view
+        switch (viewName) {
+            case 'pre-chat':
+                document.getElementById('preChatForm').style.display = 'flex';
+                break;
+            case 'chat':
+                document.getElementById('chatInterface').style.display = 'flex';
+                this.focusChatInput();
+                break;
+            case 'ended':
+                document.getElementById('chatEnded').style.display = 'flex';
+                break;
+            case 'offline':
+                document.getElementById('offlineForm').style.display = 'flex';
+                break;
+        }
+        
+        this.currentView = viewName;
+    }
+    
+    handlePreChatSubmit(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        this.userInfo = {
+            name: formData.get('userName') || document.getElementById('userName').value,
+            email: formData.get('userEmail') || document.getElementById('userEmail').value,
+            queryType: formData.get('queryType') || document.getElementById('queryType').value,
+            initialMessage: formData.get('initialMessage') || document.getElementById('initialMessage').value
+        };
+        
+        this.startChat();
+    }
+    
+    startChat() {
+        this.showView('chat');
+        this.updateAgentInfo();
+        
+        // Add system message
+        this.addSystemMessage(`Connected to ${this.agentInfo.name} from ${this.getQueryTypeName(this.userInfo.queryType)}`);
+        
+        // Add initial greeting
+        setTimeout(() => {
+            this.addAgentMessage(`Hi ${this.userInfo.name}! 👋 I'm ${this.agentInfo.name} and I'll be helping you today.`);
+            
+            if (this.userInfo.initialMessage) {
+                setTimeout(() => {
+                    this.addAgentMessage(`I see you mentioned: "${this.userInfo.initialMessage}". Let me help you with that!`);
+                }, 1500);
+            }
+        }, 1000);
+    }
+    
+    handleChatSubmit(e) {
+        e.preventDefault();
+        
+        const input = document.getElementById('chatInput');
+        const message = input.value.trim();
+        
+        if (message) {
+            this.addUserMessage(message);
+            input.value = '';
+            
+            // Simulate agent response
+            this.simulateAgentResponse(message);
+        }
+    }
+    
+    handleOfflineSubmit(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const offlineData = {
+            name: formData.get('offlineName') || document.getElementById('offlineName').value,
+            email: formData.get('offlineEmail') || document.getElementById('offlineEmail').value,
+            subject: formData.get('offlineSubject') || document.getElementById('offlineSubject').value,
+            message: formData.get('offlineMessage') || document.getElementById('offlineMessage').value
+        };
+        
+        // Simulate sending offline message
+        this.showToast('Your message has been sent! We\'ll get back to you within 2-4 hours.', 'success');
+        
+        // Store offline message
+        localStorage.setItem('chatOfflineMessage', JSON.stringify({
+            ...offlineData,
+            timestamp: new Date().toISOString()
+        }));
+        
+        this.closeChat();
+    }
+    
+    addUserMessage(text) {
+        const message = {
+            id: Date.now(),
+            type: 'user',
+            text: text,
+            timestamp: new Date(),
+            status: 'sent'
+        };
+        
+        this.chatHistory.push(message);
+        this.renderMessage(message);
+        this.saveChatHistory();
+        this.scrollToBottom();
+        
+        // Simulate message delivery
+        setTimeout(() => {
+            message.status = 'delivered';
+            this.updateMessageStatus(message.id, 'delivered');
+        }, 500);
+        
+        setTimeout(() => {
+            message.status = 'read';
+            this.updateMessageStatus(message.id, 'read');
+        }, 1000);
+    }
+    
+    addAgentMessage(text) {
+        const message = {
+            id: Date.now(),
+            type: 'agent',
+            text: text,
+            timestamp: new Date(),
+            agent: this.agentInfo.name
+        };
+        
+        this.showTypingIndicator();
+        
+        setTimeout(() => {
+            this.hideTypingIndicator();
+            this.chatHistory.push(message);
+            this.renderMessage(message);
+            this.saveChatHistory();
+            this.scrollToBottom();
+            
+            // Show notification if chat is closed
+            if (!document.getElementById('chatModal').classList.contains('active')) {
+                this.incrementUnreadCount();
+                this.showNotificationBadge();
+                this.playNotificationSound();
+            }
+        }, 1500 + Math.random() * 1000);
+    }
+    
+    addSystemMessage(text) {
+        const message = {
+            id: Date.now(),
+            type: 'system',
+            text: text,
+            timestamp: new Date()
+        };
+        
+        this.chatHistory.push(message);
+        this.renderSystemMessage(message);
+        this.saveChatHistory();
+        this.scrollToBottom();
+    }
+    
+    renderMessage(message) {
+        const chatBody = document.getElementById('chatMessages');
+        const messageElement = document.createElement('div');
+        messageElement.className = `message ${message.type}`;
+        messageElement.dataset.messageId = message.id;
+        
+        const avatar = message.type === 'user' 
+            ? this.getUserAvatar() 
+            : this.agentInfo.avatar;
+        
+        const statusIcon = message.type === 'user' ? this.getStatusIcon(message.status) : '';
+        
+        messageElement.innerHTML = `
+            <div class="message-avatar">
+                <img src="${avatar}" alt="${message.type === 'user' ? 'You' : message.agent || 'Agent'}">
+            </div>
+            <div class="message-content">
+                <div class="message-bubble">${this.formatMessageText(message.text)}</div>
+                <div class="message-info">
+                    <span class="message-time">${this.formatTime(message.timestamp)}</span>
+                    ${message.type === 'user' ? `<div class="message-status ${message.status}">${statusIcon}</div>` : ''}
+                </div>
+            </div>
+        `;
+        
+        chatBody.appendChild(messageElement);
+    }
+    
+    renderSystemMessage(message) {
+        const chatBody = document.getElementById('chatMessages');
+        const messageElement = document.createElement('div');
+        messageElement.className = 'system-message';
+        messageElement.innerHTML = message.text;
+        chatBody.appendChild(messageElement);
+    }
+    
+    updateMessageStatus(messageId, status) {
+        const messageElement = document.querySelector(`[data-message-id="${messageId}"]`);
+        if (messageElement) {
+            const statusElement = messageElement.querySelector('.message-status');
+            if (statusElement) {
+                statusElement.className = `message-status ${status}`;
+                statusElement.innerHTML = this.getStatusIcon(status);
+            }
+        }
+    }
+    
+    getStatusIcon(status) {
+        switch (status) {
+            case 'sent':
+                return '<i class="fas fa-check"></i>';
+            case 'delivered':
+                return '<i class="fas fa-check-double"></i>';
+            case 'read':
+                return '<i class="fas fa-check-double"></i>';
+            default:
+                return '';
+        }
+    }
+    
+    formatMessageText(text) {
+        // Basic emoji support and link detection
+        return text
+            .replace(/:\)/g, '😊')
+            .replace(/:\(/g, '😢')
+            .replace(/:D/g, '😃')
+            .replace(/;\)/g, '😉')
+            .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+    }
+    
+    formatTime(timestamp) {
+        return timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+    
+    getUserAvatar() {
+        const initial = this.userInfo.name ? this.userInfo.name.charAt(0).toUpperCase() : 'U';
+        return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23f59e0b'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-family='Arial'%3E${initial}%3C/text%3E%3C/svg%3E`;
+    }
+    
+    updateAgentInfo() {
+        document.getElementById('agentName').textContent = this.agentInfo.name;
+        document.getElementById('agentAvatar').src = this.agentInfo.avatar;
+    }
+    
+    simulateAgentResponse(userMessage) {
+        const responses = this.getContextualResponses(userMessage);
+        const response = responses[Math.floor(Math.random() * responses.length)];
+        
+        setTimeout(() => {
+            this.addAgentMessage(response);
+        }, 2000 + Math.random() * 2000);
+    }
+    
+    getContextualResponses(message) {
+        const lowerMessage = message.toLowerCase();
+        
+        if (lowerMessage.includes('ticket') || lowerMessage.includes('event')) {
+            return [
+                "I'd be happy to help you with ticket information! What specific event are you interested in?",
+                "Let me check our available events for you. Are you looking for any particular sport or date?",
+                "Great! I can help you find the perfect tickets. What's your preferred seating section?"
+            ];
+        }
+        
+        if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
+            return [
+                "I can help you with pricing information. Prices vary by event and seating section. Would you like me to check specific events?",
+                "Our ticket prices range from $25 to $500 depending on the event and seats. What's your budget range?",
+                "Let me find the best deals for you! Are you flexible with dates?"
+            ];
+        }
+        
+        if (lowerMessage.includes('refund') || lowerMessage.includes('cancel')) {
+            return [
+                "I understand you need help with a refund. Can you provide your order number so I can look into this for you?",
+                "Our refund policy varies by event. Let me check the details of your purchase to see what options are available.",
+                "I'll be happy to help with your cancellation request. When did you make the purchase?"
+            ];
+        }
+        
+        if (lowerMessage.includes('problem') || lowerMessage.includes('issue') || lowerMessage.includes('help')) {
+            return [
+                "I'm sorry to hear you're experiencing an issue. Can you tell me more details about what's happening?",
+                "I'm here to help resolve any problems you're having. What specifically can I assist you with?",
+                "Let me help you solve this issue. Can you describe what you're trying to do?"
+            ];
+        }
+        
+        // Default responses
+        return [
+            "Thank you for that information. How else can I assist you today?",
+            "I understand. Is there anything specific I can help you with regarding our services?",
+            "That's helpful to know. What would you like me to help you with next?",
+            "I see. Let me know if you have any questions about our events or services!",
+            "Thanks for sharing that with me. How can I make your experience better today?"
+        ];
+    }
+    
+    showTypingIndicator() {
+        const indicator = document.getElementById('typingIndicator');
+        if (indicator) {
+            indicator.style.display = 'flex';
+            this.scrollToBottom();
+        }
+    }
+    
+    hideTypingIndicator() {
+        const indicator = document.getElementById('typingIndicator');
+        if (indicator) {
+            indicator.style.display = 'none';
+        }
+    }
+    
+    toggleEmojiPicker() {
+        const picker = document.getElementById('emojiPicker');
+        if (picker) {
+            picker.style.display = picker.style.display === 'none' ? 'block' : 'none';
+        }
+    }
+    
+    insertEmoji(emoji) {
+        const input = document.getElementById('chatInput');
+        if (input) {
+            input.value += emoji;
+            input.focus();
+        }
+        this.toggleEmojiPicker();
+    }
+    
+    handleFileAttach() {
+        // Simulate file attachment
+        this.showToast('File attachment feature coming soon!', 'info');
+    }
+    
+    endChat() {
+        this.addSystemMessage('Chat session ended');
+        this.showView('ended');
+    }
+    
+    setRating(rating) {
+        this.chatRating = rating;
+        const stars = document.querySelectorAll('.rating-stars i');
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add('active');
+            } else {
+                star.classList.remove('active');
+            }
+        });
+    }
+    
+    submitFeedback() {
+        const comment = document.getElementById('feedbackComment').value;
+        const feedback = {
+            rating: this.chatRating,
+            comment: comment,
+            timestamp: new Date().toISOString(),
+            chatHistory: this.chatHistory
+        };
+        
+        // Store feedback
+        localStorage.setItem('chatFeedback', JSON.stringify(feedback));
+        
+        this.showToast('Thank you for your feedback!', 'success');
+        
+        // Auto-close after feedback
+        setTimeout(() => {
+            this.closeChat();
+            this.resetChat();
+        }, 2000);
+    }
+    
+    startNewChat() {
+        this.resetChat();
+        this.showView('pre-chat');
+    }
+    
+    resetChat() {
+        this.chatHistory = [];
+        this.userInfo = {};
+        this.chatRating = 0;
+        this.currentView = 'pre-chat';
+        
+        // Clear chat messages
+        const chatBody = document.getElementById('chatMessages');
+        if (chatBody) {
+            chatBody.innerHTML = '';
+        }
+        
+        // Reset forms
+        document.getElementById('preChatFormElement').reset();
+        document.getElementById('chatForm').reset();
+        document.getElementById('feedbackComment').value = '';
+        
+        // Reset rating stars
+        document.querySelectorAll('.rating-stars i').forEach(star => {
+            star.classList.remove('active');
+        });
+        
+        this.saveChatHistory();
+    }
+    
+    downloadTranscript() {
+        const transcript = this.generateTranscript();
+        const blob = new Blob([transcript], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `chat-transcript-${new Date().toISOString().split('T')[0]}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+    
+    generateTranscript() {
+        let transcript = `Chat Transcript - ${new Date().toLocaleDateString()}\n`;
+        transcript += `Customer: ${this.userInfo.name} (${this.userInfo.email})\n`;
+        transcript += `Query Type: ${this.getQueryTypeName(this.userInfo.queryType)}\n`;
+        transcript += `Agent: ${this.agentInfo.name}\n\n`;
+        transcript += '--- Conversation ---\n\n';
+        
+        this.chatHistory.forEach(message => {
+            if (message.type !== 'system') {
+                const sender = message.type === 'user' ? this.userInfo.name : this.agentInfo.name;
+                const time = this.formatTime(message.timestamp);
+                transcript += `[${time}] ${sender}: ${message.text}\n`;
+            }
+        });
+        
+        if (this.chatRating > 0) {
+            transcript += `\n--- Feedback ---\n`;
+            transcript += `Rating: ${this.chatRating}/5 stars\n`;
+            const comment = document.getElementById('feedbackComment').value;
+            if (comment) {
+                transcript += `Comment: ${comment}\n`;
+            }
+        }
+        
+        return transcript;
+    }
+    
+    getQueryTypeName(type) {
+        const types = {
+            'technical': 'Technical Support',
+            'billing': 'Billing Inquiry',
+            'product': 'Product Information',
+            'general': 'General Question',
+            'feedback': 'Feedback'
+        };
+        return types[type] || 'General Support';
+    }
+    
+    setupProactiveChat() {
+        // Trigger proactive chat after 30 seconds
+        setTimeout(() => {
+            if (!this.proactiveTriggered && !document.getElementById('chatModal').classList.contains('active')) {
+                this.showProactiveChat();
+            }
+        }, 30000);
+    }
+    
+    showProactiveChat() {
+        const trigger = document.getElementById('proactiveChatTrigger');
+        if (trigger) {
+            trigger.style.display = 'block';
+            this.proactiveTriggered = true;
+        }
+    }
+    
+    acceptProactiveChat() {
+        this.dismissProactiveChat();
+        this.openChat();
+    }
+    
+    dismissProactiveChat() {
+        const trigger = document.getElementById('proactiveChatTrigger');
+        if (trigger) {
+            trigger.style.display = 'none';
+        }
+    }
+    
+    simulateAgentStatus() {
+        // Randomly change agent status (for demo purposes)
+        setInterval(() => {
+            const shouldBeOnline = Math.random() > 0.1; // 90% chance of being online
+            this.updateAgentStatus(shouldBeOnline);
+        }, 60000); // Check every minute
+    }
+    
+    updateAgentStatus(isOnline) {
+        this.isOnline = isOnline;
+        const statusDot = document.getElementById('statusDot');
+        const agentStatus = document.getElementById('agentStatus');
+        
+        if (statusDot) {
+            statusDot.className = `status-dot ${isOnline ? 'online' : 'offline'}`;
+        }
+        
+        if (agentStatus) {
+            agentStatus.textContent = isOnline ? 'Online' : 'Offline';
+        }
+    }
+    
+    showNotificationBadge() {
+        const badge = document.getElementById('chatNotificationBadge');
+        const countElement = document.getElementById('unreadCount');
+        
+        if (badge && countElement) {
+            countElement.textContent = this.unreadCount;
+            badge.style.display = 'flex';
+        }
+    }
+    
+    clearNotifications() {
+        this.unreadCount = 0;
+        const badge = document.getElementById('chatNotificationBadge');
+        if (badge) {
+            badge.style.display = 'none';
+        }
+    }
+    
+    incrementUnreadCount() {
+        this.unreadCount++;
+    }
+    
+    playNotificationSound() {
+        // Create a simple notification sound
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = 800;
+        oscillator.type = 'sine';
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.5);
+    }
+    
+    saveChatHistory() {
+        localStorage.setItem('chatHistory', JSON.stringify(this.chatHistory));
+        localStorage.setItem('chatUserInfo', JSON.stringify(this.userInfo));
+    }
+    
+    loadChatHistory() {
+        const savedHistory = localStorage.getItem('chatHistory');
+        const savedUserInfo = localStorage.getItem('chatUserInfo');
+        
+        if (savedHistory) {
+            this.chatHistory = JSON.parse(savedHistory);
+        }
+        
+        if (savedUserInfo) {
+            this.userInfo = JSON.parse(savedUserInfo);
+        }
+        
+        // If there's existing chat history, show notification
+        if (this.chatHistory.length > 0) {
+            this.unreadCount = 1;
+            this.showNotificationBadge();
+        }
+    }
+    
+    scrollToBottom() {
+        const chatBody = document.getElementById('chatMessages');
+        if (chatBody) {
+            setTimeout(() => {
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 100);
+        }
+    }
+    
+    focusChatInput() {
+        const input = document.getElementById('chatInput');
+        if (input) {
+            setTimeout(() => input.focus(), 100);
+        }
+    }
+    
+    handleInputChange() {
+        // Could implement typing indicators to agent here
+        // For now, just ensure proper input handling
+    }
+    
+    showToast(message, type = 'info') {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+        
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        const icon = type === 'success' ? 'fas fa-check-circle' : 
+                    type === 'error' ? 'fas fa-exclamation-circle' : 
+                    'fas fa-info-circle';
+        
+        toast.innerHTML = `
+            <i class="${icon}"></i>
+            <span>${message}</span>
+        `;
+        
+        container.appendChild(toast);
+        
+        // Trigger animation
+        setTimeout(() => toast.classList.add('show'), 100);
+        
+        // Remove toast after 4 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
+        }, 4000);
+    }
+}
+
+// Initialize chat widget when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.chatWidget = new EnhancedChatWidget();
+});
+
+// Utility functions for external integration
+window.ChatWidgetAPI = {
+    // Open chat programmatically
+    openChat: function() {
+        if (window.chatWidget) {
+            window.chatWidget.openChat();
+        }
+    },
+    
+    // Close chat programmatically
+    closeChat: function() {
+        if (window.chatWidget) {
+            window.chatWidget.closeChat();
+        }
+    },
+    
+    // Set user info (useful for logged-in users)
+    setUserInfo: function(userInfo) {
+        if (window.chatWidget) {
+            window.chatWidget.userInfo = { ...window.chatWidget.userInfo, ...userInfo };
+            
+            // Pre-fill form fields if pre-chat form is visible
+            if (userInfo.name) {
+                const nameField = document.getElementById('userName');
+                if (nameField) nameField.value = userInfo.name;
+            }
+            if (userInfo.email) {
+                const emailField = document.getElementById('userEmail');
+                if (emailField) emailField.value = userInfo.email;
+            }
+        }
+    },
+    
+    // Set agent status
+    setAgentStatus: function(isOnline) {
+        if (window.chatWidget) {
+            window.chatWidget.updateAgentStatus(isOnline);
+        }
+    },
+    
+    // Trigger proactive chat
+    triggerProactiveChat: function() {
+        if (window.chatWidget && !window.chatWidget.proactiveTriggered) {
+            window.chatWidget.showProactiveChat();
+        }
+    },
+    
+    // Get chat history
+    getChatHistory: function() {
+        return window.chatWidget ? window.chatWidget.chatHistory : [];
+    },
+    
+    // Check if chat is active
+    isChatActive: function() {
+        return document.getElementById('chatModal').classList.contains('active');
+    }
+};
+
+
+
+
+        this.faqData = {
+            "Booking & Seat Selection": [
+                "How do I book a seat for a match?",
+                "Can I choose a specific seat in the stadium?",
+                "What if the seats I want are already taken?",
+                "How long is a reservation held?",
+                "Can I book multiple tickets next to each other?"
+            ],
+            "Payment": [
+                "What payment methods do you accept?",
+                "Can I pay with cash upon receipt?",
+                "Why is my card not going through?",
+                "Is there a commission for online payments?"
+            ],
+            "Refunds & Cancellations": [
+                "How can I cancel a booking?",
+                "Can I get a refund for my ticket?",
+                "How long does a refund take?",
+                "If the match is canceled, do I get my money back?",
+                "Can I exchange my ticket for another match?"
+            ],
+            "E-ticket & Entry": [
+                "Where can I download my ticket?",
+                "Do I need to print the ticket or can I show it on my phone?",
+                "What if I didn't receive the email with the ticket?",
+                "Can I transfer my ticket to another person?"
+            ],
+            "Stadium & Seating Information": [
+                "Can I see the stadium layout?",
+                "Which seats are considered VIP?",
+                "Is there parking near the stadium?",
+                "Are there accessible seats for people with disabilities?"
+            ],
+            "Events & Schedule": [
+                "When is the next game?",
+                "How often is the match schedule updated?",
+                "Will there be international matches this month?"
+            ],
+            "Technical Questions": [
+                "The website is not working, what should I do?",
+                "I can't complete payment - it shows an error.",
+                "How can I contact support?"
+            ],
+            "General Questions": [
+                "Are there discounts for students/seniors/groups?",
+                "How can I become a regular customer and receive bonuses?",
+                "Do you cooperate with any sports clubs?",
+                "Is there a mobile app?"
+            ]
+        };
+
+        this.faqResponses = {
+            "How do I book a seat for a match?": "To book a seat, simply navigate to the event page, select your desired match, choose your seats from the interactive map, and proceed to checkout.",
+            "Can I choose a specific seat in the stadium?": "Yes, our interactive seating map allows you to select specific seats based on availability for most events.",
+            "What if the seats I want are already taken?": "If your preferred seats are taken, we recommend checking alternative sections or dates. Our system will suggest the best available options.",
+            "How long is a reservation held?": "Reservations are typically held for 15 minutes during the checkout process. If payment is not completed within this time, the seats will be released.",
+            "Can I book multiple tickets next to each other?": "Yes, you can select multiple adjacent seats during the booking process, provided they are available.",
+            "What payment methods do you accept?": "We accept major credit cards (Visa, MasterCard, American Express), PayPal, and Apple Pay for online transactions.",
+            "Can I pay with cash upon receipt?": "Unfortunately, we do not accept cash on delivery. All payments must be completed online at the time of booking.",
+            "Why is my card not going through?": "Card payment issues can arise from various reasons. Please ensure your card details are correct, you have sufficient funds, and check with your bank for any restrictions. You can also try an alternative payment method.",
+            "Is there a commission for online payments?": "We do not charge any additional commission for online payments. The price you see is the price you pay.",
+            "How can I cancel a booking?": "To cancel a booking, please go to 'My Orders' in your account, select the booking you wish to cancel, and follow the cancellation instructions. Please note that cancellation policies vary by event.",
+            "Can I get a refund for my ticket?": "Refund eligibility depends on the event's specific refund policy. Generally, refunds are available for canceled events or under certain conditions. Please refer to our terms and conditions or contact support.",
+            "How long does a refund take?": "Refunds are typically processed within 5-10 business days, but it may take longer for the funds to appear in your account depending on your bank's processing times.",
+            "If the match is canceled, do I get my money back?": "Yes, if a match is officially canceled, you will receive a full refund for your ticket. We will notify you via email with details on the refund process.",
+            "Can I exchange my ticket for another match?": "Ticket exchanges are generally not permitted unless specified by the event organizer. Please check the event's terms and conditions or contact support for specific cases.",
+            "Where can I download my ticket?": "Your e-ticket will be available for download in your account under 'My Tickets' immediately after successful payment. A copy will also be sent to your registered email address.",
+            "Do I need to print the ticket or can I show it on my phone?": "You can show your e-ticket directly on your smartphone at the entry gate. Printing is not required but is an option if you prefer.",
+            "What if I didn't receive the email with the ticket?": "Please check your spam or junk folder first. If you still can't find it, you can download your ticket from 'My Tickets' in your account or contact our support team for assistance.",
+            "Can I transfer my ticket to another person?": "Ticket transferability depends on the event's policy. For most events, you can transfer your e-ticket through your account. Please ensure the recipient has the necessary QR code or barcode for entry.",
+            "Can I see the stadium layout?": "Yes, an interactive stadium layout is available on each event page, allowing you to view different sections and seating arrangements.",
+            "Which seats are considered VIP?": "VIP seats typically offer premium views, enhanced comfort, and often include exclusive amenities like lounge access, catering, or dedicated entry points. Details are provided on the event page.",
+            "Is there parking near the stadium?": "Parking availability varies by stadium. We provide information on nearby parking facilities and public transport options on the event details page.",
+            "Are there accessible seats for people with disabilities?": "Yes, we offer accessible seating options for individuals with disabilities. These can be selected directly from the seating map or by contacting our support team.",
+            "When is the next game?": "You can find the full schedule of upcoming games on our 'Events' page, sorted by date and sport.",
+            "How often is the match schedule updated?": "The match schedule is updated in real-time as new events are announced or changes occur. We recommend checking regularly for the latest information.",
+            "Will there be international matches this month?": "Please check our 'International Events' section on the homepage or filter events by 'International' on the events page to see upcoming international matches.",
+            "The website is not working, what should I do?": "If the website is not working, please try clearing your browser's cache and cookies, or try accessing it from a different browser or device. If the issue persists, please contact our technical support.",
+            "I can't complete payment - it shows an error.": "Payment errors can be due to various reasons. Please double-check your card details, ensure sufficient funds, or try an alternative payment method. If the problem continues, contact your bank or our support team.",
+            "How can I contact support?": "You can contact our support team via this chat widget, by emailing support@sportsseat.com, or by calling our hotline at +1-800-SPORT-SEAT during business hours.",
+            "Are there discounts for students/seniors/groups?": "We occasionally offer special discounts for students, seniors, and groups. Please check our 'Promotions' page or subscribe to our newsletter for updates on available offers.",
+            "How can I become a regular customer and receive bonuses?": "Become a regular customer by creating an account and making purchases. You'll automatically be enrolled in our loyalty program, earning points and exclusive bonuses with every booking.",
+            "Do you cooperate with any sports clubs?": "Yes, we partner with numerous sports clubs and organizations to bring you exclusive access to events and tickets. You can see our partners listed on our 'About Us' page.",
+            "Is there a mobile app?": "Yes, we have a mobile app available for both iOS and Android devices. You can download it from the App Store or Google Play for a seamless booking experience on the go."
+        };
+
+        this.faqCategories = Object.keys(this.faqData);
+
+        this.getFAQResponse = (question) => {
+            return this.faqResponses[question] || "I'm sorry, I don't have a direct answer to that question in my FAQs. Could you please rephrase or provide more details?";
+        };
+
+        this.getFAQQuestions = (category) => {
+            return this.faqData[category] || [];
+        };
+
+        this.getFAQCategories = () => {
+            return this.faqCategories;
+        };
+
+
+
+
+    displayFAQOptions() {
+        let faqMessage = "Here are some common questions I can help with. Please click on a category or type your question:\n\n";
+        this.faqCategories.forEach(category => {
+            faqMessage += `**${category}**\n`;
+            this.faqData[category].slice(0, 3).forEach(question => { // Show first 3 questions per category
+                faqMessage += `- ${question}\n`;
+            });
+            faqMessage += `[See all ${category} questions...]\n\n`;
+        });
+        this.addAgentMessage(faqMessage);
+    }
+
+    simulateAgentResponse(userMessage) {
+        const lowerMessage = userMessage.toLowerCase();
+
+        // Check if user message is an FAQ question
+        for (const category in this.faqData) {
+            for (const question of this.faqData[category]) {
+                if (lowerMessage === question.toLowerCase()) {
+                    setTimeout(() => {
+                        this.addAgentMessage(this.getFAQResponse(question));
+                    }, 1500 + Math.random() * 1000);
+                    return;
+                }
+            }
+        }
+
+        // Check if user is asking for a category
+        for (const category of this.faqCategories) {
+            if (lowerMessage.includes(category.toLowerCase())) {
+                let response = `Here are some questions related to **${category}**:\n\n`;
+                this.faqData[category].forEach(question => {
+                    response += `- ${question}\n`;
+                });
+                setTimeout(() => {
+                    this.addAgentMessage(response);
+                }, 1500 + Math.random() * 1000);
+                return;
+            }
+        }
+
+        const responses = this.getContextualResponses(userMessage);
+        const response = responses[Math.floor(Math.random() * responses.length)];
+        
+        setTimeout(() => {
+            this.addAgentMessage(response);
+        }, 2000 + Math.random() * 2000);
+    }
+
+    startChat() {
+        this.showView("chat");
+        this.updateAgentInfo();
+
+        // Add system message
+        this.addSystemMessage(`Connected to ${this.agentInfo.name} from ${this.getQueryTypeName(this.userInfo.queryType)}`);
+
+        // Add initial greeting
+        setTimeout(() => {
+            this.addAgentMessage(`Hi ${this.userInfo.name}! 👋 I'm ${this.agentInfo.name} and I'll be helping you today.`);
+
+            if (this.userInfo.initialMessage) {
+                setTimeout(() => {
+                    this.addAgentMessage(`I see you mentioned: "${this.userInfo.initialMessage}". Let me help you with that!`);
+                }, 1500);
+            }
+
+            // Display FAQ options after initial greeting
+            setTimeout(() => {
+                this.displayFAQOptions();
+            }, 3000);
+
+        }, 1000);
+    }
+
+
+
+
+
+
+    renderFAQCategories() {
+        const faqCategoriesContainer = document.getElementById("faqCategories");
+        faqCategoriesContainer.innerHTML = "";
+        this.faqCategories.forEach(category => {
+            const categoryElement = document.createElement("button");
+            categoryElement.className = "faq-category-btn";
+            categoryElement.textContent = category;
+            categoryElement.dataset.category = category;
+            categoryElement.addEventListener("click", () => this.showFAQQuestions(category));
+            faqCategoriesContainer.appendChild(categoryElement);
+        });
+    }
+
+    showFAQQuestions(category) {
+        document.getElementById("faqCategories").style.display = "none";
+        document.getElementById("faqQuestions").style.display = "block";
+        document.getElementById("faqCategoryTitle").textContent = category;
+        const questionList = document.getElementById("questionList");
+        questionList.innerHTML = "";
+        this.faqData[category].forEach(question => {
+            const questionElement = document.createElement("button");
+            questionElement.className = "faq-question-btn";
+            questionElement.textContent = question;
+            questionElement.dataset.question = question;
+            questionElement.addEventListener("click", () => this.handleFAQQuestionClick(question));
+            questionList.appendChild(questionElement);
+        });
+    }
+
+    handleFAQQuestionClick(question) {
+        this.addUserMessage(question);
+        this.simulateAgentResponse(question);
+        this.hideFAQSection();
+    }
+
+    hideFAQSection() {
+        document.getElementById("faqSection").style.display = "none";
+        document.getElementById("chatMessages").style.display = "block";
+        this.scrollToBottom();
+    }
+
+    showFAQSection() {
+        document.getElementById("chatMessages").style.display = "none";
+        document.getElementById("faqSection").style.display = "block";
+        document.getElementById("faqQuestions").style.display = "none";
+        document.getElementById("faqCategories").style.display = "grid";
+        this.renderFAQCategories();
+    }
+
+    // Modify showView to handle FAQ section
+    showView(viewName) {
+        // Hide all views
+        document.getElementById("preChatForm").style.display = "none";
+        document.getElementById("chatInterface").style.display = "none";
+        document.getElementById("chatEnded").style.display = "none";
+        document.getElementById("offlineForm").style.display = "none";
+
+        // Hide FAQ section by default when switching views
+        document.getElementById("faqSection").style.display = "none";
+        document.getElementById("chatMessages").style.display = "block";
+
+        // Show selected view
+        switch (viewName) {
+            case "pre-chat":
+                document.getElementById("preChatForm").style.display = "flex";
+                break;
+            case "chat":
+                document.getElementById("chatInterface").style.display = "flex";
+                this.focusChatInput();
+                break;
+            case "ended":
+                document.getElementById("chatEnded").style.display = "flex";
+                break;
+            case "offline":
+                document.getElementById("offlineForm").style.display = "flex";
+                break;
+        }
+
+        this.currentView = viewName;
+    }
+
+    // Add event listener for back button in FAQ questions view
+    bindEvents() {
+        // ... existing bindEvents ...
+
+        const backToCategoriesBtn = document.getElementById("backToCategories");
+        if (backToCategoriesBtn) {
+            backToCategoriesBtn.addEventListener("click", () => this.showFAQSection());
+        }
+
+        // Add a button to show FAQs in the chat footer
+        const showFaqBtn = document.getElementById("showFaqBtn");
+        if (showFaqBtn) {
+            showFaqBtn.addEventListener("click", () => this.showFAQSection());
+        }
+    }
+
+    // Modify simulateAgentResponse to prioritize FAQ responses
+    simulateAgentResponse(userMessage) {
+        const lowerMessage = userMessage.toLowerCase();
+
+        // Check if user message is an exact FAQ question
+        for (const category in this.faqData) {
+            for (const question of this.faqData[category]) {
+                if (lowerMessage === question.toLowerCase()) {
+                    setTimeout(() => {
+                        this.addAgentMessage(this.getFAQResponse(question));
+                    }, 1500 + Math.random() * 1000);
+                    return;
+                }
+            }
+        }
+
+        // Check if user is asking for a category or general FAQ help
+        if (lowerMessage.includes("faq") || lowerMessage.includes("questions") || lowerMessage.includes("help")) {
+            this.showFAQSection();
+            return;
+        }
+
+        // Existing contextual responses
+        const responses = this.getContextualResponses(userMessage);
+        const response = responses[Math.floor(Math.random() * responses.length)];
+        
+        setTimeout(() => {
+            this.addAgentMessage(response);
+        }, 2000 + Math.random() * 2000);
+    }
+
+    // Modify startChat to initially show FAQs instead of a long greeting
+    startChat() {
+        this.showView("chat");
+        this.updateAgentInfo();
+
+        // Add system message
+        this.addSystemMessage(`Connected to ${this.agentInfo.name} from ${this.getQueryTypeName(this.userInfo.queryType)}`);
+
+        // Add initial greeting and then show FAQs
+        setTimeout(() => {
+            this.addAgentMessage(`Hi ${this.userInfo.name}! 👋 I'm ${this.agentInfo.name} and I'll be helping you today. Feel free to ask your question directly or choose from our frequently asked questions below.`);
+            this.showFAQSection(); // Show FAQ categories immediately
+        }, 1000);
+    }
+
+
+
+
+
 </script>
 </body>
 </html>

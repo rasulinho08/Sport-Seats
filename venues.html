@@ -4,11 +4,210 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Venues - SportsSeat</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="venues.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    
+    <style>
+        /* Map-specific styles */
+        .map-container {
+            background: var(--background-white);
+            border-radius: var(--border-radius-xl);
+            padding: 0;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            height: 500px;
+        }
+        
+        .map-header {
+            padding: 1.5rem;
+            background: var(--background-light);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .map-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--neutral-dark);
+        }
+        
+        .map-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .map-control-btn {
+            background: var(--background-white);
+            border: 1px solid var(--neutral-light);
+            color: var(--neutral-medium);
+            padding: 0.5rem;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .map-control-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .map-control-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        #venue-map {
+            height: calc(100% - 80px);
+            width: 100%;
+        }
+        
+        /* Custom marker styles */
+        .venue-marker {
+            background: var(--primary-color);
+            border: 3px solid white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .venue-marker:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Popup styles */
+        .leaflet-popup-content-wrapper {
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .venue-popup {
+            min-width: 250px;
+        }
+        
+        .venue-popup h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--neutral-dark);
+            font-size: 1.1rem;
+        }
+        
+        .venue-popup p {
+            margin: 0 0 0.75rem 0;
+            color: var(--neutral-medium);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .venue-popup-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--neutral-medium);
+        }
+        
+        .venue-popup-sports {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+        
+        .venue-popup-sports .sport-tag {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+        }
+        
+        .venue-popup-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .venue-popup-actions .btn-primary,
+        .venue-popup-actions .btn-outline {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        /* Map loading state */
+        .map-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--neutral-medium);
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .map-loading i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive map */
+        @media (max-width: 768px) {
+            .map-container {
+                height: 400px;
+            }
+            
+            .map-header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+            
+            .map-controls {
+                justify-content: center;
+            }
+            
+            #venue-map {
+                height: calc(100% - 100px);
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="main-nav">
@@ -33,56 +232,408 @@
             </div>
         </div>
     </nav>
+    
     <section class="venues-section" style="padding-top: 120px;">
         <div class="content-wrapper">
             <div class="section-title">
                 <h2>Our Partner Venues</h2>
                 <p>Explore the iconic stadiums and arenas where unforgettable moments happen.</p>
             </div>
-            <div class="venues-list">
-                <div class="venue-item">
-                    <img src="https://i.pinimg.com/564x/4f/92/76/4f92762299690129209424840242137c.jpg" alt="Stadium 1">
-                    <h3>Grand Arena</h3>
-                    <p>A multi-purpose indoor arena located in the heart of the city, known for its electrifying atmosphere during basketball and hockey games.</p>
-                    <div class="venue-details">
-                        <span><i class="fas fa-map-marker-alt"></i> Cityville, USA</span>
-                        <span><i class="fas fa-users"></i> Capacity: 20,000</span>
-                    </div>
-                    <a href="#" class="btn-primary">View Events</a>
+            
+            <!-- Enhanced Search and Filter Bar -->
+            <div class="search-filter-bar">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="venue-search" placeholder="Search venues by name or location..." class="search-input">
+                    <button class="clear-search" id="clear-search" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <div class="venue-item">
-                    <img src="https://i.pinimg.com/564x/3b/1a/7c/3b1a7c3d0f7b0f0f0f0f0f0f0f0f0f0f.jpg" alt="Stadium 2">
-                    <h3>Coliseum Stadium</h3>
-                    <p>Home to major football and soccer matches, this open-air stadium offers panoramic views and a rich history of sporting excellence.</p>
-                    <div class="venue-details">
-                        <span><i class="fas fa-map-marker-alt"></i> Sportstown, USA</span>
-                        <span><i class="fas fa-users"></i> Capacity: 75,000</span>
-                    </div>
-                    <a href="#" class="btn-primary">View Events</a>
+                
+                <div class="filter-container">
+                    <select id="capacity-filter" class="filter-select">
+                        <option value="">All Capacities</option>
+                        <option value="small">Small (< 20,000)</option>
+                        <option value="medium">Medium (20,000 - 50,000)</option>
+                        <option value="large">Large (> 50,000)</option>
+                    </select>
+                    
+                    <select id="sport-filter" class="filter-select">
+                        <option value="">All Sports</option>
+                        <option value="football">Football</option>
+                        <option value="basketball">Basketball</option>
+                        <option value="baseball">Baseball</option>
+                        <option value="hockey">Hockey</option>
+                        <option value="swimming">Swimming</option>
+                        <option value="soccer">Soccer</option>
+                    </select>
+                    
+                    <button class="view-toggle" id="view-toggle" title="Toggle Map View">
+                        <i class="fas fa-map"></i>
+                        <span>Map View</span>
+                    </button>
                 </div>
-                <div class="venue-item">
-                    <img src="https://i.pinimg.com/564x/0a/8f/2c/0a8f2c2c2c2c2c2c2c2c2c2c2c2c2c2c.jpg" alt="Stadium 3">
-                    <h3>Diamond Park</h3>
-                    <p>A classic baseball park with a modern twist, providing an intimate setting for America's favorite pastime and family-friendly events.</p>
-                    <div class="venue-details">
-                        <span><i class="fas fa-map-marker-alt"></i> Hometown, USA</span>
-                        <span><i class="fas fa-users"></i> Capacity: 40,000</span>
+            </div>
+            
+            <!-- Results Counter -->
+            <div class="results-info">
+                <span id="results-count">4 venues found</span>
+                <button class="favorites-toggle" id="favorites-toggle">
+                    <i class="fas fa-heart"></i>
+                    <span>Show Favorites Only</span>
+                </button>
+            </div>
+            
+            <!-- Interactive Map Container -->
+            <div class="map-container" id="map-container" style="display: none;">
+                <div class="map-header">
+                    <div class="map-title">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Interactive Venue Map</span>
                     </div>
-                    <a href="#" class="btn-primary">View Events</a>
-                </div>
-                <div class="venue-item">
-                    <img src="https://i.pinimg.com/564x/5e/1f/2a/5e1f2a2a2a2a2a2a2a2a2a2a2a2a2a2a.jpg" alt="Stadium 4">
-                    <h3>Aquatic Center</h3>
-                    <p>State-of-the-art facility for swimming and diving competitions, hosting national and international aquatic events.</p>
-                    <div class="venue-details">
-                        <span><i class="fas fa-map-marker-alt"></i> Coastal City, USA</span>
-                        <span><i class="fas fa-users"></i> Capacity: 10,000</span>
+                    <div class="map-controls">
+                        <button class="map-control-btn" id="fit-bounds-btn" title="Fit All Venues">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </button>
+                        <button class="map-control-btn" id="satellite-toggle" title="Toggle Satellite View">
+                            <i class="fas fa-satellite"></i>
+                        </button>
+                        <button class="map-control-btn" id="locate-btn" title="Find My Location">
+                            <i class="fas fa-location-arrow"></i>
+                        </button>
                     </div>
-                    <a href="#" class="btn-primary">View Events</a>
                 </div>
+                <div id="venue-map">
+                    <div class="map-loading">
+                        <i class="fas fa-spinner"></i>
+                        <span>Loading map...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="venues-list" id="venues-list">
+                <div class="venue-item" data-capacity="20000" data-sports="basketball,hockey" data-location="Cityville, USA" data-lat="40.7128" data-lng="-74.0060" data-venue-id="grand-arena">
+                    <div class="venue-image-container">
+                        <img src="https://avatars.mds.yandex.net/i?id=c28405228d57352a9b75c564373d0b44cde7c56b-8375627-images-thumbs&n=13" alt="Grand Arena">
+                        <button class="favorite-btn" data-venue="grand-arena" title="Add to Favorites">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="venue-badge">Indoor Arena</div>
+                    </div>
+                    <div class="venue-content">
+                        <h3>Grand Arena</h3>
+                        <p>A multi-purpose indoor arena located in the heart of the city, known for its electrifying atmosphere during basketball and hockey games.</p>
+                        <div class="venue-details">
+                            <span><i class="fas fa-map-marker-alt"></i> Cityville, USA</span>
+                            <span><i class="fas fa-users"></i> Capacity: 20,000</span>
+                        </div>
+                        <div class="venue-sports">
+                            <span class="sport-tag">Basketball</span>
+                            <span class="sport-tag">Hockey</span>
+                        </div>
+                        <div class="venue-actions">
+                            <a href="#" class="btn-primary">View Events</a>
+                            <button class="btn-outline view-map-btn" data-venue="grand-arena">
+                                <i class="fas fa-map-marker-alt"></i>
+                                View on Map
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+<!-- 1. Wembley Stadium -->
+<div class="venue-item" data-capacity="90000" data-sports="football,soccer" data-location="London, UK" data-lat="51.5560" data-lng="-0.2796" data-venue-id="wembley-stadium">
+    <div class="venue-image-container">
+        <img src="https://avatars.mds.yandex.net/i?id=557f75eb8e4d689a59eeb9992c673cc19057d85c-12927189-images-thumbs&n=13" alt="Wembley Stadium">
+        <button class="favorite-btn" data-venue="wembley-stadium" title="Add to Favorites">
+            <i class="far fa-heart"></i>
+        </button>
+        <div class="venue-badge">National Stadium</div>
+    </div>
+    <div class="venue-content">
+        <h3>Wembley Stadium</h3>
+        <p>Iconic football arena in the UK, home of the England national team and major events.</p>
+        <div class="venue-details">
+            <span><i class="fas fa-map-marker-alt"></i> London, UK</span>
+            <span><i class="fas fa-users"></i> Capacity: 90,000</span>
+        </div>
+        <div class="venue-sports">
+            <span class="sport-tag">Football</span>
+            <span class="sport-tag">Soccer</span>
+        </div>
+        <div class="venue-actions">
+            <a href="#" class="btn-primary">View Events</a>
+            <button class="btn-outline view-map-btn" data-venue="wembley-stadium">
+                <i class="fas fa-map-marker-alt"></i> View on Map
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 2. Camp Nou -->
+<div class="venue-item" data-capacity="99354" data-sports="football" data-location="Barcelona, Spain" data-lat="41.3809" data-lng="2.1228" data-venue-id="camp-nou">
+    <div class="venue-image-container">
+        <img src="https://avatars.mds.yandex.net/i?id=c9845fbc4e881605ed4042f66c14498b_l-5289075-images-thumbs&n=13" alt="Camp Nou">
+        <button class="favorite-btn" data-venue="camp-nou" title="Add to Favorites">
+            <i class="far fa-heart"></i>
+        </button>
+        <div class="venue-badge">Club Stadium</div>
+    </div>
+    <div class="venue-content">
+        <h3>Camp Nou</h3>
+        <p>The legendary stadium of FC Barcelona, known for its passionate fans and historic matches.</p>
+        <div class="venue-details">
+            <span><i class="fas fa-map-marker-alt"></i> Barcelona, Spain</span>
+            <span><i class="fas fa-users"></i> Capacity: 99,354</span>
+        </div>
+        <div class="venue-sports">
+            <span class="sport-tag">Football</span>
+        </div>
+        <div class="venue-actions">
+            <a href="#" class="btn-primary">View Events</a>
+            <button class="btn-outline view-map-btn" data-venue="camp-nou">
+                <i class="fas fa-map-marker-alt"></i> View on Map
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 3. MetLife Stadium -->
+<div class="venue-item" data-capacity="82500" data-sports="football" data-location="New Jersey, USA" data-lat="40.8135" data-lng="-74.0745" data-venue-id="metlife-stadium">
+    <div class="venue-image-container">
+        <img src="https://avatars.mds.yandex.net/i?id=0da6a610e38022d5571f9487f59cc879_l-5646461-images-thumbs&n=13" alt="MetLife Stadium">
+        <button class="favorite-btn" data-venue="metlife-stadium" title="Add to Favorites">
+            <i class="far fa-heart"></i>
+        </button>
+        <div class="venue-badge">NFL Stadium</div>
+    </div>
+    <div class="venue-content">
+        <h3>MetLife Stadium</h3>
+        <p>Home to both the New York Giants and Jets, this multi-use venue is one of America's largest.</p>
+        <div class="venue-details">
+            <span><i class="fas fa-map-marker-alt"></i> New Jersey, USA</span>
+            <span><i class="fas fa-users"></i> Capacity: 82,500</span>
+        </div>
+        <div class="venue-sports">
+            <span class="sport-tag">Football</span>
+        </div>
+        <div class="venue-actions">
+            <a href="#" class="btn-primary">View Events</a>
+            <button class="btn-outline view-map-btn" data-venue="metlife-stadium">
+                <i class="fas fa-map-marker-alt"></i> View on Map
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 4. Allianz Arena -->
+<div class="venue-item" data-capacity="75000" data-sports="football" data-location="Munich, Germany" data-lat="48.2188" data-lng="11.6247" data-venue-id="allianz-arena">
+    <div class="venue-image-container">
+        <img src="https://avatars.mds.yandex.net/i?id=2ab62ee8026090ec654647a8708ac7591fdea901-5897487-images-thumbs&n=13" alt="Allianz Arena">
+        <button class="favorite-btn" data-venue="allianz-arena" title="Add to Favorites">
+            <i class="far fa-heart"></i>
+        </button>
+        <div class="venue-badge">LED-Lit Arena</div>
+    </div>
+    <div class="venue-content">
+        <h3>Allianz Arena</h3>
+        <p>Famous for its color-changing exterior, Allianz Arena hosts Bayern Munich's thrilling matches.</p>
+        <div class="venue-details">
+            <span><i class="fas fa-map-marker-alt"></i> Munich, Germany</span>
+            <span><i class="fas fa-users"></i> Capacity: 75,000</span>
+        </div>
+        <div class="venue-sports">
+            <span class="sport-tag">Football</span>
+        </div>
+        <div class="venue-actions">
+            <a href="#" class="btn-primary">View Events</a>
+            <button class="btn-outline view-map-btn" data-venue="allianz-arena">
+                <i class="fas fa-map-marker-alt"></i> View on Map
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 5. Old Trafford -->
+<div class="venue-item" data-capacity="74879" data-sports="football" data-location="Manchester, UK" data-lat="53.4631" data-lng="-2.2913" data-venue-id="old-trafford">
+    <div class="venue-image-container">
+        <img src="https://avatars.mds.yandex.net/i?id=add07c9b6f470a061db0255c5c5c956bd82c1622-10152094-images-thumbs&n=13" alt="Old Trafford">
+        <button class="favorite-btn" data-venue="old-trafford" title="Add to Favorites">
+            <i class="far fa-heart"></i>
+        </button>
+        <div class="venue-badge">Historic Stadium</div>
+    </div>
+    <div class="venue-content">
+        <h3>Old Trafford</h3>
+        <p>Nicknamed "The Theatre of Dreams", this is Manchester United's legendary home ground.</p>
+        <div class="venue-details">
+            <span><i class="fas fa-map-marker-alt"></i> Manchester, UK</span>
+            <span><i class="fas fa-users"></i> Capacity: 74,879</span>
+        </div>
+        <div class="venue-sports">
+            <span class="sport-tag">Football</span>
+        </div>
+        <div class="venue-actions">
+            <a href="#" class="btn-primary">View Events</a>
+            <button class="btn-outline view-map-btn" data-venue="old-trafford">
+                <i class="fas fa-map-marker-alt"></i> View on Map
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 6. AT&T Stadium -->
+<div class="venue-item" data-capacity="80000" data-sports="football" data-location="Arlington, USA" data-lat="32.7478" data-lng="-97.0945" data-venue-id="att-stadium">
+    <div class="venue-image-container">
+        <img src="https://avatars.mds.yandex.net/i?id=374c4e01c411a07f4113776672c1eb8e1fa5c644-5268868-images-thumbs&n=13" alt="AT&T Stadium">
+        <button class="favorite-btn" data-venue="att-stadium" title="Add to Favorites">
+            <i class="far fa-heart"></i>
+        </button>
+        <div class="venue-badge">Retractable Roof</div>
+    </div>
+    <div class="venue-content">
+        <h3>AT&T Stadium</h3>
+        <p>High-tech stadium with a retractable roof and giant screen, home to the Dallas Cowboys.</p>
+        <div class="venue-details">
+            <span><i class="fas fa-map-marker-alt"></i> Arlington, USA</span>
+            <span><i class="fas fa-users"></i> Capacity: 80,000</span>
+        </div>
+        <div class="venue-sports">
+            <span class="sport-tag">Football</span>
+        </div>
+        <div class="venue-actions">
+            <a href="#" class="btn-primary">View Events</a>
+            <button class="btn-outline view-map-btn" data-venue="att-stadium">
+                <i class="fas fa-map-marker-alt"></i> View on Map
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 7. Maracanã Stadium -->
+<div class="venue-item" data-capacity="18838" data-sports="football" data-location="Rio de Janeiro, Brazil" data-lat="-22.9122" data-lng="-43.2302" data-venue-id="maracana">
+    <div class="venue-image-container">
+        <img src="https://avatars.mds.yandex.net/i?id=6460c50d1b9c5772d4a41d08111db9e2_l-5646461-images-thumbs&n=13" alt="Maracanã">
+        <button class="favorite-btn" data-venue="maracana" title="Add to Favorites">
+            <i class="far fa-heart"></i>
+        </button>
+        <div class="venue-badge">Olympic Stadium</div>
+    </div>
+    <div class="venue-content">
+        <h3>Maracanã</h3>
+        <p>One of the world's most iconic stadiums, host to World Cup finals and Olympic ceremonies.</p>
+        <div class="venue-details">
+            <span><i class="fas fa-map-marker-alt"></i> Rio de Janeiro, Brazil</span>
+            <span><i class="fas fa-users"></i> Capacity: 18,838</span>
+        </div>
+        <div class="venue-sports">
+            <span class="sport-tag">Football</span>
+        </div>
+        <div class="venue-actions">
+            <a href="#" class="btn-primary">View Events</a>
+            <button class="btn-outline view-map-btn" data-venue="maracana">
+                <i class="fas fa-map-marker-alt"></i> View on Map
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 8. Stade de France -->
+<div class="venue-item" data-capacity="81338" data-sports="football,rugby" data-location="Paris, France" data-lat="48.9244" data-lng="2.3601" data-venue-id="stade-de-france">
+    <div class="venue-image-container">
+        <img src="https://avatars.mds.yandex.net/i?id=6460c50d1b9c5772d4a41d08111db9e2_l-5646461-images-thumbs&n=13" alt="Stade de France">
+        <button class="favorite-btn" data-venue="stade-de-france" title="Add to Favorites">
+            <i class="far fa-heart"></i>
+        </button>
+        <div class="venue-badge">Multi-sport Arena</div>
+    </div>
+    <div class="venue-content">
+        <h3>Stade de France</h3>
+        <p>National stadium of France hosting football, rugby, and major international events.</p>
+        <div class="venue-details">
+            <span><i class="fas fa-map-marker-alt"></i> Paris, France</span>
+            <span><i class="fas fa-users"></i> Capacity: 81,338</span>
+        </div>
+        <div class="venue-sports">
+            <span class="sport-tag">Football</span>
+            <span class="sport-tag">Rugby</span>
+        </div>
+        <div class="venue-actions">
+            <a href="#" class="btn-primary">View Events</a>
+            <button class="btn-outline view-map-btn" data-venue="stade-de-france">
+                <i class="fas fa-map-marker-alt"></i> View on Map
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 9. San Siro -->
+<div class="venue-item" data-capacity="75000" data-sports="football" data-location="Milan, Italy" data-lat="45.4781" data-lng="9.1240" data-venue-id="san-siro">
+    <div class="venue-image-container">
+        <img src="https://avatars.mds.yandex.net/i?id=2cd01fce2404dc65988f926201039f4d_l-5231754-images-thumbs&n=13" alt="San Siro">
+        <button class="favorite-btn" data-venue="san-siro" title="Add to Favorites">
+            <i class="far fa-heart"></i>
+        </button>
+        <div class="venue-badge">Twin Club Stadium</div>
+    </div>
+    <div class="venue-content">
+        <h3>San Siro</h3>
+        <p>Shared by AC Milan and Inter, San Siro is a temple of Italian football and fierce rivalries.</p>
+        <div class="venue-details">
+            <span><i class="fas fa-map-marker-alt"></i> Milan, Italy</span>
+            <span><i class="fas fa-users"></i> Capacity: 75,000</span>
+        </div>
+        <div class="venue-sports">
+            <span class="sport-tag">Football</span>
+        </div>
+        <div class="venue-actions">
+            <a href="#" class="btn-primary">View Events</a>
+            <button class="btn-outline view-map-btn" data-venue="san-siro">
+                <i class="fas fa-map-marker-alt"></i> View on Map
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 10. Tokyo Dome -->
+<div class="venue-item" data-capacity="55000" data-sports="baseball,concerts" data-location="Tokyo, Japan" data-lat="35.7058" data-lng="139.7519" data-venue-id="tokyo-dome">
+    <div class="venue-image-container">
+        <img src="https://avatars.mds.yandex.net/i?id=c73b092abc041bace75009eabde0043b_l-5875933-images-thumbs&n=13" alt="Tokyo Dome">
+        <button class="favorite-btn" data-venue="tokyo-dome" title="Add to Favorites">
+            <i class="far fa-heart"></i>
+        </button>
+        <div class="venue-badge">Indoor Dome</div>
+    </div>
+    <div class="venue-content">
+        <h3>Tokyo Dome</h3>
+        <p>Multi-purpose indoor stadium in Japan used for baseball games, concerts, and other events.</p>
+        <div class="venue-details">
+            <span><i class="fas fa-map-marker-alt"></i> Tokyo, Japan</span>
+            <span><i class="fas fa-users"></i> Capacity: 55,000</span>
+        </div>
+        <div class="venue-sports">
+            <span class="sport-tag">Baseball</span>
+            <span class="sport-tag">Concerts</span>
+        </div>
+        <div class="venue-actions">
+            <a href="#" class="btn-primary">View Events</a>
+            <button class="btn-outline view-map-btn" data-venue="tokyo-dome">
+                <i class="fas fa-map-marker-alt"></i> View on Map
+            </button>
+        </div>
+    </div>
+</div>
+
+            <!-- No Results Message -->
+            <div class="no-results" id="no-results" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No venues found</h3>
+                <p>Try adjusting your search criteria or filters</p>
+                <button class="btn-primary" id="clear-all-filters">Clear All Filters</button>
             </div>
         </div>
     </section>
+    
     <footer class="main-footer">
         <div class="content-wrapper">
             <div class="footer-content">
@@ -137,44 +688,9 @@
             </div>
         </div>
     </footer>
-    <script src="main.js"></script>
-    <script>
-        // Basic modal functionality for the about page
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add("active");
-            }
-        }
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove("active");
-            }
-        }
-        function switchModal(currentModalId, targetModalId) {
-            closeModal(currentModalId);
-            setTimeout(() => openModal(targetModalId), 300);
-        }
-        // Close modal when clicking outside
-        document.addEventListener("click", function(e) {
-            if (e.target.classList.contains("modal-overlay")) {
-                e.target.classList.remove("active");
-            }
-        });
-        // Close modal with escape key
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "Escape") {
-                document.querySelectorAll(".modal-overlay.active").forEach(modal => {
-                    modal.classList.remove("active");
-                });
-            }
-        });
-        // Mobile menu toggle
-        document.getElementById("mobile-menu-btn").addEventListener("click", function() {
-            const navLinks = document.getElementById("nav-links");
-            navLinks.classList.toggle("active");
-        });
-    </script>
+    
+    <script src="venues.js"></script>
 </body>
 </html>
+
+
