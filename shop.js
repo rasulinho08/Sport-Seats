@@ -22,103 +22,313 @@ class EnhancedShopManager {
         this.initHeroSlider();
         this.loadSampleReviews();
     }
-
-    loadProducts() {
-        this.products = [
-            {
-                id: 1,
-                name: 'Basketball Jersey',
-                category: 'sportswear',
-                price: 50,
-                images: [
-                    'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop',
-                    'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&sat=-50',
-                    'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&hue=30'
-                ],
-                description: 'Breathable and comfortable jersey perfect for the court. Made with moisture-wicking fabric.',
-                sizes: ['S', 'M', 'L', 'XL'],
-                colors: ['Red', 'Blue', 'Black', 'White'],
-                rating: 4.8,
-                reviewCount: 124
-            },
-            {
-                id: 2,
-                name: 'Running Shoes',
-                category: 'footwear',
-                price: 120,
-                images: [
-                    'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=600&h=400&fit=crop',
-                    'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=600&h=400&fit=crop&sat=-50',
-                    'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=600&h=400&fit=crop&hue=30'
-                ],
-                description: 'High-performance running shoes designed for all terrains with superior cushioning.',
-                sizes: ['7', '8', '9', '10', '11', '12'],
-                colors: ['Black', 'White', 'Gray', 'Blue'],
-                rating: 4.6,
-                reviewCount: 89
-            },
-            {
-                id: 3,
-                name: 'Football',
-                category: 'equipment',
-                price: 30,
-                images: [
-                    'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop',
-                    'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop&sat=-50',
-                    'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop&hue=30'
-                ],
-                description: 'Professional-grade football perfect for training and matches. Official size and weight.',
-                rating: 4.7,
-                reviewCount: 156
-            },
-            {
-                id: 4,
-                name: 'Smartwatch',
-                category: 'tech',
-                price: 200,
-                images: [
-                    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop',
-                    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop&sat=-50',
-                    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop&hue=30'
-                ],
-                description: 'Advanced fitness tracking smartwatch with heart rate monitoring and GPS.',
-                colors: ['Black', 'Silver', 'Gold'],
-                rating: 4.5,
-                reviewCount: 203
-            },
-            {
-                id: 5,
-                name: 'Protein Powder',
-                category: 'nutrition',
-                price: 45,
-                images: [
-                    'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=600&h=400&fit=crop',
-                    'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=600&h=400&fit=crop&sat=-50',
-                    'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=600&h=400&fit=crop&hue=30'
-                ],
-                description: 'High-quality whey protein powder for muscle recovery and growth.',
-                colors: ['Vanilla', 'Chocolate', 'Strawberry'],
-                rating: 4.9,
-                reviewCount: 78
-            },
-            {
-                id: 6,
-                name: 'Yoga Mat',
-                category: 'equipment',
-                price: 40,
-                images: [
-                    'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop',
-                    'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop&sat=-50',
-                    'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop&hue=30'
-                ],
-                description: 'Non-slip yoga mat with excellent grip and cushioning for all poses.',
-                colors: ['Purple', 'Blue', 'Green', 'Pink'],
-                rating: 4.4,
-                reviewCount: 92
-            }
-        ];
-    }
-
+loadProducts() {
+     this.products = [
+         {
+             id: 1,
+             name: 'Basketball Jersey',
+             category: 'sportswear',
+             price: 50,
+             images: [
+                  'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/cc36ee33-4480-435e-aa3a-0038c1e8d7de/FRA+M+NK+LMTD+JSY+RD+NN+O+24.png',
+                 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/bea76b9c-6285-4323-bf81-cf6b803c92dd/FRA+M+NK+LMTD+JSY+RD+NN+O+24.png',
+                 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/cf74d10a-8fa7-4af5-af43-301bf1ea2945/FRA+M+NK+LMTD+JSY+RD+NN+O+24.png',
+                 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/59957a8d-7f76-4efd-86e2-d6c98bd79ee3/FRA+M+NK+LMTD+JSY+RD+NN+O+24.png'
+             ],
+             description: 'Breathable and comfortable jersey perfect for the court. Made with moisture-wicking fabric.',
+             sizes: ['S', 'M', 'L', 'XL'],
+             colors: ['Red', 'Blue', 'Black', 'White'],
+             rating: 4.8,
+             reviewCount: 124
+         },
+         {
+             id: 2,
+             name: 'Running Shoes',
+             category: 'footwear',
+             price: 120,
+             images: [
+                 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/92985e4d-3d5c-49c4-a25c-5f103b790f9e/W+NIKE+VOMERO+PLUS.png',
+                 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/c46c2a01-3400-4c86-8c98-43d416560a8c/W+NIKE+VOMERO+PLUS.png',
+                 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/493e05e0-d4fa-4f33-ba25-74021799084d/W+NIKE+VOMERO+PLUS.png',
+                 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/04f071ee-86f6-4e91-9e94-8a78b1dc480c/W+NIKE+VOMERO+PLUS.png',
+             ],
+             description: 'High-performance running shoes designed for all terrains with superior cushioning.',
+             sizes: ['38', '39', '40', '41', '42', '43'],
+             colors: ['Black', 'White', 'Gray', 'Blue'],
+             rating: 4.6,
+             reviewCount: 89
+         },
+         {
+             id: 3,
+             name: 'Football',
+             category: 'equipment',
+             price: 30,
+             images: [
+                 'https://images.pexels.com/photos/47730/the-ball-stadion-football-the-pitch-47730.jpeg',
+                 'https://images.pexels.com/photos/2834921/pexels-photo-2834921.jpeg',
+                 'https://images.pexels.com/photos/2834917/pexels-photo-2834917.jpeg'
+             ],
+             description: 'Professional-grade football perfect for training and matches. Official size and weight.',
+             rating: 4.7,
+             reviewCount: 156
+         },
+         {
+             id: 4,
+             name: 'Smartwatch',
+             category: 'tech',
+             price: 200,
+             images: [
+                 'https://images.pexels.com/photos/2783873/pexels-photo-2783873.jpeg',
+                 'https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg',
+                 'https://images.pexels.com/photos/110471/pexels-photo-110471.jpeg'
+             ],
+             description: 'Advanced fitness tracking smartwatch with heart rate monitoring and GPS.',
+             colors: ['Black', 'Silver', 'Gold'],
+             rating: 4.5,
+             reviewCount: 203
+         },
+         {
+             id: 5,
+             name: 'Protein Powder',
+             category: 'nutrition',
+             price: 45,
+             images: [
+                 'https://images.pexels.com/photos/8438363/pexels-photo-8438363.jpeg',
+                 'https://images.pexels.com/photos/6551139/pexels-photo-6551139.jpeg',
+                 'https://plus.unsplash.com/premium_photo-1663040520419-e7746374a2f4'
+             ],
+             description: 'High-quality whey protein powder for muscle recovery and growth.',
+             colors: ['Vanilla', 'Chocolate', 'Strawberry'],
+             rating: 4.9,
+             reviewCount: 78
+         },
+         {
+             id: 6,
+             name: 'Yoga Mat',
+             category: 'equipment',
+             price: 40,
+             images: [
+                 'https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg',
+                 'https://images.pexels.com/photos/868759/pexels-photo-868759.jpeg',
+                 'https://images.pexels.com/photos/4134839/pexels-photo-4134839.jpeg'
+             ],
+             description: 'Non-slip yoga mat with excellent grip and cushioning for all poses.',
+             colors: ['Purple', 'Blue', 'Green', 'Pink'],
+             rating: 4.4,
+             reviewCount: 92
+         },
+         {
+             id: 7,
+             name: 'Boxing Gloves',
+             category: 'equipment',
+             price: 60,
+             images: [
+                 'https://images.pexels.com/photos/3993132/pexels-photo-3993132.jpeg',
+                 'https://images.pexels.com/photos/8949212/pexels-photo-8949212.jpeg',
+                 'https://images.pexels.com/photos/1721944/pexels-photo-1721944.jpeg'
+             ],
+             description: 'Durable leather boxing gloves with high-impact padding for training and matches.',
+             colors: ['Red', 'Black', 'White'],
+             rating: 4.7,
+             reviewCount: 67
+         },
+         {
+             id: 8,
+             name: 'Gym Shorts',
+             category: 'sportswear',
+             price: 25,
+             images: [
+                 'https://images.pexels.com/photos/9820541/pexels-photo-9820541.jpeg',
+                 'https://images.pexels.com/photos/6311653/pexels-photo-6311653.jpeg',
+                 'https://images.pexels.com/photos/6311652/pexels-photo-6311652.jpeg'
+             ],
+             description: 'Lightweight and flexible gym shorts ideal for any workout.',
+             sizes: ['S', 'M', 'L', 'XL'],
+             colors: ['Black', 'Gray', 'Navy'],
+             rating: 4.3,
+             reviewCount: 58
+         },
+         {
+             id: 9,
+             name: 'Cycling Helmet',
+             category: 'equipment',
+             price: 85,
+             images: [
+                 'https://images.pexels.com/photos/276510/pexels-photo-276510.jpeg',
+                 'https://images.pexels.com/photos/1000746/pexels-photo-1000746.jpeg',
+                 'https://images.pexels.com/photos/5994073/pexels-photo-5994073.jpeg'
+             ],
+             description: 'Aerodynamic cycling helmet with advanced ventilation and impact resistance.',
+             colors: ['Black', 'Red', 'Blue'],
+             rating: 4.6,
+             reviewCount: 44
+         },
+         {
+             id: 10,
+             name: 'Tennis Racket',
+             category: 'equipment',
+             price: 110,
+             images: [
+                 'https://images.pexels.com/photos/1432034/pexels-photo-1432034.jpeg',
+                 'https://images.pexels.com/photos/5689006/pexels-photo-5689006.jpeg',
+                 'https://images.pexels.com/photos/2213451/pexels-photo-2213451.jpeg'
+             ],
+             description: 'Lightweight tennis racket for beginners and pros. Enhanced grip and control.',
+             rating: 4.5,
+             reviewCount: 73
+         },
+         {
+             id: 11,
+             name: 'Compression Shirt',
+             category: 'sportswear',
+             price: 35,
+             images: [
+                 'https://images.pexels.com/photos/16140502/pexels-photo-16140502/free-photo-of-man-in-long-sleeved-shirt.jpeg',
+                 'https://images.pexels.com/photos/1552103/pexels-photo-1552103.jpeg',
+                 'https://images.pexels.com/photos/8649390/pexels-photo-8649390.jpeg'
+             ],
+             description: 'Moisture-wicking compression shirt ideal for running and strength training.',
+             sizes: ['S', 'M', 'L', 'XL'],
+             colors: ['Black', 'Blue', 'Gray'],
+             rating: 4.4,
+             reviewCount: 61
+         },
+         {
+             id: 12,
+             name: 'Jump Rope',
+             category: 'equipment',
+             price: 20,
+             images: [
+                 'https://images.pexels.com/photos/4397779/pexels-photo-4397779.jpeg',
+                 'https://images.pexels.com/photos/4058315/pexels-photo-4058315.jpeg',
+                 'https://images.pexels.com/photos/6456299/pexels-photo-6456299.jpeg'
+             ],
+             description: 'Adjustable-speed jump rope perfect for cardio and endurance workouts.',
+             colors: ['Black', 'Green'],
+             rating: 4.2,
+             reviewCount: 49
+         },
+         {
+             id: 13,
+             name: 'Basketball',
+             category: 'equipment',
+             price: 35,
+             images: [
+                 'https://images.pexels.com/photos/1752757/pexels-photo-1752757.jpeg',
+                 'https://images.pexels.com/photos/6653/ball-basketball-game-sport.jpg',
+                 'https://images.pexels.com/photos/2834914/pexels-photo-2834914.jpeg'
+             ],
+             description: 'Indoor/outdoor basketball with durable grip and excellent bounce.',
+             rating: 4.6,
+             reviewCount: 85
+         },
+         {
+             id: 14,
+             name: 'Sweatband Set',
+             category: 'accessories',
+             price: 15,
+             images: [
+                 'https://images.pexels.com/photos/8468087/pexels-photo-8468087.jpeg',
+                 'https://images.pexels.com/photos/8468095/pexels-photo-8468095.jpeg',
+                 'https://images.pexels.com/photos/3757956/pexels-photo-3757956.jpeg'
+             ],
+             description: 'Headband and wristband set for staying dry during intense workouts.',
+             colors: ['White', 'Black', 'Blue'],
+             rating: 4.1,
+             reviewCount: 29
+         },
+         {
+             id: 15,
+             name: 'Training Hoodie',
+             category: 'sportswear',
+             price: 55,
+             images: [
+                 'https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg',
+                 'https://images.pexels.com/photos/3078440/pexels-photo-3078440.jpeg',
+                 'https://images.pexels.com/photos/2664421/pexels-photo-2664421.jpeg'
+             ],
+             description: 'Warm and breathable hoodie with zip pockets, ideal for warm-up or casual wear.',
+             sizes: ['S', 'M', 'L', 'XL'],
+             colors: ['Gray', 'Black', 'Maroon'],
+             rating: 4.5,
+             reviewCount: 70
+         },
+         {
+             id: 16,
+             name: 'Hydration Bottle',
+             category: 'accessories',
+             price: 18,
+             images: [
+                 'https://images.pexels.com/photos/1309240/pexels-photo-1309240.jpeg',
+                 'https://images.pexels.com/photos/8987431/pexels-photo-8987431.jpeg',
+                 'https://images.pexels.com/photos/5999951/pexels-photo-5999951.jpeg'
+             ],
+             description: 'Leak-proof sport water bottle with time marker and handle.',
+             colors: ['Blue', 'Black', 'Green'],
+             rating: 4.6,
+             reviewCount: 90
+         },
+         {
+             id: 17,
+             name: 'Resistance Bands Set',
+             category: 'equipment',
+             price: 32,
+             images: [
+                 'https://images.pexels.com/photos/4164044/pexels-photo-4164044.jpeg',
+                 'https://images.pexels.com/photos/841131/pexels-photo-841131.jpeg',
+                 'https://images.pexels.com/photos/6740630/pexels-photo-6740630.jpeg'
+             ],
+             description: 'Set of resistance bands for strength, mobility, and rehab exercises.',
+             rating: 4.8,
+             reviewCount: 103
+         },
+         {
+             id: 18,
+             name: 'Soccer Cleats',
+             category: 'footwear',
+             price: 90,
+             images: [
+                 'https://images.pexels.com/photos/167703/pexels-photo-167703.jpeg',
+                 'https://images.pexels.com/photos/1070344/pexels-photo-1070344.jpeg',
+                 'https://images.pexels.com/photos/1299905/pexels-photo-1299905.jpeg'
+             ],
+             description: 'Firm ground soccer cleats offering traction, speed, and stability.',
+             sizes: ['7', '8', '9', '10', '11'],
+             colors: ['Black', 'Orange', 'White'],
+             rating: 4.7,
+             reviewCount: 82
+         },
+         {
+             id: 19,
+             name: 'Sports Sunglasses',
+             category: 'accessories',
+             price: 60,
+             images: [
+                 'https://images.pexels.com/photos/701877/pexels-photo-701877.jpeg',
+                 'https://images.pexels.com/photos/1359330/pexels-photo-1359330.jpeg',
+                 'https://images.pexels.com/photos/2860807/pexels-photo-2860807.jpeg'
+             ],
+             description: 'Polarized sunglasses with UV protection for outdoor sports and cycling.',
+             colors: ['Black', 'Silver'],
+             rating: 4.5,
+             reviewCount: 34
+         },
+         {
+             id: 20,
+             name: 'Pull-Up Bar',
+             category: 'equipment',
+             price: 70,
+             images: [
+                 'https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg',
+                 'https://images.pexels.com/photos/4761663/pexels-photo-4761663.jpeg',
+                 'https://images.pexels.com/photos/4162451/pexels-photo-4162451.jpeg'
+             ],
+             description: 'Multi-grip doorway pull-up bar for full upper-body workouts at home.',
+             rating: 4.6,
+             reviewCount: 76
+         }
+     ];
+ }
     setupEventListeners() {
         // Hero slider controls
         document.getElementById('next-btn').addEventListener('click', () => this.nextSlide());

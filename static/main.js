@@ -24,4 +24,3 @@ socket.on('receive_message', function(data) {
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }); 
-

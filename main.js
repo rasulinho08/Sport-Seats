@@ -1,6 +1,3 @@
-
-
-
 // DOM Elements
 const mobileMenuBtn = document.getElementById("mobile-menu-btn");
 const navLinks = document.getElementById("nav-links");
@@ -10,12 +7,38 @@ const sportFilter = document.getElementById("sport-filter");
 const dateFilter = document.getElementById("date-filter");
 const toastWrapper = document.getElementById("toast-wrapper");
 
+// Sample events data (replace with actual API data in production)
+const sampleEvents = [
+    {
+        id: 1,
+        title: "NFL: Patriots vs. Jets",
+        venue: "Gillette Stadium",
+        date: "2025-08-15",
+        sport: "football",
+        price: 99,
+        image: "https://example.com/patriots-jets.jpg",
+        featured: true
+    },
+    {
+        id: 2,
+        title: "NBA: Lakers vs. Celtics",
+        venue: "Staples Center",
+        date: "2025-08-20",
+        sport: "basketball",
+        price: 150,
+        image: "https://example.com/lakers-celtics.jpg",
+        featured: true
+    },
+    // Add more sample events as needed
+];
+
 // State
 let currentEvents = sampleEvents.filter(event => event.featured);
 let filteredEvents = [...currentEvents];
 
 // Initialize the application
 document.addEventListener("DOMContentLoaded", function() {
+    console.log('Main DOMContentLoaded: Initializing core features');
     initializeNavigation();
     initializeSearch();
     initializeModals();
@@ -25,9 +48,15 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeScrollAnimations();
 });
 
+// Initialize Socket.IO
+const socket = io('http://localhost:3000', {
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000
+});
+
 // Navigation functionality
 function initializeNavigation() {
-    // Mobile menu toggle
     if (mobileMenuBtn && navLinks) {
         mobileMenuBtn.addEventListener("click", function() {
             navLinks.classList.toggle("active");
@@ -40,14 +69,14 @@ function initializeNavigation() {
         });
     }
 
-    // Smooth scrolling for navigation links
     document.querySelectorAll(".nav-item").forEach(link => {
         link.addEventListener("click", function(e) {
             e.preventDefault();
             const targetId = this.getAttribute("href");
             
-            // Handle external links (like about.html)
-            if (targetId.startsWith("about.html")) {
+            if (targetId.startsWith("about.html") || targetId.startsWith("venues.html") || 
+                targetId.startsWith("shop.html") || targetId.startsWith("login.html") || 
+                targetId.startsWith("register.html") || targetId.startsWith("admin.html")) {
                 window.location.href = targetId;
                 return;
             }
@@ -60,19 +89,16 @@ function initializeNavigation() {
                     block: "start"
                 });
                 
-                // Close mobile menu
                 navLinks.classList.remove("active");
                 const icon = mobileMenuBtn.querySelector("i");
                 icon.classList.replace("fa-times", "fa-bars");
                 
-                // Update active link
                 document.querySelectorAll(".nav-item").forEach(l => l.classList.remove("active"));
                 this.classList.add("active");
             }
         });
     });
 
-    // Navbar scroll effect
     window.addEventListener("scroll", function() {
         const navbar = document.querySelector(".main-nav");
         if (window.scrollY > 100) {
@@ -99,7 +125,6 @@ function initializeSearch() {
         dateFilter.addEventListener("change", handleSearch);
     }
 
-    // Search button
     document.querySelector(".search-btn")?.addEventListener("click", function(e) {
         e.preventDefault();
         handleSearch();
@@ -190,7 +215,6 @@ function renderEvents() {
 
 // Modal functionality
 function initializeModals() {
-    // Close modal when clicking outside
     document.querySelectorAll(".modal-overlay").forEach(modal => {
         modal.addEventListener("click", function(e) {
             if (e.target === this) {
@@ -199,7 +223,6 @@ function initializeModals() {
         });
     });
 
-    // Close modal with Escape key
     document.addEventListener("keydown", function(e) {
         if (e.key === "Escape") {
             document.querySelectorAll(".modal-overlay.active").forEach(modal => {
@@ -212,16 +235,23 @@ function initializeModals() {
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
+        console.log(`Opening modal: ${modalId}`);
         modal.classList.add("active");
         document.body.style.overflow = "hidden";
+    } else {
+        console.error(`Modal with ID ${modalId} not found`);
+        showToast("Error opening modal. Please try again.", "error");
     }
 }
 
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
+        console.log(`Closing modal: ${modalId}`);
         modal.classList.remove("active");
         document.body.style.overflow = "";
+    } else {
+        console.error(`Modal with ID ${modalId} not found`);
     }
 }
 
@@ -232,7 +262,6 @@ function switchModal(fromModalId, toModalId) {
 
 // Form handling
 function initializeForms() {
-    // Login form (modal)
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
         loginForm.addEventListener("submit", async function(e) {
@@ -244,7 +273,7 @@ function initializeForms() {
                 return;
             }
             try {
-                const res = await fetch('/api/login', {
+                const res = await fetch('http://localhost:5000/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -267,7 +296,6 @@ function initializeForms() {
         });
     }
 
-    // Register form (modal)
     const registerForm = document.getElementById("register-form");
     if (registerForm) {
         registerForm.addEventListener("submit", async function(e) {
@@ -290,7 +318,7 @@ function initializeForms() {
                 return;
             }
             try {
-                const res = await fetch('/api/register', {
+                const res = await fetch('http://localhost:5000/api/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -311,7 +339,6 @@ function initializeForms() {
         });
     }
 
-    // Newsletter form
     const newsletterForm = document.getElementById("newsletter-form");
     if (newsletterForm) {
         newsletterForm.addEventListener("submit", function(e) {
@@ -333,17 +360,14 @@ function initializeCategoryCards() {
         card.addEventListener("click", function() {
             const sport = this.dataset.sport;
             if (sport) {
-                // Update sport filter
                 if (sportFilter) {
                     sportFilter.value = sport;
                 }
-                // Clear other filters
                 if (heroSearch) heroSearch.value = "";
                 if (dateFilter) dateFilter.value = "";
                 
                 handleSearch();
                 
-                // Scroll to events section
                 document.getElementById("events")?.scrollIntoView({
                     behavior: "smooth"
                 });
@@ -359,7 +383,6 @@ function viewEvent(eventId) {
     const event = sampleEvents.find(e => e.id === eventId);
     if (event) {
         showToast(`Viewing ${event.title} details...`, "success");
-        // In a real app, this would navigate to event details page
         console.log("Viewing event:", event);
     }
 }
@@ -368,13 +391,11 @@ function bookEvent(eventId) {
     const event = sampleEvents.find(e => e.id === eventId);
     if (event) {
         showToast(`Booking ${event.title}...`, "success");
-        // In a real app, this would open booking flow
         console.log("Booking event:", event);
     }
 }
 
 function loadMoreEvents() {
-    // Add more events to current display
     const moreEvents = sampleEvents.filter(event => !event.featured);
     currentEvents = [...currentEvents, ...moreEvents];
     filteredEvents = [...currentEvents];
@@ -384,6 +405,10 @@ function loadMoreEvents() {
 
 // Toast notifications
 function showToast(message, type = "success") {
+    if (!toastWrapper) {
+        console.error('Toast wrapper not found');
+        return;
+    }
     const toast = document.createElement("div");
     toast.className = `toast ${type}`;
     toast.innerHTML = `
@@ -398,10 +423,8 @@ function showToast(message, type = "success") {
     
     toastWrapper.appendChild(toast);
     
-    // Show toast
     setTimeout(() => toast.classList.add("show"), 100);
     
-    // Auto remove after 5 seconds
     setTimeout(() => removeToast(toast.querySelector(".toast-close")), 5000);
 }
 
@@ -426,7 +449,6 @@ function initializeScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe elements for animation
     document.querySelectorAll(".feature-item, .category-item, .event-card").forEach(el => {
         observer.observe(el);
     });
@@ -440,6 +462,7 @@ function updateUIForLoggedInUser(email) {
             <div class="user-menu">
                 <span class="user-email">${email}</span>
                 <button class="btn-outline" onclick="logout()">Logout</button>
+                ${email === 'mamishovrasul028@gmail.com' ? '<a href="admin.html" class="btn-outline" id="admin-panel-link" style="margin-left:10px;">Admin Panel</a>' : ''}
             </div>
         `;
     }
@@ -449,7 +472,6 @@ function logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
     showToast("Logged out successfully!", "success");
-    // Reset nav buttons
     const navButtons = document.querySelector(".nav-buttons");
     if (navButtons) {
         navButtons.innerHTML = `
@@ -459,13 +481,12 @@ function logout() {
                 <i class="fas fa-bars"></i>
             </button>
         `;
-        // Reinitialize navigation
         initializeNavigation();
     }
 }
 
-// --- Ensure admin user exists on load ---
-(async function ensureAdminUser() {
+// Ensure admin user (optional, comment out if no backend at port 5000)
+/*(async function ensureAdminUser() {
     try {
         const res = await fetch('http://localhost:5000/api/register', {
             method: 'POST',
@@ -475,7 +496,6 @@ function logout() {
                 password: 'R5661007'
             })
         });
-        // If already exists, try to login and set admin flag in localStorage
         if (!res.ok) {
             const loginRes = await fetch('http://localhost:5000/api/login', {
                 method: 'POST',
@@ -489,12 +509,124 @@ function logout() {
                 const data = await loginRes.json();
                 localStorage.setItem('access_token', data.access_token);
                 localStorage.setItem('user', JSON.stringify(data.user));
+                updateUIForLoggedInUser(data.user.email);
             }
         }
     } catch (e) {
-        // Ignore errors (e.g., server not running)
+        console.log('Admin user setup skipped (no backend at port 5000)');
     }
-})();
+})();*/
+
+// Chat functionality
+function initializeChat() {
+    const chatFloatBtn = document.getElementById('chatFloatBtn');
+    const chatCloseBtn = document.getElementById('chatCloseBtn');
+    const chatModal = document.getElementById('chatModal');
+    const chatForm = document.getElementById('chatForm');
+    const chatMessages = document.getElementById('chatMessages');
+
+    // Debug: Log element presence
+    console.log('Chat elements found:', {
+        chatFloatBtn: !!chatFloatBtn,
+        chatCloseBtn: !!chatCloseBtn,
+        chatModal: !!chatModal,
+        chatForm: !!chatForm,
+        chatMessages: !!chatMessages
+    });
+
+    // Check for critical elements
+    if (!chatFloatBtn || !chatModal) {
+        console.error('Chat button or modal not found');
+        showToast('Chat feature unavailable. Please refresh the page.', 'error');
+        return;
+    }
+
+    // Clone button to clear any existing listeners
+    const newChatFloatBtn = chatFloatBtn.cloneNode(true);
+    chatFloatBtn.parentNode.replaceChild(newChatFloatBtn, chatFloatBtn);
+
+    // Add click event for chat button
+    newChatFloatBtn.addEventListener('click', () => {
+        console.log('Chat button clicked!');
+        openModal('chatModal');
+    });
+
+    // Add close button event if present
+    if (chatCloseBtn) {
+        chatCloseBtn.addEventListener('click', () => {
+            console.log('Chat close button clicked');
+            closeModal('chatModal');
+        });
+    }
+
+    // Handle form submission if form exists
+    if (chatForm && chatMessages) {
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            const user = JSON.parse(localStorage.getItem('user')) || { email: 'Guest' };
+
+            if (message) {
+                const messageData = {
+                    message,
+                    sender: user.email === 'mamishovrasul028@gmail.com' ? 'support' : 'user',
+                    email: user.email,
+                    timestamp: new Date().toISOString()
+                };
+                console.log('Sending message:', messageData);
+                socket.emit('chatMessage', messageData);
+                addMessage(messageData);
+                input.value = '';
+            } else {
+                showToast('Please enter a message.', 'error');
+            }
+        });
+
+        // Handle incoming messages
+        socket.on('chatMessage', (data) => {
+            console.log('Received message:', data);
+            addMessage(data);
+        });
+
+        // Handle connection errors
+        socket.on('connect_error', (err) => {
+            console.error('Socket.IO connection error:', err);
+            showToast('Unable to connect to chat server. Please try again later.', 'error');
+        });
+
+        // Handle reconnection
+        socket.on('reconnect', () => {
+            showToast('Reconnected to chat server!', 'success');
+        });
+    }
+}
+
+// Add message to chat body
+function addMessage(data) {
+    const chatMessages = document.getElementById('chatMessages');
+    if (!chatMessages) {
+        console.error('Chat messages container not found');
+        return;
+    }
+
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('chat-message', data.sender);
+    messageElement.innerHTML = `
+        <div class="chat-message-content">
+            <p>${data.message}</p>
+            <div class="chat-message-timestamp">${formatDate(data.timestamp)}</div>
+        </div>
+    `;
+    chatMessages.appendChild(messageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Initialize chat on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Chat DOMContentLoaded: Initializing chat');
+    initializeChat();
+});
 
 // Utility functions
 function debounce(func, wait) {
@@ -514,14 +646,16 @@ function formatDate(dateString) {
     const options = { 
         month: "short", 
         day: "numeric",
-        weekday: "short"
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit"
     };
     return date.toLocaleDateString("en-US", options);
 }
 
 // Performance optimization
 function lazyLoadImages() {
-    const images = document.querySelectorAll("img[loading="lazy"]");
+    const images = document.querySelectorAll("img[loading='lazy']");
     
     if ("IntersectionObserver" in window) {
         const imageObserver = new IntersectionObserver((entries) => {
@@ -560,30 +694,3 @@ if ("serviceWorker" in navigator) {
             });
     });
 }
-const socket = io('http://localhost:3000');
-
-document.getElementById('chatFloatBtn').addEventListener('click', () => {
-    document.getElementById('chatModal').classList.add('active');
-});
-
-document.getElementById('chatCloseBtn').addEventListener('click', () => {
-    document.getElementById('chatModal').classList.remove('active');
-});
-
-document.getElementById('chatForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const input = document.getElementById('chatInput');
-    const message = input.value.trim();
-    if (message) {
-        socket.emit('chatMessage', { message, sender: 'user' });
-        addMessage(message, 'user');
-        input.value = '';
-    }
-});
-
-socket.on('chatMessage', (data) => {
-    addMessage(data.message, data.sender);
-});
-
-function addMessage(message, sender) {
-    const chatBody = document.getElementBy
