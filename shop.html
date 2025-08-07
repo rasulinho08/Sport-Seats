@@ -314,6 +314,83 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script src="shop.js"></script>
+    <script>
+// Hero background slider logic
+const heroSlides = document.querySelectorAll('.hero-slide');
+const heroDots = document.querySelectorAll('.hero-dots .dot');
+const productPreview = document.getElementById('hero-product-preview');
+let currentSlide = 0;
+const previewCards = [
+    {
+        img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop',
+        title: 'Basketball Jersey',
+        price: '$50.00',
+        rating: '4.8',
+        stars: 5
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=300&h=200&fit=crop',
+        title: 'Running Shoes',
+        price: '$80.00',
+        rating: '4.6',
+        stars: 5
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop',
+        title: 'Football',
+        price: '$30.00',
+        rating: '4.7',
+        stars: 5
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop',
+        title: 'Smartwatch',
+        price: '$120.00',
+        rating: '4.5',
+        stars: 5
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=300&h=200&fit=crop',
+        title: 'Protein Powder',
+        price: '$25.00',
+        rating: '4.9',
+        stars: 5
+    }
+];
+function showSlide(index) {
+    heroSlides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+    });
+    heroDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+    // Update product preview card
+    const card = previewCards[index];
+    productPreview.innerHTML = `<div class="product-preview-card active" data-product-id="${index+1}">
+        <img src="${card.img}" alt="${card.title}">
+        <div class="preview-info">
+            <h3>${card.title}</h3>
+            <p class="price">${card.price}</p>
+            <div class="rating">
+                ${'<i class="fas fa-star"></i>'.repeat(card.stars)}
+                <span>(${card.rating})</span>
+            </div>
+        </div>
+    </div>`;
+    currentSlide = index;
+}
+heroDots.forEach((dot, i) => {
+    dot.addEventListener('click', () => showSlide(i));
+});
+document.getElementById('prev-btn').onclick = function() {
+    showSlide((currentSlide - 1 + heroSlides.length) % heroSlides.length);
+};
+document.getElementById('next-btn').onclick = function() {
+    showSlide((currentSlide + 1) % heroSlides.length);
+};
+// Show first slide on load
+showSlide(0);
+</script>
 
 </body>
 </html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportsSeat - Premium Sports Ticketing Platform</title>
+    <link rel="icon" type="/images/icon" href="images/icon.jpg">
     <link rel="stylesheet" href="/static/styles.css">
     <meta name="description" content="Book premium sports tickets with interactive seat selection. Find the best seats for football, basketball, baseball and more.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,12 +30,14 @@
                 <a href="shop.html" class="nav-item">Shop</a>
             </div>
             <div class="nav-buttons">
-                <a href="login.html" style="background: var(--accent-color);" class="btn-outline">Login</a>
-                <a href="register.html" class="btn-primary">Sign Up</a>
-                <a href="admin.html" class="btn-outline" id="admin-panel-link" style="display:none; margin-left:10px;">Admin Panel</a>
-                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <a href="login.html" style="background: green; color: white;" class="btn-outline" id="login-btn">Login</a>
+                <a href="register.html" class="btn-primary" id="signup-btn">Sign Up</a>
+                <div class="user-avatar" id="user-avatar" style="display:none;"></div>
+                <button id="logout-btn" style="display:none; background:#f44336; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Logout</button>
+                <a href="dashboard.html" id="account-btn" style="display:none; background:#2196f3; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Account</a>
+                <div class="mobile-menu-btn" id="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
-                </button>
+                </div>
             </div>
         </div>
     </nav>
@@ -99,6 +102,7 @@
             </div>
         </div>
     </section>
+     
 
     <!-- Featured Events -->
     <section class="events-section" id="events">
@@ -116,6 +120,49 @@
         </div>
     </section>
 
+      <!-- Green Game Section -  -->
+    <section class="game-section-green">
+        <div class="game-section-container">
+            <div class="game-section-content">
+                <h2 class="game-section-title">Experience the Ultimate Football Challenge</h2>
+                <p class="game-section-description">
+                    Step into the world of competitive football gaming where strategy meets skill. 
+                    Our immersive foosball experience brings the excitement of the pitch directly to your screen. 
+                    Challenge yourself against intelligent AI opponents, master precise ball control, and climb the ranks 
+                    to become the ultimate champion.
+                </p>
+                <div class="game-section-features">
+                    <div class="game-feature-item">
+                        <span class="game-feature-icon">⚽</span>
+                        <span class="game-feature-text">Realistic Physics</span>
+                    </div>
+                    <div class="game-feature-item">
+                        <span class="game-feature-icon">🏆</span>
+                        <span class="game-feature-text">Championship Mode</span>
+                    </div>
+                    <div class="game-feature-item">
+                        <span class="game-feature-icon">📱</span>
+                        <span class="game-feature-text">Mobile Optimized</span>
+                    </div>
+                </div>
+                <div class="game-section-buttons">
+                    <a class="game-btn game-btn-primary" href="game.html" target="_blank">
+                        <span class="game-btn-text">Play Now</span>
+                        <span class="game-btn-icon">▶</span>
+                    </a>
+                    <button class="game-btn game-btn-secondary" onclick="showInstructions()">
+                        <span class="game-btn-text">How to Play</span>
+                        <span class="game-btn-icon">❓</span>
+                    </button>
+                    <button class="game-btn game-btn-accent" onclick="showLeaderboard()">
+                        <span class="game-btn-text">Leaderboard</span>
+                        <span class="game-btn-icon">📊</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <!-- Sports Categories -->
     <section class="categories-section">
         <div class="content-wrapper">
@@ -230,15 +277,15 @@
                     <div class="testimonials">
                         <div class="testimonial active" data-testimonial="0">
                             <p>"Best sports newsletter I've ever subscribed to!"</p>
-                            <span>- Mike Johnson</span>
+                            <span>- Zahra </span>
                         </div>
                         <div class="testimonial" data-testimonial="1">
                             <p>"Never miss a game thanks to their alerts!"</p>
-                            <span>- Sarah Wilson</span>
+                            <span>- Gulməliyev Shukur</span>
                         </div>
                         <div class="testimonial" data-testimonial="2">
                             <p>"Exclusive presale access saved me hundreds!"</p>
-                            <span>- David Chen</span>
+                            <span>- Ruslan Hemidov </span>
                         </div>
                     </div>
                 </div>
@@ -436,8 +483,6 @@
 <!-- Toast Notifications -->
 <div class="toast-container" id="toast-container"></div>
 
-
-
     <!-- Footer -->
     <footer class="main-footer">
         <div class="content-wrapper">
@@ -518,7 +563,7 @@
                             <input type="checkbox">
                             <span>Remember me</span>
                         </label>
-                        <a href="#" class="forgot-link">Forgot password?</a>
+                        <a href="#" class="forgot-link" onclick="openModal('forgotModal')" style="color:#2196f3; font-weight:bold;">Forgot password?</a>
                     </div>
                     <button type="submit" class="btn-primary btn-full">Sign In</button>
                 </form>
@@ -549,6 +594,26 @@
                             <label for="register-lastname">Last Name</label>
                             <input type="text" id="register-lastname" required>
                         </div>
+                        <div class="input-group">
+                            <label for="register-age">Age</label>
+                            <input type="number" id="register-age" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="register-phone">Phone</label>
+                            <input type="tel" id="register-phone" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="register-card">Card Number</label>
+                            <input type="text" id="register-card" maxlength="19" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="register-expiry">Card Expiry</label>
+                            <input type="text" id="register-expiry" maxlength="5" placeholder="MM/YY" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="register-cvv">Card CVV</label>
+                            <input type="text" id="register-cvv" maxlength="4" required>
+                        </div>
                     </div>
                     <div class="input-group">
                         <label for="register-email">Email Address</label>
@@ -573,6 +638,44 @@
                 <div class="modal-footer">
                     <p>Already have an account? <a href="#" onclick="switchModal('registerModal', 'loginModal')">Sign in</a></p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Modal -->
+    <div class="modal-overlay" id="accountModal" style="display:none;">
+        <div class="modal-box" style="max-width:400px; border-radius:20px; box-shadow:0 8px 32px rgba(33,150,243,0.2);">
+            <div class="modal-header" style="background:#2196f3; color:white; border-radius:20px 20px 0 0;">
+                <h2>Account Information</h2>
+                <button class="close-btn" onclick="closeModal('accountModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" style="padding:24px;">
+                <form id="account-form">
+                    <div class="input-group"><label>Name</label><input type="text" id="account-name" required></div>
+                    <div class="input-group"><label>Age</label><input type="number" id="account-age" required></div>
+                    <div class="input-group"><label>Email</label><input type="email" id="account-email" required disabled></div>
+                    <div class="input-group"><label>Phone</label><input type="tel" id="account-phone" required></div>
+                    <div class="input-group"><label>Card Number</label><input type="text" id="account-card" maxlength="19" required></div>
+                    <div class="input-group"><label>Card Expiry</label><input type="text" id="account-expiry" maxlength="5" placeholder="MM/YY" required></div>
+                    <div class="input-group"><label>Card CVV</label><input type="text" id="account-cvv" maxlength="4" required></div>
+                    <button type="submit" class="btn-primary btn-full" style="margin-top:18px;">Update Info</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal-overlay" id="forgotModal" style="display:none;">
+        <div class="modal-box" style="max-width:350px; border-radius:20px; box-shadow:0 8px 32px rgba(244,67,54,0.2);">
+            <div class="modal-header" style="background:#f44336; color:white; border-radius:20px 20px 0 0;">
+                <h2>Reset Password</h2>
+                <button class="close-btn" onclick="closeModal('forgotModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" style="padding:24px;">
+                <form id="forgot-form">
+                    <div class="input-group"><label>Email Address</label><input type="email" id="forgot-email" required></div>
+                    <button type="submit" class="btn-primary btn-full" style="margin-top:18px;">Send Reset Link</button>
+                </form>
             </div>
         </div>
     </div>
@@ -876,6 +979,81 @@ document.getElementById('register-form').onsubmit = async function(e) {
     }
 };
 
+// Show user avatar if logged in
+function showUserAvatar() {
+    var user = JSON.parse(localStorage.getItem('user'));
+    var avatar = document.getElementById('user-avatar');
+    var loginBtn = document.getElementById('login-btn');
+    var signupBtn = document.getElementById('signup-btn');
+    var logoutBtn = document.getElementById('logout-btn');
+    var accountBtn = document.getElementById('account-btn');
+    if (user && user.email) {
+        avatar.textContent = user.email.charAt(0).toUpperCase();
+        avatar.style.display = 'flex';
+        loginBtn.style.display = 'none';
+        signupBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+        accountBtn.style.display = 'inline-block';
+    } else {
+        avatar.style.display = 'none';
+        loginBtn.style.display = 'inline-block';
+        signupBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+        accountBtn.style.display = 'none';
+    }
+}
+document.addEventListener('DOMContentLoaded', showUserAvatar);
+
+// Logout functionality
+if (document.getElementById('logout-btn')) {
+    document.getElementById('logout-btn').onclick = function() {
+        localStorage.removeItem('user');
+        showUserAvatar();
+        location.reload();
+    };
+}
+// Account modal functionality
+if (document.getElementById('account-btn')) {
+    document.getElementById('account-btn').onclick = function() {
+        var user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            document.getElementById('account-name').value = user.name || '';
+            document.getElementById('account-age').value = user.age || '';
+            document.getElementById('account-email').value = user.email || '';
+            document.getElementById('account-phone').value = user.phone || '';
+            document.getElementById('account-card').value = user.card || '';
+            document.getElementById('account-expiry').value = user.expiry || '';
+            document.getElementById('account-cvv').value = user.cvv || '';
+        }
+        openModal('accountModal');
+    };
+}
+// Account form update
+if (document.getElementById('account-form')) {
+    document.getElementById('account-form').onsubmit = function(e) {
+        e.preventDefault();
+        var user = JSON.parse(localStorage.getItem('user')) || {};
+        user.name = document.getElementById('account-name').value;
+        user.age = document.getElementById('account-age').value;
+        user.phone = document.getElementById('account-phone').value;
+        user.card = document.getElementById('account-card').value;
+        user.expiry = document.getElementById('account-expiry').value;
+        user.cvv = document.getElementById('account-cvv').value;
+        localStorage.setItem('user', JSON.stringify(user));
+        closeModal('accountModal');
+        showUserAvatar();
+        alert('Account information updated!');
+    };
+}
+// Forgot password form
+if (document.getElementById('forgot-form')) {
+    document.getElementById('forgot-form').onsubmit = function(e) {
+        e.preventDefault();
+        var email = document.getElementById('forgot-email').value;
+        closeModal('forgotModal');
+        alert('If this email exists, a reset link will be sent.');
+    };
+}
 // Enhanced Newsletter Section JavaScript
 
 class NewsletterEnhancer {
@@ -1259,8 +1437,324 @@ window.NewsletterUtils = {
         }
     }
 };
+  
 
+// Button click handlers
+function startGame() {
+    // This function can be customized to integrate with your existing game
+    gameSectionShowNotification('Starting game...', 'success');
+    
+    // Example: You can replace this with your actual game initialization
+    // If you have an existing init() function, you can call it here:
+    // if (typeof init === 'function') {
+    //     init();
+    // }
+    
+    // For demonstration, we'll just show a message
+    setTimeout(() => {
+        gameSectionShowNotification('Game ready! Use arrow keys to play.', 'info');
+    }, 1500);
+}
 
+function showInstructions() {
+    gameSectionShowModal('How to Play', `
+        <div class="game-instructions">
+            <h3>Game Controls</h3>
+            <p><strong>Left Arrow:</strong> Move players left</p>
+            <p><strong>Right Arrow:</strong> Move players right</p>
+            <p><strong>Goal:</strong> Score more goals than your opponent!</p>
+            <br>
+            <h3>Game Rules</h3>
+            <p>• Match duration: 2 minutes</p>
+            <p>• Control your team (red players)</p>
+            <p>• Beat the AI opponent (blue players)</p>
+            <p>• Score goals to win the match</p>
+        </div>
+    `);
+}
+
+function showLeaderboard() {
+    // Sample leaderboard data - you can replace this with real data
+    const leaderboardData = [
+        { rank: 1, name: 'Rasul', score: 3000 },
+        { rank: 2, name: 'Islam', score: 2000 },
+        { rank: 3, name: 'Zahra', score: 1920 },
+        { rank: 4, name: 'Ayxan', score: 1650 },
+        { rank: 5, name: 'Ruslan', score: 1200 }
+    ];
+    
+    let leaderboardHTML = '<div class="game-leaderboard"><h3>Top Players</h3>';
+    leaderboardData.forEach(player => {
+        leaderboardHTML += `
+            <div class="leaderboard-item">
+                <span class="rank">#${player.rank}</span>
+                <span class="name">${player.name}</span>
+                <span class="score">${player.score}</span>
+            </div>
+        `;
+    });
+    leaderboardHTML += '</div>';
+    
+    gameSectionShowModal('Leaderboard', leaderboardHTML);
+}
+
+// Utility functions
+function gameSectionShowNotification(message, type = 'info') {
+    // Remove existing notification
+    const existingNotification = document.querySelector('.game-section-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification
+    const notification = document.createElement('div');
+    notification.className = 'game-section-notification';
+    notification.textContent = message;
+    
+    // Style the notification
+    const bgColor = type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3';
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${bgColor};
+        color: white;
+        padding: 15px 25px;
+        border-radius: 25px;
+        font-family: 'Verdana', sans-serif;
+        font-weight: bold;
+        font-size: 0.9rem;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        z-index: 10000;
+        animation: gameSectionSlideIn 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
+    `;
+    
+    // Add animation styles if not already added
+    if (!document.querySelector('#game-section-notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'game-section-notification-styles';
+        style.textContent = `
+            @keyframes gameSectionSlideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes gameSectionSlideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.style.animation = 'gameSectionSlideOut 0.3s ease';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 300);
+        }
+    }, 3000);
+}
+
+function gameSectionShowModal(title, content) {
+    // Remove existing modal
+    const existingModal = document.querySelector('.game-section-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Create modal
+    const modal = document.createElement('div');
+    modal.className = 'game-section-modal';
+    modal.innerHTML = `
+        <div class="game-modal-overlay" onclick="gameSectionCloseModal()"></div>
+        <div class="game-modal-content">
+            <div class="game-modal-header">
+                <h2>${title}</h2>
+                <button class="game-modal-close" onclick="gameSectionCloseModal()">×</button>
+            </div>
+            <div class="game-modal-body">
+                ${content}
+            </div>
+        </div>
+    `;
+    
+    // Style the modal
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10001;
+        animation: gameSectionModalFadeIn 0.3s ease;
+    `;
+    
+    // Add modal styles if not already added
+    if (!document.querySelector('#game-section-modal-styles')) {
+        const style = document.createElement('style');
+        style.id = 'game-section-modal-styles';
+        style.textContent = `
+            @keyframes gameSectionModalFadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            .game-modal-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                backdrop-filter: blur(5px);
+            }
+            .game-modal-content {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #1b5e20, #2e7d32);
+                border-radius: 15px;
+                max-width: 500px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            }
+            .game-modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 25px;
+                border-bottom: 1px solid rgba(255,255,255,0.2);
+            }
+            .game-modal-header h2 {
+                margin: 0;
+                color: #e8f5e8;
+                font-family: 'Verdana', sans-serif;
+                font-size: 1.3rem;
+            }
+            .game-modal-close {
+                background: none;
+                border: none;
+                color: #e8f5e8;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 5px;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background 0.3s ease;
+            }
+            .game-modal-close:hover {
+                background: rgba(255,255,255,0.1);
+            }
+            .game-modal-body {
+                padding: 25px;
+                color: #c8e6c9;
+                font-family: 'Verdana', sans-serif;
+                line-height: 1.6;
+            }
+            .game-instructions h3 {
+                color: #e8f5e8;
+                margin-top: 0;
+                margin-bottom: 15px;
+            }
+            .game-instructions p {
+                margin-bottom: 10px;
+            }
+            .game-leaderboard h3 {
+                color: #e8f5e8;
+                margin-top: 0;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            .leaderboard-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 15px;
+                margin-bottom: 8px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 8px;
+                transition: background 0.3s ease;
+            }
+            .leaderboard-item:hover {
+                background: rgba(255,255,255,0.15);
+            }
+            .leaderboard-item .rank {
+                font-weight: bold;
+                color: #81c784;
+                min-width: 30px;
+            }
+            .leaderboard-item .name {
+                flex: 1;
+                margin: 0 15px;
+            }
+            .leaderboard-item .score {
+                font-weight: bold;
+                color: #a5d6a7;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(modal);
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+function gameSectionCloseModal() {
+    const modal = document.querySelector('.game-section-modal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = '';
+    }
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        gameSectionCloseModal();
+    }
+});
+
+// Add touch event handling for better mobile experience
+document.addEventListener('DOMContentLoaded', function() {
+    // Add touch feedback for buttons
+    const buttons = document.querySelectorAll('.game-btn');
+    buttons.forEach(button => {
+        button.addEventListener('touchstart', function() {
+            this.style.transform = 'translateY(-1px) scale(0.98)';
+        });
+        
+        button.addEventListener('touchend', function() {
+            this.style.transform = '';
+        });
+    });
+});
+
+function openModal(id) {
+    var modal = document.getElementById(id);
+    if (modal) modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+    var modal = document.getElementById(id);
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+}
 </script>
 </body>
 </html>

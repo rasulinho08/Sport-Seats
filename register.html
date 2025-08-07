@@ -29,7 +29,7 @@ document.getElementById('register-form').onsubmit = async function (e) {
     const password = document.getElementById('register-password').value;
     const message = document.getElementById('register-message');
     try {
-        const res = await fetch('/api/register', {
+        const res = await fetch('http://127.0.0.1:5000/api/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })

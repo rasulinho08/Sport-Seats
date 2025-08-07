@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Foosball Game</title>
+    <style>
+        /* CSS from pasted_content.txt */
+        .game-section-green {
+            background: rgb(10, 137, 10);
+            padding: 60px 20px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Verdana', sans-serif;
+        }
+
+        .game-section-green::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(129, 199, 132, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .game-section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-section-content {
+            text-align: center;
+            color: white;
+        }
+
+        .game-section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #e8f5e8, #c8e6c9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .game-section-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #e8f5e8;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-section-features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .game-feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .game-feature-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-feature-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .game-feature-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #c8e6c9;
+            text-align: center;
+        }
+
+        .game-section-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .game-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            font-family: 'Verdana', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            min-width: 160px;
+            justify-content: center;
+        }
+
+        .game-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .game-btn:hover::before {
+            left: 100%;
+        }
+
+        .game-btn-primary {
+            background: linear-gradient(45deg, #4caf50, #66bb6a);
+            color: white;
+            border: 2px solid #2e7d32;
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .game-btn-primary:hover {
+            background: linear-gradient(45deg, #66bb6a, #81c784);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
+        }
+
+        .game-btn-secondary {
+            background: linear-gradient(45deg, #2e7d32, #388e3c);
+            color: white;
+            border: 2px solid #1b5e20;
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+        }
+
+        .game-btn-secondary:hover {
+            background: linear-gradient(45deg, #388e3c, #43a047);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.5);
+        }
+
+        .game-btn-accent {
+            background: linear-gradient(45deg, #689f38, #8bc34a);
+            color: white;
+            border: 2px solid #33691e;
+            box-shadow: 0 6px 20px rgba(104, 159, 56, 0.4);
+        }
+
+        .game-btn-accent:hover {
+            background: linear-gradient(45deg, #8bc34a, #9ccc65);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(104, 159, 56, 0.5);
+        }
+
+        .game-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .game-btn-text {
+            font-size: 0.9rem;
+        }
+
+        .game-btn-icon {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .game-btn:hover .game-btn-icon {
+            transform: scale(1.2);
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            .game-section-green {
+                padding: 40px 15px;
+                margin: 20px 0;
+            }
+            
+            .game-section-title {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+            
+            .game-section-description {
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
+            
+            .game-section-features {
+                gap: 20px;
+                margin-bottom: 40px;
+            }
+            
+            .game-feature-item {
+                padding: 15px;
+                min-width: 100px;
+            }
+            
+            .game-feature-icon {
+                font-size: 1.5rem;
+            }
+            
+            .game-feature-text {
+                font-size: 0.8rem;
+            }
+            
+            .game-section-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .game-btn {
+                width: 100%;
+                max-width: 280px;
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-section-title {
+                font-size: 1.7rem;
+            }
+            
+            .game-section-description {
+                font-size: 0.95rem;
+            }
+            
+            .game-section-features {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .game-feature-item {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .game-btn {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+                min-width: 140px;
+            }
+            
+            .game-btn-text {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Touch-friendly enhancements for mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .game-btn {
+                padding: 18px 35px;
+                font-size: 1.1rem;
+            }
+            
+            .game-feature-item {
+                padding: 25px;
+            }
+            
+            .game-feature-icon {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Original styles.css content */
+        body {
+            background: #333;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            position: relative;
+            width: 480px;
+            height: 720px;
+            background: #000;
+            border: 5px solid #555;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        #myCanvas {
+            background: #006400; /* Dark green for the field */
+            display: block;
+            margin: 0 auto;
+            border: 2px solid #004d00;
+        }
+
+        #startScreen, #gameOverScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        #title {
+            font-size: 3em;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition:  0.3s;
+        }
+
+        button:hover {
+            background: #0c0;
+        }
+
+        #help {
+            margin-top: 20px;
+        }
+
+        #instructions {
+            font-size: 0.9em;
+            color: #aaa;
+            margin-top: 10px;
+        }
+
+        #score {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        #timer {
+            text-align: center;
+        }
+
+        #countdown {
+            font-size: 1.8em;
+            color: #0f0;
+        }
+
+        #blue, #red {
+            margin: 0;
+        }
+
+        #away, #home {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        #status {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: yellow;
+            text-align: center;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+<div id = "container">
+
+
+    <div id ="startScreen">
+        <div id="title">FoosBall</div>
+        <button id="play" onclick="init()">PLAY</button>
+        <br><br><br>
+        <img src="images/help.png" height="100" width="150" id="help">
+        <br>
+        <span id ="instructions">(Use left and right arrow keys to play)</span>
+    </div>
+
+    <div id ="gameOverScreen">
+        <div id="title">FoosBall</div>
+        <button id="playagain" onclick="init()">PLAY AGAIN</button>
+        <br><br><br>
+    </div>
+
+
+    <canvas id="myCanvas" width="480" height="720"></canvas>
+    <div id="score">
+        <div id = "timer">
+            Time Left
+            <div id = "countdown">02:00</div>
+        </div>
+        <h3 id = "blue">Juventus </h3>
+        <div id="away">0</div>
+        <h3 id = "red">Liverpool</h3>
+        <div id="home">0</div>
+        <div id="status"></div>
+
+    </div> 
+    
+</div>
+<button onclick="window.location.href='index.html'" style="background: #ff4d00; border-radius: 5px; color: white; padding: 12px 32px; font-size: 1.1em; font-weight: bold; margin-top: 20px; cursor: pointer;">GO BACK</button>
+<script>
+    // SAT.js content from pasted_content_2.txt
+    // Version 0.5.0 - Copyright 2012 - 2015 -  Jim Riecken <jimr@jimr.ca>
+    //
+    // Released under the MIT License - https://github.com/jriecken/sat-js
+    //
+    // A simple library for determining intersections of circles and
+    // polygons using the Separating Axis Theorem.
+    /** @preserve SAT.js - Version 0.5.0 - Copyright 2012 - 2015 -  Jim Riecken <jimr@jimr.ca> - released under the MIT License. https://github.com/jriecken/sat-js */
+
+    /*global define: false, module: false*/
+    /*jshint shadow:true, sub:true, forin:true, noarg:true, noempty:true, 
+      eqeqeq:true, bitwise:true, strict:true, undef:true, 
+      curly:true, browser:true */
+
+    // Create a UMD wrapper for SAT. Works in:
+    //
+    //  - Plain browser via global SAT variable
+    //  - AMD loader (like require.js)
+    //  - Node.js
+    //
+    // The quoted properties all over the place are used so that the Closure Compiler
+    // does not mangle the exposed API in advanced mode.
+    /**
+     * @param {*} root - The global scope
+     * @param {Function} factory - Factory that creates SAT module
+     */
+    (function (root, factory) {
+      "use strict";
+      if (typeof define === 'function' && define['amd']) {
+        define(factory);
+      } else if (typeof exports === 'object') {
+        module['exports'] = factory();
+      } else {
+        root['SAT'] = factory();
+      }
+    }(this, function () {
+      "use strict";
+
+      var SAT = {};
+
+      //
+      // ## Vector
+      //
+      // Represents a vector in two dimensions with `x` and `y` properties.
+
+
+      // Create a new Vector, optionally passing in the `x` and `y` coordinates. If
+      // a coordinate is not specified, it will be set to `0`
+      /** 
+       * @param {?number=} x The x position.
+       * @param {?number=} y The y position.
+       * @constructor
+       */
+      function Vector(x, y) {
+        this['x'] = x || 0;
+        this['y'] = y || 0;
+      }
+      SAT['Vector'] = Vector;
+      // Alias `Vector` as `V`
+      SAT['V'] = Vector;
+
+
+      // Copy the values of another Vector into this one.
+      /**
+       * @param {Vector} other The other Vector.
+       * @return {Vector} This for chaining.
+       */
+      Vector.prototype['copy'] = Vector.prototype.copy = function(other) {
+        this['x'] = other['x'];
+        this['y'] = other['y'];
+        return this;
+      };
+
+      // Create a new vector with the same coordinates as this on.
+      /**
+       * @return {Vector} The new cloned vector
+       */
+      Vector.prototype['clone'] = Vector.prototype.clone = function() {
+        return new Vector(this['x'], this['y']);
+      };
+
+      // Change this vector to be perpendicular to what it was before. (Effectively
+      // roatates it 90 degrees in a clockwise direction)
+      /**
+       * @return {Vector} This for chaining.
+       */
+      Vector.prototype['perp'] = Vector.prototype.perp = function() {
+        var x = this['x'];
+        this['x'] = this['y'];
+        this['y'] = -x;
+        return this;
+      };
+
+      // Rotate this vector (counter-clockwise) by the specified angle (in radians).
+      /**
+       * @param {number} angle The angle to rotate (in radians)
+       * @return {Vector} This for chaining.
+       */
+      Vector.prototype['rotate'] = Vector.prototype.rotate = function (angle) {
+        var x = this['x'];
+        var y = this['y'];
+        this['x'] = x * Math.cos(angle) - y * Math.sin(angle);
+        this['y'] = x * Math.sin(angle) + y * Math.cos(angle);
+        return this;
+      };
+
+      // Reverse this vector.
+      /**
+       * @return {Vector} This for chaining.
+       */
+      Vector.prototype['reverse'] = Vector.prototype.reverse = function() {
+        this['x'] = -this['x'];
+        this['y'] = -this['y'];
+        return this;
+      };
+      
+
+      // Normalize this vector.  (make it have length of `1`)
+      /**
+       * @return {Vector} This for chaining.
+       */
+      Vector.prototype['normalize'] = Vector.prototype.normalize = function() {
+        var d = this.len();
+        if(d > 0) {
+          this['x'] = this['x'] / d;
+          this['y'] = this['y'] / d;
+        }
+        return this;
+      };
+      
+      // Add another vector to this one.
+      /**
+       * @param {Vector} other The other Vector.
+       * @return {Vector} This for chaining.
+       */
+      Vector.prototype['add'] = Vector.prototype.add = function(other) {
+        this['x'] += other['x'];
+        this['y'] += other['y'];
+        return this;
+      };
+      
+      // Subtract another vector from this one.
+      /**
+       * @param {Vector} other The other Vector.
+       * @return {Vector} This for chaiing.
+       */
+      Vector.prototype['sub'] = Vector.prototype.sub = function(other) {
+        this['x'] -= other['x'];
+        this['y'] -= other['y'];
+        return this;
+      };
+      
+      // Scale this vector. An independant scaling factor can be provided
+      // for each axis, or a single scaling factor that will scale both `x` and `y`.
+      /**
+       * @param {number} x The scaling factor in the x direction.
+       * @param {?number=} y The scaling factor in the y direction.  If this
+       *   is not specified, the x scaling factor will be used.
+       * @return {Vector} This for chaining.
+       */
+      Vector.prototype['scale'] = Vector.prototype.scale = function(x,y) {
+        this['x'] *= x;
+        this['y'] *= y || x;
+        return this; 
+      };
+      
+      // Project this vector on to another vector.
+      /**
+       * @param {Vector} other The vector to project onto.
+       * @return {Vector} This for chaining.
+       */
+      Vector.prototype['project'] = Vector.prototype.project = function(other) {
+        var amt = this.dot(other) / other.len2();
+        this['x'] = amt * other['x'];
+        this['y'] = amt * other['y'];
+        return this;
+      };
+      
+      // Project this vector onto a vector of unit length. This is slightly more efficient
+      // than `project` when dealing with unit vectors.
+      /**
+       * @param {Vector} other The unit vector to project onto.
+       * @return {Vector} This for chaining.
+       */
+      Vector.prototype['projectN'] = Vector.prototype.projectN = function(other) {
+        var amt = this.dot(other);
+        this['x'] = amt * other['x'];
+        this['y'] = amt * other['y'];
+        return this;
+      };
+      
+      // Reflect this vector on an arbitrary axis.
+      /**
+       * @param {Vector} axis The vector representing the axis.
+       * @return {Vector} This for chaining.
+       */
+      Vector.prototype['reflect'] = Vector.prototype.reflect = function(axis) {
+        var x = this['x'];
+        var y = this['y'];
+        this.project(axis).scale(2);
+        this['x'] -= x;
+        this['y'] -= y;
+        return this;
+      };
+      
+      // Reflect this vector on an arbitrary axis (represented by a unit vector). This is
+      // slightly more efficient than `reflect` when dealing with an axis that is a unit vector.
+      /**
+       * @param {Vector} axis The unit vector representing the axis.
+       * @return {Vector} This for chaining.
+       */
+      Vector.prototype['reflectN'] = Vector.prototype.reflectN = function(axis) {
+        var x = this['x'];
+        var y = this['y'];
+        this.projectN(axis).scale(2);
+        this['x'] -= x;
+        this['y'] -= y;
+        return this;
+      };
+      
+      // Get the dot product of this vector and another.
+      /**
+       * @param {Vector}  other The vector to dot this one against.
+       * @return {number} The dot product.
+       */
+      Vector.prototype['dot'] = Vector.prototype.dot = function(other) {
+        return this['x'] * other['x'] + this['y'] * other['y'];
+      };
+      
+      // Get the squared length of this vector.
+      /**
+       * @return {number} The length^2 of this vector.
+       */
+      Vector.prototype['len2'] = Vector.prototype.len2 = function() {
+        return this.dot(this);
+      };
+      
+      // Get the length of this vector.
+      /**
+       * @return {number} The length of this vector.
+       */
+      Vector.prototype['len'] = Vector.prototype.len = function() {
+        return Math.sqrt(this.len2());
+      };
+      
+      // ## Circle
+      //
+      // Represents a circle with a position and a radius.
+
+      // Create a new circle, optionally passing in a position and/or radius. If no position
+      // is given, the circle will be at `(0,0)`. If no radius is provided, the circle will
+      // have a radius of `0`.
+      /**
+       * @param {Vector=} pos A vector representing the position of the center of the circle
+       * @param {?number=} r The radius of the circle
+       * @constructor
+       */
+      function Circle(pos, r) {
+        this['pos'] = pos || new Vector();
+        this['r'] = r || 0;
+      }
+      SAT['Circle'] = Circle;
+      
+      // Compute the axis-aligned bounding box (AABB) of this Circle.
+      //
+      // Note: Returns a _new_ `Polygon` each time you call this.
+      /**
+       * @return {Polygon} The AABB
+       */
+      Circle.prototype['getAABB'] = Circle.prototype.getAABB = function() {
+        var r = this['r'];
+        var corner = this["pos"].clone().sub(new Vector(r, r));
+        return new Box(corner, r*2, r*2).toPolygon();
+      };
+
+      // ## Polygon
+      //
+      // Represents a *convex* polygon with any number of points (specified in counter-clockwise order)
+      //
+      // Note: Do _not_ manually change the `points`, `angle`, or `offset` properties. Use the
+      // provided setters. Otherwise the calculated properties will not be updated correctly.
+      //
+      // `pos` can be changed directly.
+
+      // Create a new polygon, passing in a position vector, and an array of points (represented
+      // by vectors relative to the position vector). If no position is passed in, the position
+      // of the polygon will be `(0,0)`.
+      /**
+       * @param {Vector=} pos A vector representing the origin of the polygon. (all other
+       *   points are relative to this one)
+       * @param {Array.<Vector>=} points An array of vectors representing the points in the polygon,
+       *   in counter-clockwise order.
+       * @constructor
+       */
+      function Polygon(pos, points) {
+        this['pos'] = pos || new Vector();
+        this['angle'] = 0;
+        this['offset'] = new Vector();
+        this.setPoints(points || []);
+      }
+      SAT['Polygon'] = Polygon;
+      
+      // Set the points of the polygon.
+      //
+      // Note: The points are counter-clockwise *with respect to the coordinate system*.
+      // If you directly draw the points on a screen that has the origin at the top-left corner
+      // it will _appear_ visually that the points are being specified clockwise. This is just
+      // because of the inversion of the Y-axis when being displayed.
+      /**
+       * @param {Array.<Vector>=} points An array of vectors representing the points in the polygon,
+       *   in counter-clockwise order.
+       * @return {Polygon} This for chaining.
+       */
+      Polygon.prototype['setPoints'] = Polygon.prototype.setPoints = function(points) {
+        // Only re-allocate if this is a new polygon or the number of points has changed.
+        var lengthChanged = !this['points'] || this['points'].length !== points.length;
+        if (lengthChanged) {
+          var i;
+          var calcPoints = this['calcPoints'] = [];
+          var edges = this['edges'] = [];
+          var normals = this['normals'] = [];
+          // Allocate the vector arrays for the calculated properties
+          for (i = 0; i < points.length; i++) {
+            calcPoints.push(new Vector());
+            edges.push(new Vector());
+            normals.push(new Vector());
+          }
+        }
+        this['points'] = points;
+        this._recalc();
+        return this;
+      };
+
+      // Set the current rotation angle of the polygon.
+      /**
+       * @param {number} angle The current rotation angle (in radians).
+       * @return {Polygon} This for chaining.
+       */
+      Polygon.prototype['setAngle'] = Polygon.prototype.setAngle = function(angle) {
+        this['angle'] = angle;
+        this._recalc();
+        return this;
+      };
+
+      // Set the current offset to apply to the `points` before applying the `angle` rotation.
+      /**
+       * @param {Vector} offset The new offset vector.
+       * @return {Polygon} This for chaining.
+       */
+      Polygon.prototype['setOffset'] = Polygon.prototype.setOffset = function(offset) {
+        this['offset'] = offset;
+        this._recalc();
+        return this;
+      };
+
+      // Rotates this polygon counter-clockwise around the origin of *its local coordinate system* (i.e. `pos`).
+      //
+      // Note: This changes the **original** points (so any `angle` will be applied on top of this rotation).
+      /**
+       * @param {number} angle The angle to rotate (in radians)
+       * @return {Polygon} This for chaining.
+       */
+      Polygon.prototype['rotate'] = Polygon.prototype.rotate = function(angle) {
+        var points = this['points'];
+        var len = points.length;
+        for (var i = 0; i < len; i++) {
+          points[i].rotate(angle);
+        }
+        this._recalc();
+        return this;
+      };
+
+      // Translates the points of this polygon by a specified amount relative to the origin of *its own coordinate
+      // system* (i.e. `pos`).
+      //
+      // This is most useful to change the "center point" of a polygon. If you just want to move the whole polygon, change
+      // the coordinates of `pos`.
+      //
+      // Note: This changes the **original** points (so any `offset` will be applied on top of this translation)
+      /**
+       * @param {number} x The horizontal amount to translate.
+       * @param {number} y The vertical amount to translate.
+       * @return {Polygon} This for chaining.
+       */
+      Polygon.prototype['translate'] = Polygon.prototype.translate = function (x, y) {
+        var points = this['points'];
+        var len = points.length;
+        for (var i = 0; i < len; i++) {
+          points[i].x += x;
+          points[i].y += y;
+        }
+        this._recalc();
+        return this;
+      };
+
+
+      // Computes the calculated collision polygon. Applies the `angle` and `offset` to the original points then recalculates the
+      // edges and normals of the collision polygon.
+      /**
+       * @return {Polygon} This for chaining.
+       */
+      Polygon.prototype._recalc = function() {
+        // Calculated points - this is what is used for underlying collisions and takes into account
+        // the angle/offset set on the polygon.
+        var calcPoints = this['calcPoints'];
+        // The edges here are the direction of the `n`th edge of the polygon, relative to
+        // the `n`th point. If you want to draw a given edge from the edge value, you must
+        // first translate to the position of the starting point.
+        var edges = this['edges'];
+        // The normals here are the direction of the normal for the `n`th edge of the polygon, relative
+        // to the position of the `n`th point. If you want to draw an edge normal, you must first
+        // translate to the position of the starting point.
+        var normals = this['normals'];
+        // Copy the original points array and apply the offset/angle
+        var points = this['points'];
+        var offset = this['offset'];
+        var angle = this['angle'];
+        var len = points.length;
+        var i;
+        for (i = 0; i < len; i++) {
+          var calcPoint = calcPoints[i].copy(points[i]);
+          calcPoint.x += offset.x;
+          calcPoint.y += offset.y;
+          if (angle !== 0) {
+            calcPoint.rotate(angle);
+          }
+        }
+        // Calculate the edges/normals
+        for (i = 0; i < len; i++) {
+          var p1 = calcPoints[i];
+          var p2 = i < len - 1 ? calcPoints[i + 1] : calcPoints[0];
+          var e = edges[i].copy(p2).sub(p1);
+          normals[i].copy(e).perp().normalize();
+        }
+        return this;
+      };
+      
+      
+      // Compute the axis-aligned bounding box. Any current state
+      // (translations/rotations) will be applied before constructing the AABB.
+      //
+      // Note: Returns a _new_ `Polygon` each time you call this.
+      /**
+       * @return {Polygon} The AABB
+       */
+      Polygon.prototype["getAABB"] = Polygon.prototype.getAABB = function() {
+        var points = this["calcPoints"];
+        var len = points.length;
+        var xMin = points[0]["x"];
+        var yMin = points[0]["y"];
+        var xMax = points[0]["x"];
+        var yMax = points[0]["y"];
+        for (var i = 1; i < len; i++) {
+          var point = points[i];
+          if (point["x"] < xMin) {
+            xMin = point["x"];
+          }
+          else if (point["x"] > xMax) {
+            xMax = point["x"];
+          }
+          if (point["y"] < yMin) {
+            yMin = point["y"];
+          }
+          else if (point["y"] > yMax) {
+            yMax = point["y"];
+          }
+        }
+        return new Box(this["pos"].clone().add(new Vector(xMin, yMin)), xMax - xMin, yMax - yMin).toPolygon();
+      };
+      
+
+      // ## Box
+      //
+      // Represents an axis-aligned box, with a width and height.
+
+
+      // Create a new box, with the specified position, width, and height. If no position
+      // is given, the position will be `(0,0)`. If no width or height are given, they will
+      // be set to `0`.
+      /**
+       * @param {Vector=} pos A vector representing the bottom-left of the box (i.e. the smallest x and smallest y value).
+       * @param {?number=} w The width of the box.
+       * @param {?number=} h The height of the box.
+       * @constructor
+       */
+      function Box(pos, w, h) {
+        this['pos'] = pos || new Vector();
+        this['w'] = w || 0;
+        this['h'] = h || 0;
+      }
+      SAT['Box'] = Box;
+
+      // Returns a polygon whose edges are the same as this box.
+      /**
+       * @return {Polygon} A new Polygon that represents this box.
+       */
+      Box.prototype['toPolygon'] = Box.prototype.toPolygon = function() {
+        var pos = this['pos'];
+        var w = this['w'];
+        var h = this['h'];
+        return new Polygon(new Vector(pos['x'], pos['y']), [
+          new Vector(),
+          new Vector(w, 0),
+          new Vector(w, h),
+          new Vector(0, h)
+        ]);
+      };
+
+      // ## Response
+      //
+      // An object representing the result of an intersection.
+
+      // Create a new `Response` object. Each time sat.js is called to test an
+      // intersection, a new `Response` object is created. 
+      //
+      // A `Response` object stores the following properties:
+      //
+      // * `a` - The first object in the collision
+      // * `b` - The second object in the collision
+      // * `overlapN` - The shortest axis along which the objects overlap
+      // * `overlap` - The amount of overlap on that axis
+      // * `overlapV` - The overlap vector (i.e. `overlapN.scale(overlap)`) 
+      // * `aInB` - True if `a` is completely inside `b`
+      // * `bInA` - True if `b` is completely inside `a`
+      //
+      // All of these properties are set to `0` or `null` when the `Response`
+      // is created.
+      /**
+       * @constructor
+       */
+      function Response() {
+        this['a'] = null;
+        this['b'] = null;
+        this['overlapN'] = new Vector();
+        this['overlap'] = 0;
+        this['overlapV'] = new Vector();
+        this['aInB'] = true;
+        this['bInA'] = true;
+      }
+      SAT['Response'] = Response;
+
+      // Set the properties of the Response to the values of the given Response.
+      /**
+       * @param {Response} other The other Response to copy from.
+       * @return {Response} This for chaining.
+       */
+      Response.prototype['copy'] = Response.prototype.copy = function(other) {
+        this['a'] = other['a'];
+        this['b'] = other['b'];
+        this['overlapN'].copy(other['overlapN']);
+        this['overlap'] = other['overlap'];
+        this['overlapV'].copy(other['overlapV']);
+        this['aInB'] = other['aInB'];
+        this['bInA'] = other['bInA'];
+        return this;
+      };
+
+      // Clear the response. `a` and `b` will be set to null, `overlap` will
+      // be set to 0, and `aInB` and `bInA` will be set to true.
+      /**
+       * @return {Response} This for chaining.
+       */
+      Response.prototype['clear'] = Response.prototype.clear = function() {
+        this['a'] = null;
+        this['b'] = null;
+        this['overlapN'].x = 0;
+        this['overlapN'].y = 0;
+        this['overlap'] = 0;
+        this['overlapV'].x = 0;
+        this['overlapV'].y = 0;
+        this['aInB'] = true;
+        this['bInA'] = true;
+        return this;
+      };
+
+      // ## Object builders
+
+      // Create a Box and return it as a Polygon.
+      //
+      // This function returns a _new_ Polygon each time it is called.
+      /**
+       * @param {Vector} pos The position of the box.
+       * @param {number} width The width of the box.
+       * @param {number} height The height of the box.
+       * @return {Polygon} A new Polygon representing the box.
+       */
+      SAT['box'] = function(pos, width, height) {
+        return new Box(pos, width, height).toPolygon();
+      };
+
+      // ## Helper functions
+
+      // Flattens the specified array of points onto the specified axis. The
+      // `min` and `max` parameters will be set to the `min` and `max` scalars
+      // of the projected points.
+      /**
+       * @param {Array.<Vector>} points The points to project.
+       * @param {Vector} normal The axis to project onto.
+       * @param {Array.<number>} result The array to store the results in.
+       */
+      function flattenPointsOn(points, normal, result) {
+        var min = Number.MAX_VALUE;
+        var max = Number.MIN_VALUE;
+        var len = points.length;
+        for (var i = 0; i < len; i++) {
+          // The magnitude of the projection of the point onto the normal
+          var dot = points[i].dot(normal);
+          if (dot < min) {
+            min = dot;
+          }
+          if (dot > max) {
+            max = dot;
+          }
+        }
+        result[0] = min;
+        result[1] = max;
+      }
+
+      // Check whether two convex polygons are colliding. If they are, fill the
+      // response object with the collision details.
+      /**
+       * @param {Polygon} a The first polygon.
+       * @param {Polygon} b The second polygon.
+       * @param {Response=} response Response object (optional) that will be populated if the
+       *   polygons intersect.
+       * @return {boolean} true if the polygons intersect, false otherwise.
+       */
+      SAT['testPolygonPolygon'] = function(a, b, response) {
+        var aPoints = a['calcPoints'];
+        var aLen = aPoints.length;
+        var bPoints = b['calcPoints'];
+        var bLen = bPoints.length;
+        var i, len;
+
+        // If response is passed in, clear it
+        if (response) {
+          response.clear();
+        }
+
+        var currentAxis = new Vector();
+
+        // Precalc the projections so that we don't have to loop over the
+        // points every time.
+        var minA, maxA, minB, maxB;
+        var projected = [];
+        var axes = a['normals'].concat(b['normals']);
+        var axesLen = axes.length;
+
+        // Loop over all the axes
+        for (i = 0; i < axesLen; i++) {
+          currentAxis.copy(axes[i]);
+
+          // Project both polygons onto the axis
+          flattenPointsOn(aPoints, currentAxis, projected);
+          minA = projected[0];
+          maxA = projected[1];
+          flattenPointsOn(bPoints, currentAxis, projected);
+          minB = projected[0];
+          maxB = projected[1];
+
+          // Check if there is any overlap on the axis
+          if (minA > maxB || minB > maxA) {
+            return false;
+          }
+
+          var overlap = 0;
+          // If we are at this point, there is an overlap. We need to figure out how much.
+          if (minA < minB) {
+            overlap = maxA - minB;
+            if (response) {
+              response['aInB'] = false;
+            }
+          } else {
+            overlap = maxB - minA;
+            if (response) {
+              response['bInA'] = false;
+            }
+          }
+
+          // If this is the smallest overlap we've seen so far, then store it
+          // and the axis
+          if (response && overlap < response['overlap'] || response['overlap'] === 0) {
+            response['overlap'] = overlap;
+            response['overlapN'].copy(currentAxis);
+          }
+        }
+
+        if (response) {
+          var centerA = a['pos'].clone().add(a['offset']);
+          var centerB = b['pos'].clone().add(b['offset']);
+          var v = centerA.sub(centerB);
+          if (v.dot(response['overlapN']) < 0) {
+            response['overlapN'].reverse();
+          }
+          response['overlapV'].copy(response['overlapN']).scale(response['overlap']);
+          response['a'] = a;
+          response['b'] = b;
+        }
+
+        return true;
+      };
+
+      // Check whether a polygon and a circle are colliding. If they are, fill the
+      // response object with the collision details.
+      /**
+       * @param {Polygon} polygon The polygon.
+       * @param {Circle} circle The circle.
+       * @param {Response=} response Response object (optional) that will be populated if the
+       *   objects intersect.
+       * @return {boolean} true if the objects intersect, false otherwise.
+       */
+      SAT['testPolygonCircle'] = function(polygon, circle, response) {
+        var projected = [];
+        var minA, maxA, minB, maxB;
+        // Get the position of the circle relative to the polygon. We need to transform
+        // the circle so that it's in the polygon's coordinate space.
+        var circlePos = circle['pos'].clone().sub(polygon['pos']).sub(polygon['offset']);
+        var radius = circle['r'];
+        var points = polygon['calcPoints'];
+        var len = points.length;
+        var i;
+
+        // If response is passed in, clear it
+        if (response) {
+          response.clear();
+        }
+
+        // Transform the circle into the polygon's (un-rotated) local space
+        if (polygon['angle'] !== 0) {
+          circlePos.rotate(-polygon['angle']);
+        }
+
+        var normal = new Vector();
+        var rotated = new Vector();
+        var closest = new Vector();
+        var min = Number.MAX_VALUE;
+        var overlap = 0;
+
+        // For each edge in the polygon, find the closest point on the edge to the circle
+        // and project the circle onto the axis normal to the edge. 
+        for (i = 0; i < len; i++) {
+          var p1 = points[i];
+          var p2 = i < len - 1 ? points[i + 1] : points[0];
+          
+          normal.copy(polygon['normals'][i]);
+
+          // Find the perpendicular axis
+          var axis = normal.clone().reverse();
+          flattenPointsOn(points, axis, projected);
+          minA = projected[0];
+          maxA = projected[1];
+
+          // Project the circle onto the axis
+          var dot = circlePos.dot(axis);
+          minB = dot - radius;
+          maxB = dot + radius;
+
+          // Check if there is any overlap on the axis
+          if (minA > maxB || minB > maxA) {
+            return false;
+          }
+
+          // If this is the smallest overlap we've seen so far, then store it
+          // and the axis
+          overlap = 0;
+          if (minA < minB) {
+            overlap = maxA - minB;
+            if (response) {
+              response['aInB'] = false;
+            }
+          } else {
+            overlap = maxB - minA;
+            if (response) {
+              response['bInA'] = false;
+            }
+          }
+
+          if (response && overlap < response['overlap'] || response['overlap'] === 0) {
+            response['overlap'] = overlap;
+            response['overlapN'].copy(normal);
+          }
+        }
+
+        // There was no separating axis for the edges of the polygon, so now we have to
+        // check the corners. The closest point on the polygon to the center of the
+        // circle must be one of the polygon's vertices. We'll project the center of
+        // the circle onto each of the polygon's edges, and the closest to the center
+        // will be the closest point on the polygon to the center of the circle.
+        var closestPoint = new Vector();
+        min = Number.MAX_VALUE;
+        for (i = 0; i < len; i++) {
+          var p1 = points[i];
+          var p2 = i < len - 1 ? points[i + 1] : points[0];
+          
+          var edge = p2.clone().sub(p1);
+          var point = circlePos.clone().sub(p1);
+          var len2 = edge.len2();
+          var dot = point.dot(edge);
+          var t = dot / len2;
+
+          // Find the closest point on the edge to the center of the circle
+          if (t < 0) {
+            closest.copy(p1);
+          } else if (t > 1) {
+            closest.copy(p2);
+          } else {
+            closest.copy(p1).add(edge.scale(t));
+          }
+
+          // Go back into the original coordinate system for the distance check
+          var dist = circlePos.clone().sub(closest).len2();
+          
+          if (dist < min) {
+            min = dist;
+            closestPoint.copy(closest);
+          }
+        }
+
+        // If the circle's center is inside the polygon, then it is colliding
+        // and there is no separating axis. 
+        if (min < radius * radius) {
+          var v = circlePos.clone().sub(closestPoint);
+          overlap = radius - v.len();
+          if (response) {
+            response['overlap'] = overlap;
+            response['overlapN'].copy(v.normalize());
+            response['overlapV'].copy(response['overlapN']).scale(overlap);
+            response['a'] = polygon;
+            response['b'] = circle;
+          }
+          return true;
+        }
+
+        return false;
+      };
+
+      // Check whether a circle and a polygon are colliding. If they are, fill the
+      // response object with the collision details.
+      /**
+       * @param {Circle} circle The circle.
+       * @param {Polygon} polygon The polygon.
+       * @param {Response=} response Response object (optional) that will be populated if the
+       *   objects intersect.
+       * @return {boolean} true if the objects intersect, false otherwise.
+       */
+      SAT['testCirclePolygon'] = function(circle, polygon, response) {
+        // The SAT.js library is set up so that A and B are first respectively.
+        // We need to flip the response if we are testing A against B or B against A
+        // so that the collision response is correct.
+        var reversed = false;
+        if (response) {
+          response['a'] = circle;
+          response['b'] = polygon;
+          reversed = true;
+        }
+        var result = SAT['testPolygonCircle'](polygon, circle, response);
+        if (reversed && result) {
+          response['overlapN'].reverse();
+          response['overlapV'].reverse();
+        }
+        return result;
+      };
+
+      // Check whether two circles are colliding. If they are, fill the
+      // response object with the collision details.
+      /**
+       * @param {Circle} a The first circle.
+       * @param {Circle} b The second circle.
+       * @param {Response=} response Response object (optional) that will be populated if the
+       *   objects intersect.
+       * @return {boolean} true if the circles intersect, false otherwise.
+       */
+      SAT['testCircleCircle'] = function(a, b, response) {
+        // Check if the distance between the centers of the two
+        // circles is greater than their combined radius.
+        var differenceV = a['pos'].clone().sub(b['pos']);
+        var totalRadius = a['r'] + b['r'];
+        var totalRadiusSq = totalRadius * totalRadius;
+        var distanceSq = differenceV.len2();
+
+        if (distanceSq > totalRadiusSq) {
+          return false;
+        }
+
+        // There is an overlap. Fill the response with the details.
+        if (response) {
+          var dist = Math.sqrt(distanceSq);
+          response['a'] = a;
+          response['b'] = b;
+          response['overlap'] = totalRadius - dist;
+          response['overlapN'].copy(differenceV.normalize());
+          response['overlapV'].copy(differenceV).scale(response['overlap']);
+          response['aInB'] = a['r'] <= b['r'] && dist + a['r'] <= b['r'];
+          response['bInA'] = b['r'] <= a['r'] && dist + b['r'] <= a['r'];
+        }
+
+        return true;
+      };
+
+      return SAT;
+    }));
+</script>
+
+<script>
+    // football.js content from pasted_content_3.txt
+    //build canvas
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    //set initial ball location
+    var x = canvas.width/2;
+    var y = canvas.height/2;
+
+    //set ball radius
+    var ballRadius = 6;
+
+    //set ball speed
+    var dx = 1.5;
+    var dy = -1.5;
+
+    //initialize ball speed
+    var m = 0;
+    var j = 0;
+
+    var aiSpeed = 1.25;
+
+    //set paddle dimensions
+    var paddleHeight = 10;
+    var paddleWidth = 30;
+
+    var paddleX = (canvas.width-paddleWidth);
+
+    //initialize keypress status
+    var rightPressed = false;
+    var leftPressed = false;  
+
+    //set goalpost dimensions
+    var goalpostWidth = 150;
+    var goalpostHeight = 10;
+
+    //initialize scorecard
+    var homeScore = 0;
+    var awayScore = 0;
+
+    //set player dimensions
+    var playerHeight = 50;
+    var playerWidth = 30;
+
+
+    //set flags
+    var initFlag = true;
+    var gameOver = false;
+    var flag1 = 1;
+    var flag2 = 1;
+    var drawFlag = true;
+
+    //register for keypress events
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+
+
+    //initialize SAT.js variables
+    var V = SAT.Vector;
+    var C = SAT.Circle;
+    var B = SAT.Box;
+
+    var circle;
+    var box;
+
+    //initialize images
+    var homePlayer = new Image();
+    var awayPlayer = new Image();
+
+
+    //it all starts here
+    function init() {
+        removeStatus();
+        homePlayer.src = 'images/homePlayer.png';
+        awayPlayer.src = 'images/awayPlayer.png';
+        document.getElementById('startScreen').style['z-index'] = '-1';
+        document.getElementById('gameOverScreen').style['z-index'] = '-1';
+        document.getElementById('home').innerHTML = '0';
+        document.getElementById('away').innerHTML = '0';
+        awayScore = 0;
+        homeScore = 0;
+        gameOver = 0;
+        setInitialDelay();
+    }
+
+    function setInitialDelay() {
+        setTimeout(function() {
+            startTimer(60 * 2);
+            drawFlag = true;
+            window.requestAnimationFrame(draw);
+            updateStatus('You are team <br> in <span style="color:red">RED</span>');
+        }, 1500);
+    }
+
+    function setDelay() {
+        setTimeout(function() {
+            drawFlag = true;
+            window.requestAnimationFrame(draw);
+        }, 1500);
+    }
+
+    function startTimer(duration) {
+        var timer = duration,
+            minutes, seconds;
+        countdown = setInterval(function() {
+            minutes = parseInt(timer / 60, 10)
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            document.getElementById('countdown').innerHTML = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                document.getElementById('gameOverScreen').style['z-index'] = 3;
+                gameOver = true;
+                clearInterval(countdown);
+                if (homeScore > awayScore)
+                    updateStatus('GAME OVER!<br>Liverpool Won!');
+                else if (awayScore > homeScore)
+                    updateStatus('GAME OVER!<br>Juventus Won!');
+                else
+                    updateStatus('GAME OVER!<br>Draw!')
+            }
+        }, 1000);
+    }
+
+    //it all happens here
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBall();
+        drawPlayers();
+        drawGoalPost();
+        x += dx;
+        y += dy;
+        if (rightPressed && paddleX * 3 / 4 + m < canvas.width - paddleWidth) {
+            m += 2;
+        } else if (leftPressed && paddleX / 4 + m > 0) {
+            m -= 2;
+        }
+        if (drawFlag && !gameOver)
+            window.requestAnimationFrame(draw);
+    }
+
+
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = "white";
+        ctx.fill();
+        ctx.closePath();
+        circle = new C(new V(x, y), 6);
+        if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+                dx = -dx;
+                if(x<0)
+                    x=0;
+                if(x>canvas.width)
+                    x = canvas.width; 
+        }
+        if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+            dy = -dy;
+        }
+
+    }
+
+    function drawPlayers() {
+        drawHomeTeam();
+        drawAwayTeam();
+        
+    }
+
+    function drawHomeTeam() {
+        //home
+        drawGoalkeeper();
+        drawDefenders();
+        drawMidfielders();
+        drawStrikers();
+    }
+
+    function drawAwayTeam() {
+        //away
+        drawAwayGoalkeeper();
+        drawAwayDefenders();
+        drawAwayMidfielders();
+        drawAwayStrikers();
+    }
+
+    function drawGoalPost() {
+
+        //home
+        ctx.beginPath();
+        var gphX = (canvas.width - goalpostWidth) / 2;
+        var gphY = canvas.height - goalpostHeight;
+        ctx.rect(gphX, gphY, goalpostWidth, goalpostHeight);
+        ctx.fillStyle = "#9C9C9C";
+        ctx.fill();
+        ctx.closePath();
+        box = new B(new V(gphX, gphY), goalpostWidth, goalpostHeight).toPolygon();
+        if (goalDetection(box)) {
+            updateScore('home');
+            updateStatus('GOAL!<br>Juventus Score!');
+            removeStatus();
+            resetBall();
+            setDelay();
+        }
+        //away
+        ctx.beginPath();
+        var gpaX = (canvas.width - goalpostWidth) / 2;
+        var gpaY = paddleHeight - goalpostHeight;
+        ctx.rect(gpaX, gpaY, goalpostWidth, goalpostHeight);
+        ctx.fillStyle = "#9C9C9C";
+        ctx.fill();
+        ctx.closePath();
+
+        box = new B(new V(gpaX, gpaY), goalpostWidth, goalpostHeight).toPolygon();
+        if (goalDetection(box)) {
+            updateScore('away');
+            updateStatus('GOAL!<br>Liverpool Score!');
+            removeStatus();
+            resetBall();
+            setDelay();
+        }
+    }
+
+
+    function updateScore(goal) {
+
+        if (goal === 'home') {
+            awayScore += 1;
+            document.getElementById('away').innerHTML = awayScore;
+        } else {
+            homeScore += 1;
+            document.getElementById('home').innerHTML = homeScore;
+        }
+    }
+
+    function resetBall() {
+        x = canvas.width / 2;
+        y = canvas.height / 2;
+        drawBall();
+        drawFlag = false;
+        window.requestAnimationFrame(draw);
+
+    }
+
+    function updateStatus(message) {
+        document.getElementById('status').innerHTML = message;
+
+    }
+
+    function removeStatus() {
+        setTimeout(function() {
+            document.getElementById('status').innerHTML = '';
+        }, 1500);
+    }
+
+
+
+    function drawGoalkeeper() {
+
+        var gkX = paddleX / 2 + m;
+        var gkY = canvas.height * 7 / 8 - paddleHeight;
+        ctx.drawImage(homePlayer, gkX, gkY - 15, playerWidth, playerHeight);
+        drawRods(gkY);
+        box = new B(new V(gkX, gkY), playerWidth, paddleHeight).toPolygon();
+        collisionDetection(box, gkX);
+
+    }
+
+
+    function drawDefenders() {
+
+        var lcbX = paddleX / 4 + m;
+        var lcbY = canvas.height * 13 / 16 - paddleHeight;
+        drawRods(lcbY);
+        ctx.drawImage(homePlayer, lcbX, lcbY - 15, playerWidth, playerHeight);
+        box = new B(new V(lcbX, lcbY), playerWidth, paddleHeight).toPolygon();
+        collisionDetection(box, lcbX);
+
+        var rcbX = paddleX * 3 / 4 + m;
+        var rcbY = canvas.height * 13 / 16 - paddleHeight;
+        ctx.drawImage(homePlayer, rcbX, rcbY - 15, playerWidth, playerHeight);
+        box = new B(new V(rcbX, rcbY), playerWidth, paddleHeight).toPolygon();
+        collisionDetection(box, rcbX);
+    }
+
+    function drawMidfielders() {
+
+        //midfielders
+        var lwbX = paddleX * 1 / 8 + m;
+        var lwbY = canvas.height * 5 / 8 - paddleHeight;
+        drawRods(lwbY);
+        ctx.drawImage(homePlayer, lwbX, lwbY - 15, playerWidth, playerHeight);
+        box = new B(new V(lwbX, lwbY), playerWidth, paddleHeight).toPolygon();
+        collisionDetection(box, lwbX);
+
+        var lcmX = paddleX * 3 / 8 + m;
+        var lcmY = canvas.height * 5 / 8 - paddleHeight;
+        ctx.drawImage(homePlayer, lcmX, lcmY - 15, playerWidth, playerHeight);
+        box = new B(new V(lcmX, lcmY), playerWidth, paddleHeight).toPolygon();
+        collisionDetection(box, lcmX);
+
+        var rcmX = paddleX * 5 / 8 + m;
+        var rcmY = canvas.height * 5 / 8 - paddleHeight;
+        ctx.drawImage(homePlayer, rcmX, rcmY - 15, playerWidth, playerHeight);
+        box = new B(new V(rcmX, rcmY), playerWidth, paddleHeight).toPolygon();
+        collisionDetection(box, rcmX);
+
+        var rwbX = paddleX * 7 / 8 + m;
+        var rwbY = canvas.height * 5 / 8 - paddleHeight;
+        ctx.drawImage(homePlayer, rwbX, rwbY - 15, playerWidth, playerHeight);
+        box = new B(new V(rwbX, rwbY), playerWidth, paddleHeight).toPolygon();
+        collisionDetection(box, rwbX);
+
+    }
+
+    function drawStrikers() {
+        //attackers
+        var lwX = paddleX / 4 + m;
+        var lwY = canvas.height * 9 / 32 - paddleHeight;
+        drawRods(lwY);
+        ctx.drawImage(homePlayer, lwX, lwY - 15, playerWidth, playerHeight);
+        box = new B(new V(lwX, lwY), playerWidth, paddleHeight).toPolygon();
+        collisionDetection(box, lwX);
+
+        var cfX = paddleX / 2 + m;
+        var cfY = canvas.height * 9 / 32 - paddleHeight;
+        ctx.drawImage(homePlayer, cfX, cfY - 15, playerWidth, playerHeight);
+        box = new B(new V(cfX, cfY), playerWidth, paddleHeight).toPolygon();
+        collisionDetection(box, cfX);
+
+        var rwX = paddleX * 3 / 4 + m;
+        var rwY = canvas.height * 9 / 32 - paddleHeight;
+        ctx.drawImage(homePlayer, rwX, rwY - 15, playerWidth, playerHeight);
+        box = new B(new V(rwX, rwY), playerWidth, paddleHeight).toPolygon();
+        collisionDetection(box, rwX);
+
+    }
+
+
+
+    function drawAwayGoalkeeper() {
+
+        var gkX = paddleX / 2 + j;
+        var gkY = canvas.height * 1 / 8 - paddleHeight;
+        drawRods(gkY);
+        ctx.drawImage(awayPlayer, gkX, gkY - 15, playerWidth, playerHeight);
+        box = new B(new V(gkX, gkY), playerWidth, paddleHeight).toPolygon();
+        collisionDetectionAway(box, gkX);
+
+        if (x > gkX && gkX < paddleX * 3 / 4)
+            j += aiSpeed;
+        else if (gkX > paddleX * 1 / 4)
+            j -= aiSpeed;
+
+    }
+
+    function drawAwayDefenders() {
+
+        var lcbX = paddleX / 4 + j;
+        var lcbY = canvas.height * 3 / 16 - paddleHeight;
+        drawRods(lcbY);
+        ctx.drawImage(awayPlayer, lcbX, lcbY - 15, playerWidth, playerHeight);
+        box = new B(new V(lcbX, lcbY), playerWidth, paddleHeight).toPolygon();
+        collisionDetectionAway(box, lcbX);
+
+        var rcbX = paddleX * 3 / 4 + j;
+        var rcbY = canvas.height * 3 / 16 - paddleHeight;
+        ctx.drawImage(awayPlayer, rcbX, rcbY - 15, playerWidth, playerHeight);
+        box = new B(new V(rcbX, rcbY), playerWidth, paddleHeight).toPolygon();
+        collisionDetectionAway(box, rcbX);
+
+        if (x > lcbX && lcbX < paddleX * 3 / 4)
+            j += aiSpeed;
+        else if (lcbX > paddleX * 1 / 4)
+            j -= aiSpeed;
+        if (x > rcbX && rcbX < paddleX * 3 / 4)
+            j += aiSpeed;
+        else if (rcbX > paddleX * 1 / 4)
+            j -= aiSpeed;
+    }
+
+    function drawAwayMidfielders() {
+
+        //midfielders
+        var lwbX = paddleX * 1 / 8 + j;
+        var lwbY = canvas.height * 3 / 8 - paddleHeight;
+        drawRods(lwbY)
+        ctx.drawImage(awayPlayer, lwbX, lwbY - 15, playerWidth, playerHeight);
+        box = new B(new V(lwbX, lwbY), playerWidth, paddleHeight).toPolygon();
+        collisionDetectionAway(box, lwbX);
+
+        var lcmX = paddleX * 3 / 8 + j;
+        var lcmY = canvas.height * 3 / 8 - paddleHeight;
+        ctx.drawImage(awayPlayer, lcmX, lcmY - 15, playerWidth, playerHeight);
+        box = new B(new V(lcmX, lcmY), playerWidth, paddleHeight).toPolygon();
+        collisionDetectionAway(box, lcmX);
+
+        var rcmX = paddleX * 5 / 8 + j;
+        var rcmY = canvas.height * 3 / 8 - paddleHeight;
+        ctx.drawImage(awayPlayer, rcmX, rcmY - 15, playerWidth, playerHeight);
+        box = new B(new V(rcmX, rcmY), playerWidth, paddleHeight).toPolygon();
+        collisionDetectionAway(box, rcmX);
+
+        var rwbX = paddleX * 7 / 8 + j;
+        var rwbY = canvas.height * 3 / 8 - paddleHeight;
+        ctx.drawImage(awayPlayer, rwbX, rwbY - 15, playerWidth, playerHeight);
+        box = new B(new V(rwbX, rwbY), playerWidth, paddleHeight).toPolygon();
+        collisionDetectionAway(box, rwbX);
+
+        if (x > lwbX && lwbX < paddleX * 3 / 4)
+            j += aiSpeed;
+        else if (lwbX > paddleX * 1 / 4)
+            j -= aiSpeed;
+        if (x > rwbX && rwbX < paddleX * 3 / 4)
+            j += aiSpeed;
+        else if (rwbX > paddleX * 1 / 4)
+            j -= aiSpeed;
+        if (x > rcmX && rcmX < paddleX * 3 / 4)
+            j += aiSpeed;
+        else if (rcmX > paddleX * 1 / 4)
+            j -= aiSpeed;
+        if (x > lcmX && lcmX < paddleX * 3 / 4)
+            j += aiSpeed;
+        else if (lcmX > paddleX * 1 / 4)
+            j -= aiSpeed;
+    }
+
+
+    function drawAwayStrikers() {
+        //attackers
+        ctx.beginPath();
+        var lwX = paddleX / 4 + j;
+        var lwY = canvas.height * 23 / 32 - paddleHeight;
+        drawRods(lwY);
+        ctx.drawImage(awayPlayer, lwX, lwY - 15, playerWidth, playerHeight);
+        box = new B(new V(lwX, lwY), playerWidth, paddleHeight).toPolygon();
+        collisionDetectionAway(box, lwX);
+
+        ctx.beginPath();
+        var cfX = paddleX / 2 + j;
+        var cfY = canvas.height * 23 / 32 - paddleHeight;
+        ctx.drawImage(awayPlayer, cfX, cfY - 15, playerWidth, playerHeight);
+        box = new B(new V(cfX, cfY), playerWidth, paddleHeight).toPolygon();
+        collisionDetectionAway(box, cfX);
+
+        ctx.beginPath();
+        var rwX = paddleX * 3 / 4 + j;
+        var rwY = canvas.height * 23 / 32 - paddleHeight;
+        ctx.drawImage(awayPlayer, rwX, rwY - 15, playerWidth, playerHeight);
+        box = new B(new V(rwX, rwY), playerWidth, paddleHeight).toPolygon();
+        collisionDetectionAway(box, rwX);
+
+
+        // if(y + 10 == rwY || y - 10 == rwY) {
+        if (x > lwX && lwX < paddleX * 3 / 4)
+            j += aiSpeed;
+        else if (lwX > paddleX * 1 / 4)
+            j -= aiSpeed;
+        if (x > rwX && rwX < paddleX * 3 / 4)
+            j += aiSpeed;
+        else if (rwX > paddleX * 1 / 4)
+            j -= aiSpeed;
+        if (x > cfX && cfX < paddleX * 3 / 4)
+            j += aiSpeed;
+        else if (cfX > paddleX * 1 / 4)
+            j -= aiSpeed;
+        //}
+
+
+    }
+
+
+    function collisionDetection(box, pX) {
+        var response = new SAT.Response();
+        if (SAT.testPolygonCircle(box, circle, response)) {
+            var speed = (x + (12 / 2) - pX + (20 / 2)) / (20 / 2) * 5;
+            if (flag1 == 1) {
+                if (dy > 0) {
+                    dy = -dy;
+                    y = y - speed;
+                    if (dx > 0)
+                        x = x + speed;
+                    else
+                        x = x - speed;
+                } else {
+                    y = y - speed;
+                    if (dx > 0)
+                        x = x - speed;
+                    else
+                        x = x + speed;
+                }
+                flag1 = 0;
+            }
+        } else
+            flag1 = 1;
+    }
+
+    function collisionDetectionAway(box, pX) {
+        var response = new SAT.Response();
+        if (SAT.testPolygonCircle(box, circle, response)) {
+            var speed = (x + (12 / 2) - pX + (20 / 2)) / (20 / 2) * 5;
+            if (flag2 == 1) {
+                if (dy < 0) {
+                    dy = -dy;
+                    y = y + speed;
+                    if (dx > 0)
+                        x = x + speed;
+                    else
+                        x = x - speed;
+                } else {
+                    y = y + speed;
+                    if (dx > 0)
+                        x = x + speed;
+                    else
+                        x = x + speed;
+                }
+            }
+        } else
+            flag2 = 1;
+    }
+
+
+    function goalDetection(box) {
+        var response = new SAT.Response();
+        return SAT.testPolygonCircle(box, circle, response);
+    }
+
+    function drawRods(yAxis) {
+        ctx.beginPath();
+        ctx.rect(0, yAxis + 2, canvas.width, paddleHeight - 5);
+        ctx.fillStyle = "#BDBDBD";
+        ctx.fill();
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    function keyDownHandler(e) {
+        if (e.keyCode == 39) {
+            rightPressed = true;
+        } else if (e.keyCode == 37) {
+            leftPressed = true;
+        }
+    }
+
+    function keyUpHandler(e) {
+        if (e.keyCode == 39) {
+            rightPressed = false;
+        } else if (e.keyCode == 37) {
+            leftPressed = false;
+        }
+    }
+</script>
+</body>
+</html>
+
