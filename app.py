@@ -26,7 +26,7 @@ jwt = JWTManager(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Database configuration - Using PostgreSQL
-DATABASE_URL = "postgresql+psycopg2://postgres:postgre2025@localhost:5432/sport-seats"
+DATABASE_URL = "sqlite:///users.db"
 
 try:
     engine = create_engine(DATABASE_URL, echo=True)
@@ -248,15 +248,55 @@ def delete_user(user_id):
     except Exception as e:
         logger.error(f"Delete user error: {e}")
         return jsonify({"message": "Server error"}), 500
+# In-memory features list
+features = []
+next_feature_id = 1
 
-# API Routes for Event Management
+@app.route("/api/features", methods=["GET"])
+def get_features():
+    return jsonify({"features": features}), 200
+
+@app.route("/api/features", methods=["POST"])
+def create_feature():
+    global next_feature_id
+    data = request.get_json(force=True)
+    name = data.get("name")
+    status = data.get("status")
+
+    if not name or not status:
+        return jsonify({"message": "Feature name and status are required"}), 400
+
+    feature = {
+        "id": next_feature_id,
+        "name": name,
+        "description": data.get("description", ""),
+        "status": status,
+        "category": data.get("category", ""),
+        "created_at": data.get("created_at", "")
+    }
+    features.append(feature)
+    next_feature_id += 1
+    return jsonify(feature), 201
+
+@app.route("/api/features/<int:feature_id>", methods=["PUT"])
+def update_feature(feature_id):
+    data = request.get_json(force=True)
+    for feature in features:
+        if feature["id"] == feature_id:
+            feature.update(data)
+            return jsonify(feature), 200
+    return jsonify({"message": "Feature not found"}), 404
+
+@app.route("/api/features/<int:feature_id>", methods=["DELETE"])
+def delete_feature(feature_id):
+    global features
+    features = [f for f in features if f["id"] != feature_id]
+    return jsonify({"message": "Feature deleted"}), 200
+
 @app.route("/api/events", methods=["GET"])
 def get_events():
-    try:
-        return jsonify({"events": events}), 200
-    except Exception as e:
-        logger.error(f"Get events error: {e}")
-        return jsonify({"message": "Server error"}), 500
+    return jsonify({"events": events}), 200
+
 
 @app.route("/api/events", methods=["POST"])
 def create_event():
@@ -394,4 +434,5 @@ def handle_send_message(data):
 if __name__ == "__main__":
     logger.info("Starting Flask application...")
     app.run(host="0.0.0.0", port=5000, debug=True)
+
 

@@ -64,9 +64,9 @@ loadProducts() {
              category: 'equipment',
              price: 30,
              images: [
-                 'https://images.pexels.com/photos/47730/the-ball-stadion-football-the-pitch-47730.jpeg',
-                 'https://images.pexels.com/photos/2834921/pexels-photo-2834921.jpeg',
-                 'https://images.pexels.com/photos/2834917/pexels-photo-2834917.jpeg'
+                 
+                 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/8762902f-a1f6-4876-aa84-bc80e1a97964/NK+CLUB+ELITE+-+FA24.png',
+                 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/48973c20-1c6f-4974-a49f-bc0c35f53faf/NK+CLUB+ELITE+-+FA24.png'
              ],
              description: 'Professional-grade football perfect for training and matches. Official size and weight.',
              rating: 4.7,
@@ -78,9 +78,9 @@ loadProducts() {
              category: 'tech',
              price: 200,
              images: [
-                 'https://images.pexels.com/photos/2783873/pexels-photo-2783873.jpeg',
-                 'https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg',
-                 'https://images.pexels.com/photos/110471/pexels-photo-110471.jpeg'
+                 '',
+                 '',
+                 ''
              ],
              description: 'Advanced fitness tracking smartwatch with heart rate monitoring and GPS.',
              colors: ['Black', 'Silver', 'Gold'],

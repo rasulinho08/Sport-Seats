@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportsSeat Admin Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
     <div class="admin-container">
@@ -43,10 +43,34 @@
                         <p>Upcoming Events</p>
                     </div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-cogs"></i></div>
+                    <div class="stat-info">
+                        <h3 id="total-features">0</h3>
+                        <p>Total Features</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-toggle-on"></i></div>
+                    <div class="stat-info">
+                        <h3 id="enabled-features">0</h3>
+                        <p>Enabled Features</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="showTab('events')">
+                    <i class="fas fa-calendar-alt"></i> Event Management
+                </button>
+                <button class="tab-btn" onclick="showTab('features')">
+                    <i class="fas fa-cogs"></i> Feature Management
+                </button>
             </div>
 
             <!-- Event Management -->
-            <section class="event-management">
+            <section class="tab-content active" id="events-tab">
                 <div class="section-header">
                     <h2><i class="fas fa-calendar-alt"></i> Event Management</h2>
                     <button class="btn btn-primary" onclick="openAddEventModal()">
@@ -87,11 +111,55 @@
                 </div>
             </section>
 
-            <!-- Modal -->
+            <!-- Feature Management -->
+            <section class="tab-content" id="features-tab">
+                <div class="section-header">
+                    <h2><i class="fas fa-cogs"></i> Feature Management</h2>
+                    <button class="btn btn-primary" onclick="openAddFeatureModal()">
+                        <i class="fas fa-plus"></i> Add New Feature
+                    </button>
+                </div>
+                <div class="search-filter">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-features" placeholder="Search features..." oninput="filterFeatures()">
+                    </div>
+                    <select id="status-filter" onchange="filterFeatures()">
+                        <option value="">All Status</option>
+                        <option value="enabled">Enabled</option>
+                        <option value="disabled">Disabled</option>
+                    </select>
+                    <select id="category-filter" onchange="filterFeatures()">
+                        <option value="">All Categories</option>
+                        <option value="ui">UI</option>
+                        <option value="api">API</option>
+                        <option value="security">Security</option>
+                        <option value="performance">Performance</option>
+                    </select>
+                </div>
+                <div class="table-container">
+                    <table class="features-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="features-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Event Modal -->
             <div class="modal" id="event-modal">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 id="modal-title">Add New Event</h3>
+                        <h3 id="event-modal-title">Add New Event</h3>
                         <span class="close" onclick="closeEventModal()">&times;</span>
                     </div>
                     <form id="event-form" onsubmit="saveEvent(event)">
@@ -132,7 +200,6 @@
                         <div class="form-group">
                             <label for="event-image">Image URL</label>
                             <input type="text" id="event-image">
-                            <input type="file" id="event-image-file" accept="image/*">
                         </div>
                         <div class="form-group">
                             <label class="checkbox-label">
@@ -149,6 +216,49 @@
                 </div>
             </div>
 
+            <!-- Feature Modal -->
+            <div class="modal" id="feature-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="feature-modal-title">Add New Feature</h3>
+                        <span class="close" onclick="closeFeatureModal()">&times;</span>
+                    </div>
+                    <form id="feature-form" onsubmit="saveFeature(event)">
+                        <div class="form-group">
+                            <label for="feature-name">Feature Name</label>
+                            <input type="text" id="feature-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="feature-description">Description</label>
+                            <textarea id="feature-description" rows="3"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="feature-status">Status</label>
+                                <select id="feature-status" required>
+                                    <option value="disabled">Disabled</option>
+                                    <option value="enabled">Enabled</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="feature-category">Category</label>
+                                <select id="feature-category">
+                                    <option value="">Select Category</option>
+                                    <option value="ui">UI</option>
+                                    <option value="api">API</option>
+                                    <option value="security">Security</option>
+                                    <option value="performance">Performance</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeFeatureModal()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Feature</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <!-- Notification -->
             <div class="notification" id="notification"></div>
         </main>
@@ -156,3 +266,4 @@
     <script src="admin.js"></script>
 </body>
 </html>
+

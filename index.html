@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportsSeat - Premium Sports Ticketing Platform</title>
+    <link rel="icon" type="/images/icon" href="images/icon.jpg">
     <link rel="stylesheet" href="/static/styles.css">
     <meta name="description" content="Book premium sports tickets with interactive seat selection. Find the best seats for football, basketball, baseball and more.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,12 +30,14 @@
                 <a href="shop.html" class="nav-item">Shop</a>
             </div>
             <div class="nav-buttons">
-                <a href="login.html" style="background: var(--accent-color);" class="btn-outline">Login</a>
-                <a href="register.html" class="btn-primary">Sign Up</a>
-                <a href="admin.html" class="btn-outline" id="admin-panel-link" style="display:none; margin-left:10px;">Admin Panel</a>
-                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <a href="login.html" style="background: green; color: white;" class="btn-outline" id="login-btn">Login</a>
+                <a href="register.html" class="btn-primary" id="signup-btn">Sign Up</a>
+                <div class="user-avatar" id="user-avatar" style="display:none;"></div>
+                <button id="logout-btn" style="display:none; background:#f44336; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Logout</button>
+                <a href="dashboard.html" id="account-btn" style="display:none; background:#2196f3; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Account</a>
+                <div class="mobile-menu-btn" id="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
-                </button>
+                </div>
             </div>
         </div>
     </nav>
@@ -99,6 +102,7 @@
             </div>
         </div>
     </section>
+     
 
     <!-- Featured Events -->
     <!-- Interactive Stadium Map -->
@@ -157,6 +161,49 @@
         </div>
     </section>
 
+      <!-- Green Game Section -  -->
+    <section class="game-section-green">
+        <div class="game-section-container">
+            <div class="game-section-content">
+                <h2 class="game-section-title">Experience the Ultimate Football Challenge</h2>
+                <p class="game-section-description">
+                    Step into the world of competitive football gaming where strategy meets skill. 
+                    Our immersive foosball experience brings the excitement of the pitch directly to your screen. 
+                    Challenge yourself against intelligent AI opponents, master precise ball control, and climb the ranks 
+                    to become the ultimate champion.
+                </p>
+                <div class="game-section-features">
+                    <div class="game-feature-item">
+                        <span class="game-feature-icon">⚽</span>
+                        <span class="game-feature-text">Realistic Physics</span>
+                    </div>
+                    <div class="game-feature-item">
+                        <span class="game-feature-icon">🏆</span>
+                        <span class="game-feature-text">Championship Mode</span>
+                    </div>
+                    <div class="game-feature-item">
+                        <span class="game-feature-icon">📱</span>
+                        <span class="game-feature-text">Mobile Optimized</span>
+                    </div>
+                </div>
+                <div class="game-section-buttons">
+                    <a class="game-btn game-btn-primary" href="game.html" target="_blank">
+                        <span class="game-btn-text">Play Now</span>
+                        <span class="game-btn-icon">▶</span>
+                    </a>
+                    <button class="game-btn game-btn-secondary" onclick="showInstructions()">
+                        <span class="game-btn-text">How to Play</span>
+                        <span class="game-btn-icon">❓</span>
+                    </button>
+                    <button class="game-btn game-btn-accent" onclick="showLeaderboard()">
+                        <span class="game-btn-text">Leaderboard</span>
+                        <span class="game-btn-icon">📊</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <!-- Sports Categories -->
     <section class="categories-section">
         <div class="content-wrapper">
@@ -271,15 +318,15 @@
                     <div class="testimonials">
                         <div class="testimonial active" data-testimonial="0">
                             <p>"Best sports newsletter I've ever subscribed to!"</p>
-                            <span>- Mike Johnson</span>
+                            <span>- Zahra </span>
                         </div>
                         <div class="testimonial" data-testimonial="1">
                             <p>"Never miss a game thanks to their alerts!"</p>
-                            <span>- Sarah Wilson</span>
+                            <span>- Gulməliyev Shukur</span>
                         </div>
                         <div class="testimonial" data-testimonial="2">
                             <p>"Exclusive presale access saved me hundreds!"</p>
-                            <span>- David Chen</span>
+                            <span>- Ruslan Hemidov </span>
                         </div>
                     </div>
                 </div>
@@ -476,3 +523,1281 @@
 
 <!-- Toast Notifications -->
 <div class="toast-container" id="toast-container"></div>
+
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="content-wrapper">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="brand-logo">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>SportsSeat</span>
+                    </div>
+                    <p>Your premier destination for sports tickets with interactive seat selection and real-time availability.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html#events">Browse Events</a></li>
+                        <li><a href="venues.html">Venuevs</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Sports</h3>
+                    <ul>
+                        <li><a href="#" data-sport="football">Football</a></li>
+                        <li><a href="#" data-sport="basketball">Basketball</a></li>
+                        <li><a href="#" data-sport="baseball">Baseball</a></li>
+22                        <li><a href="#" data-sport="soccer">Soccer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Ticket Transfer</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 SportsSeat. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>Welcome Back</h2>
+                <button class="close-btn" onclick="closeModal('loginModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="input-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-link" onclick="openModal('forgotModal')" style="color:#2196f3; font-weight:bold;">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Sign In</button>
+                </form>
+                <div class="modal-footer">
+                    <p>Don't have an account? <a href="#" onclick="switchModal('loginModal', 'registerModal')">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>Create Account</h2>
+                <button class="close-btn" onclick="closeModal('registerModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="register-form">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="register-firstname">First Name</label>
+                            <input type="text" id="register-firstname" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="register-lastname">Last Name</label>
+                            <input type="text" id="register-lastname" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="register-age">Age</label>
+                            <input type="number" id="register-age" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="register-phone">Phone</label>
+                            <input type="tel" id="register-phone" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="register-card">Card Number</label>
+                            <input type="text" id="register-card" maxlength="19" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="register-expiry">Card Expiry</label>
+                            <input type="text" id="register-expiry" maxlength="5" placeholder="MM/YY" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="register-cvv">Card CVV</label>
+                            <input type="text" id="register-cvv" maxlength="4" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-email">Email Address</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-confirm">Confirm Password</label>
+                        <input type="password" id="register-confirm" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Create Account</button>
+                </form>
+                <div class="modal-footer">
+                    <p>Already have an account? <a href="#" onclick="switchModal('registerModal', 'loginModal')">Sign in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Modal -->
+    <div class="modal-overlay" id="accountModal" style="display:none;">
+        <div class="modal-box" style="max-width:400px; border-radius:20px; box-shadow:0 8px 32px rgba(33,150,243,0.2);">
+            <div class="modal-header" style="background:#2196f3; color:white; border-radius:20px 20px 0 0;">
+                <h2>Account Information</h2>
+                <button class="close-btn" onclick="closeModal('accountModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" style="padding:24px;">
+                <form id="account-form">
+                    <div class="input-group"><label>Name</label><input type="text" id="account-name" required></div>
+                    <div class="input-group"><label>Age</label><input type="number" id="account-age" required></div>
+                    <div class="input-group"><label>Email</label><input type="email" id="account-email" required disabled></div>
+                    <div class="input-group"><label>Phone</label><input type="tel" id="account-phone" required></div>
+                    <div class="input-group"><label>Card Number</label><input type="text" id="account-card" maxlength="19" required></div>
+                    <div class="input-group"><label>Card Expiry</label><input type="text" id="account-expiry" maxlength="5" placeholder="MM/YY" required></div>
+                    <div class="input-group"><label>Card CVV</label><input type="text" id="account-cvv" maxlength="4" required></div>
+                    <button type="submit" class="btn-primary btn-full" style="margin-top:18px;">Update Info</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal-overlay" id="forgotModal" style="display:none;">
+        <div class="modal-box" style="max-width:350px; border-radius:20px; box-shadow:0 8px 32px rgba(244,67,54,0.2);">
+            <div class="modal-header" style="background:#f44336; color:white; border-radius:20px 20px 0 0;">
+                <h2>Reset Password</h2>
+                <button class="close-btn" onclick="closeModal('forgotModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" style="padding:24px;">
+                <form id="forgot-form">
+                    <div class="input-group"><label>Email Address</label><input type="email" id="forgot-email" required></div>
+                    <button type="submit" class="btn-primary btn-full" style="margin-top:18px;">Send Reset Link</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- Enhanced Chat Widget -->
+<div class="chat-float-btn" id="chatFloatBtn">
+    <i class="fas fa-comments"></i>
+    <div class="chat-notification-badge" id="chatNotificationBadge" style="display: none;">
+        <span id="unreadCount">1</span>
+    </div>
+    <div class="chat-status-indicator" id="chatStatusIndicator">
+        <div class="status-dot online" id="statusDot"></div>
+    </div>
+</div>
+
+<div class="chat-modal" id="chatModal">
+    <div class="chat-content">
+        <!-- Pre-Chat Form -->
+        <div class="pre-chat-form" id="preChatForm">
+            <div class="chat-header">
+                <h2>Start a Conversation</h2>
+                <button class="chat-close" id="chatCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="pre-chat-body">
+                <form id="preChatFormElement">
+                    <div class="form-group">
+                        <label for="userName">Your Name</label>
+                        <input type="text" id="userName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">Email Address</label>
+                        <input type="email" id="userEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="queryType">How can we help you?</label>
+                        <select id="queryType" required>
+                            <option value="">Select a topic</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="billing">Billing Inquiry</option>
+                            <option value="product">Product Information</option>
+                            <option value="general">General Question</option>
+                            <option value="feedback">Feedback</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="initialMessage">Tell us more about your question</label>
+                        <textarea id="initialMessage" placeholder="Describe your question or issue..." rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary start-chat-btn">
+                        <i class="fas fa-comments"></i>
+                        Start Chat
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main Chat Interface -->
+        <div class="chat-interface" id="chatInterface" style="display: none;">
+            <div class="chat-header">
+                <div class="agent-info">
+                    <div class="agent-avatar">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%233b82f6'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-family='Arial'%3ES%3C/text%3E%3C/svg%3E" alt="Support Agent" id="agentAvatar">
+                    </div>
+                    <div class="agent-details">
+                        <h3 id="agentName">Support Agent</h3>
+                        <div class="agent-status">
+                            <div class="status-dot online"></div>
+                            <span id="agentStatus">Online</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button class="chat-action-btn" id="emojiBtn" title="Emojis">
+                        <i class="fas fa-smile"></i>
+                    </button>
+                    <button class="chat-action-btn" id="attachBtn" title="Attach File">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <button class="chat-minimize" id="chatMinimizeBtn" title="Minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="chat-close" id="chatCloseBtn2">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-body" id="chatMessages">
+                <!-- Messages will be populated by JavaScript -->
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section" id="faqSection">
+                <div class="faq-categories" id="faqCategories">
+                    <!-- FAQ Categories will be populated by JavaScript -->
+                </div>
+                <div class="faq-questions" id="faqQuestions" style="display: none;">
+                    <button class="back-to-categories" id="backToCategories"><i class="fas fa-arrow-left"></i> Back to Categories</button>
+                    <h4 id="faqCategoryTitle"></h4>
+                    <div class="question-list" id="questionList">
+                        <!-- FAQ Questions will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span class="typing-text">Agent is typing...</span>
+            </div>
+
+            <!-- Emoji Picker -->
+            <div class="emoji-picker" id="emojiPicker" style="display: none;">
+                <div class="emoji-grid">
+                    <span class="emoji-item" data-emoji="😊">😊</span>
+                    <span class="emoji-item" data-emoji="😂">😂</span>
+                    <span class="emoji-item" data-emoji="😍">😍</span>
+                    <span class="emoji-item" data-emoji="🤔">🤔</span>
+                    <span class="emoji-item" data-emoji="😢">😢</span>
+                    <span class="emoji-item" data-emoji="😡">😡</span>
+                    <span class="emoji-item" data-emoji="👍">👍</span>
+                    <span class="emoji-item" data-emoji="👎">👎</span>
+                    <span class="emoji-item" data-emoji="❤️">❤️</span>
+                    <span class="emoji-item" data-emoji="🎉">🎉</span>
+                    <span class="emoji-item" data-emoji="🔥">🔥</span>
+                    <span class="emoji-item" data-emoji="💯">💯</span>
+                </div>
+            </div>
+
+            <div class="chat-footer">
+                <form id="chatForm">
+                    <div class="chat-input-group">
+                        <input type="text" id="chatInput" placeholder="Type your message..." required>
+                        <button type="submit" class="btn-primary send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+                <div class="chat-footer-actions">
+                    <button class="btn-outline" id="showFaqBtn">
+                        <i class="fas fa-question-circle"></i>
+                        FAQs
+                    </button>
+                    <button class="end-chat-btn" id="endChatBtn">
+                        <i class="fas fa-phone-slash"></i>
+                        End Chat
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Ended Screen -->
+        <div class="chat-ended" id="chatEnded" style="display: none;">
+            <div class="chat-header">
+                <h2>Chat Ended</h2>
+                <button class="chat-close" id="chatCloseBtn3">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-ended-body">
+                <div class="chat-ended-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Thank you for contacting us!</h3>
+                <p>We hope we were able to help you today.</p>
+                
+                <!-- Feedback Form -->
+                <div class="feedback-section">
+                    <h4>How was your experience?</h4>
+                    <div class="rating-stars" id="ratingStars">
+                        <i class="fas fa-star" data-rating="1"></i>
+                        <i class="fas fa-star" data-rating="2"></i>
+                        <i class="fas fa-star" data-rating="3"></i>
+                        <i class="fas fa-star" data-rating="4"></i>
+                        <i class="fas fa-star" data-rating="5"></i>
+                    </div>
+                    <textarea id="feedbackComment" placeholder="Tell us about your experience (optional)" rows="3"></textarea>
+                    <button class="btn-primary" id="submitFeedbackBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Feedback
+                    </button>
+                </div>
+                
+                <div class="chat-actions-end">
+                    <button class="btn-outline" id="newChatBtn">
+                        <i class="fas fa-plus"></i>
+                        Start New Chat
+                    </button>
+                    <button class="btn-outline" id="downloadTranscriptBtn">
+                        <i class="fas fa-download"></i>
+                        Download Transcript
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Offline Form -->
+        <div class="offline-form" id="offlineForm" style="display: none;">
+            <div class="chat-header">
+                <h2>We're Currently Offline</h2>
+                <button class="chat-close" id="chatCloseBtn4">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="offline-body">
+                <div class="offline-icon">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <p>Our support team is currently offline. Leave us a message and we'll get back to you as soon as possible!</p>
+                
+                <form id="offlineMessageForm">
+                    <div class="form-group">
+                        <label for="offlineName">Your Name</label>
+                        <input type="text" id="offlineName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="offlineEmail">Email Address</label>
+                        <input type="email" id="offlineEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="offlineSubject">Subject</label>
+                        <input type="text" id="offlineSubject" placeholder="Brief subject line" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="offlineMessage">Message</label>
+                        <textarea id="offlineMessage" placeholder="Tell us how we can help you..." rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Message
+                    </button>
+                </form>
+                
+                <div class="expected-response">
+                    <i class="fas fa-clock"></i>
+                    <span>Expected response time: 2-4 hours</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Proactive Chat Trigger -->
+<div class="proactive-chat-trigger" id="proactiveChatTrigger" style="display: none;">
+    <div class="proactive-message">
+        <div class="proactive-avatar">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%233b82f6'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-family='Arial'%3ES%3C/text%3E%3C/svg%3E" alt="Support">
+        </div>
+        <div class="proactive-content">
+            <div class="proactive-text">
+                <p>Hi there! 👋 Need any help finding what you're looking for?</p>
+            </div>
+            <div class="proactive-actions">
+                <button class="btn-primary btn-sm" id="acceptProactiveChat">Yes, I need help</button>
+                <button class="btn-outline btn-sm" id="dismissProactiveChat">No, thanks</button>
+            </div>
+        </div>
+        <button class="proactive-close" id="closeProactiveChat">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
+
+<!-- Toast Notifications -->
+<div class="toast-container" id="toastContainer"></div>
+
+
+    <!-- Toast Notifications -->
+    <div class="toast-wrapper" id="toast-wrapper"></div>
+
+<script>
+document.getElementById('register-form').onsubmit = async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+    const confirm = document.getElementById('register-confirm').value;
+
+    if (password !== confirm) {
+        alert('Passwords do not match!');
+        return;
+    }
+
+    const res = await fetch('http://127.0.0.1:5000/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (res.ok) {
+        alert('Registration successful! Please login.');
+        closeModal('registerModal');
+        openModal('loginModal');
+    } else {
+        alert(data.message || 'Registration failed');
+    }
+};
+
+// Show user avatar if logged in
+function showUserAvatar() {
+    var user = JSON.parse(localStorage.getItem('user'));
+    var avatar = document.getElementById('user-avatar');
+    var loginBtn = document.getElementById('login-btn');
+    var signupBtn = document.getElementById('signup-btn');
+    var logoutBtn = document.getElementById('logout-btn');
+    var accountBtn = document.getElementById('account-btn');
+    if (user && user.email) {
+        avatar.textContent = user.email.charAt(0).toUpperCase();
+        avatar.style.display = 'flex';
+        loginBtn.style.display = 'none';
+        signupBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+        accountBtn.style.display = 'inline-block';
+    } else {
+        avatar.style.display = 'none';
+        loginBtn.style.display = 'inline-block';
+        signupBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+        accountBtn.style.display = 'none';
+    }
+}
+document.addEventListener('DOMContentLoaded', showUserAvatar);
+
+// Logout functionality
+if (document.getElementById('logout-btn')) {
+    document.getElementById('logout-btn').onclick = function() {
+        localStorage.removeItem('user');
+        showUserAvatar();
+        location.reload();
+    };
+}
+// Account modal functionality
+if (document.getElementById('account-btn')) {
+    document.getElementById('account-btn').onclick = function() {
+        var user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            document.getElementById('account-name').value = user.name || '';
+            document.getElementById('account-age').value = user.age || '';
+            document.getElementById('account-email').value = user.email || '';
+            document.getElementById('account-phone').value = user.phone || '';
+            document.getElementById('account-card').value = user.card || '';
+            document.getElementById('account-expiry').value = user.expiry || '';
+            document.getElementById('account-cvv').value = user.cvv || '';
+        }
+        openModal('accountModal');
+    };
+}
+// Account form update
+if (document.getElementById('account-form')) {
+    document.getElementById('account-form').onsubmit = function(e) {
+        e.preventDefault();
+        var user = JSON.parse(localStorage.getItem('user')) || {};
+        user.name = document.getElementById('account-name').value;
+        user.age = document.getElementById('account-age').value;
+        user.phone = document.getElementById('account-phone').value;
+        user.card = document.getElementById('account-card').value;
+        user.expiry = document.getElementById('account-expiry').value;
+        user.cvv = document.getElementById('account-cvv').value;
+        localStorage.setItem('user', JSON.stringify(user));
+        closeModal('accountModal');
+        showUserAvatar();
+        alert('Account information updated!');
+    };
+}
+// Forgot password form
+if (document.getElementById('forgot-form')) {
+    document.getElementById('forgot-form').onsubmit = function(e) {
+        e.preventDefault();
+        var email = document.getElementById('forgot-email').value;
+        closeModal('forgotModal');
+        alert('If this email exists, a reset link will be sent.');
+    };
+}
+// Enhanced Newsletter Section JavaScript
+
+class NewsletterEnhancer {
+    constructor() {
+        this.currentStep = 1;
+        this.maxSteps = 3;
+        this.selectedTier = 'free';
+        this.testimonialIndex = 0;
+        this.subscriberCount = 127543;
+        
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+        this.startTestimonialRotation();
+        this.animateSubscriberCount();
+    }
+    
+    bindEvents() {
+        // Tier selection
+        document.querySelectorAll('.tier-option').forEach(tier => {
+            tier.addEventListener('click', (e) => this.selectTier(e));
+        });
+        
+        // Form navigation
+        document.querySelectorAll('.next-step').forEach(btn => {
+            btn.addEventListener('click', (e) => this.nextStep(e));
+        });
+        
+        document.querySelectorAll('.prev-step').forEach(btn => {
+            btn.addEventListener('click', (e) => this.prevStep(e));
+        });
+        
+        // Form submission
+        const form = document.getElementById('newsletter-form');
+        if (form) {
+            form.addEventListener('submit', (e) => this.handleSubmit(e));
+        }
+        
+        // Modal controls
+        const closeModal = document.getElementById('close-modal');
+        if (closeModal) {
+            closeModal.addEventListener('click', () => this.closeModal());
+        }
+        
+        // Spin wheel
+        const spinBtn = document.getElementById('spin-btn');
+        if (spinBtn) {
+            spinBtn.addEventListener('click', () => this.spinWheel());
+        }
+        
+        // Interest selection validation
+        document.querySelectorAll('input[name="interests"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => this.validateInterests());
+        });
+    }
+    
+    selectTier(e) {
+        // Remove active class from all tiers
+        document.querySelectorAll('.tier-option').forEach(tier => {
+            tier.classList.remove('active');
+        });
+        
+        // Add active class to selected tier
+        e.currentTarget.classList.add('active');
+        this.selectedTier = e.currentTarget.dataset.tier;
+        
+        // Show tier selection feedback
+        this.showToast(`${this.selectedTier.charAt(0).toUpperCase() + this.selectedTier.slice(1)} tier selected!`, 'success');
+    }
+    
+    nextStep(e) {
+        e.preventDefault();
+        
+        // Validate current step
+        if (!this.validateCurrentStep()) {
+            return;
+        }
+        
+        if (this.currentStep < this.maxSteps) {
+            this.currentStep++;
+            this.updateFormStep();
+            this.updateProgressIndicator();
+        }
+    }
+    
+    prevStep(e) {
+        e.preventDefault();
+        
+        if (this.currentStep > 1) {
+            this.currentStep--;
+            this.updateFormStep();
+            this.updateProgressIndicator();
+        }
+    }
+    
+    validateCurrentStep() {
+        switch (this.currentStep) {
+            case 1:
+                const email = document.getElementById('email-input').value;
+                if (!email || !this.isValidEmail(email)) {
+                    this.showToast('Please enter a valid email address', 'error');
+                    return false;
+                }
+                break;
+            case 2:
+                const selectedInterests = document.querySelectorAll('input[name="interests"]:checked');
+                if (selectedInterests.length === 0) {
+                    this.showToast('Please select at least one interest', 'error');
+                    return false;
+                }
+                break;
+            case 3:
+                const selectedFrequency = document.querySelector('input[name="frequency"]:checked');
+                if (!selectedFrequency) {
+                    this.showToast('Please select a notification frequency', 'error');
+                    return false;
+                }
+                break;
+        }
+        return true;
+    }
+    
+    validateInterests() {
+        const selectedInterests = document.querySelectorAll('input[name="interests"]:checked');
+        const nextBtn = document.querySelector('.form-step[data-step="2"] .next-step');
+        
+        if (selectedInterests.length > 0) {
+            nextBtn.style.opacity = '1';
+            nextBtn.style.pointerEvents = 'all';
+        } else {
+            nextBtn.style.opacity = '0.6';
+            nextBtn.style.pointerEvents = 'none';
+        }
+    }
+    
+    updateFormStep() {
+        // Hide all steps
+        document.querySelectorAll('.form-step').forEach(step => {
+            step.classList.remove('active');
+        });
+        
+        // Show current step
+        const currentStepElement = document.querySelector(`[data-step="${this.currentStep}"]`);
+        if (currentStepElement) {
+            currentStepElement.classList.add('active');
+        }
+    }
+    
+    updateProgressIndicator() {
+        document.querySelectorAll('.progress-step').forEach(step => {
+            step.classList.remove('active');
+        });
+        
+        const currentProgressStep = document.querySelector(`.progress-step[data-step="${this.currentStep}"]`);
+        if (currentProgressStep) {
+            currentProgressStep.classList.add('active');
+        }
+    }
+    
+    handleSubmit(e) {
+        e.preventDefault();
+        
+        if (!this.validateCurrentStep()) {
+            return;
+        }
+        
+        // Collect form data
+        const formData = this.collectFormData();
+        
+        // Simulate API call
+        this.showToast('Processing your subscription...', 'success');
+        
+        setTimeout(() => {
+            this.showSuccessModal(formData);
+            this.incrementSubscriberCount();
+        }, 1500);
+    }
+    
+    collectFormData() {
+        const email = document.getElementById('email-input').value;
+        const interests = Array.from(document.querySelectorAll('input[name="interests"]:checked'))
+            .map(cb => cb.value);
+        const frequency = document.querySelector('input[name="frequency"]:checked').value;
+        
+        return {
+            email,
+            interests,
+            frequency,
+            tier: this.selectedTier,
+            timestamp: new Date().toISOString()
+        };
+    }
+    
+    showSuccessModal(formData) {
+        const modal = document.getElementById('success-modal');
+        if (modal) {
+            modal.classList.add('active');
+            
+            // Store subscription data
+            localStorage.setItem('newsletterSubscription', JSON.stringify(formData));
+        }
+    }
+    
+    closeModal() {
+        const modal = document.getElementById('success-modal');
+        if (modal) {
+            modal.classList.remove('active');
+            
+            // Reset form
+            this.resetForm();
+        }
+    }
+    
+    resetForm() {
+        this.currentStep = 1;
+        this.updateFormStep();
+        this.updateProgressIndicator();
+        
+        // Clear form inputs
+        document.getElementById('newsletter-form').reset();
+        
+        // Reset tier selection
+        document.querySelectorAll('.tier-option').forEach(tier => {
+            tier.classList.remove('active');
+        });
+        document.querySelector('.tier-option[data-tier="free"]').classList.add('active');
+        this.selectedTier = 'free';
+    }
+    
+    spinWheel() {
+        const wheel = document.getElementById('bonus-wheel');
+        const spinBtn = document.getElementById('spin-btn');
+        const prizeResult = document.getElementById('prize-result');
+        
+        if (!wheel || !spinBtn) return;
+        
+        // Disable button during spin
+        spinBtn.disabled = true;
+        spinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Spinning...';
+        
+        // Generate random rotation (multiple full rotations + random position)
+        const randomRotation = 1440 + Math.random() * 360; // 4 full rotations + random
+        wheel.style.transform = `rotate(${randomRotation}deg)`;
+        
+        // Determine prize based on final position
+        setTimeout(() => {
+            const prizes = ['10% Off', 'Free Shipping', '15% Off', 'Early Access', '20% Off', 'VIP Status'];
+            const finalPosition = randomRotation % 360;
+            const prizeIndex = Math.floor(finalPosition / 60);
+            const prize = prizes[prizeIndex];
+            
+            // Show prize result
+            document.getElementById('prize-text').textContent = prize;
+            prizeResult.style.display = 'block';
+            
+            // Re-enable button
+            spinBtn.disabled = false;
+            spinBtn.innerHTML = '<i class="fas fa-redo"></i> Spin Again!';
+            
+            // Store prize in localStorage
+            const subscription = JSON.parse(localStorage.getItem('newsletterSubscription') || '{}');
+            subscription.welcomeBonus = prize;
+            localStorage.setItem('newsletterSubscription', JSON.stringify(subscription));
+            
+            this.showToast(`Congratulations! You won: ${prize}`, 'success');
+        }, 3000);
+    }
+    
+    startTestimonialRotation() {
+        const testimonials = document.querySelectorAll('.testimonial');
+        if (testimonials.length === 0) return;
+        
+        setInterval(() => {
+            // Remove active class from current testimonial
+            testimonials[this.testimonialIndex].classList.remove('active');
+            
+            // Move to next testimonial
+            this.testimonialIndex = (this.testimonialIndex + 1) % testimonials.length;
+            
+            // Add active class to new testimonial
+            testimonials[this.testimonialIndex].classList.add('active');
+        }, 4000);
+    }
+    
+    animateSubscriberCount() {
+        const countElement = document.getElementById('subscriber-count');
+        if (!countElement) return;
+        
+        // Animate count up
+        let currentCount = 0;
+        const targetCount = this.subscriberCount;
+        const increment = targetCount / 100;
+        
+        const countAnimation = setInterval(() => {
+            currentCount += increment;
+            if (currentCount >= targetCount) {
+                currentCount = targetCount;
+                clearInterval(countAnimation);
+            }
+            countElement.textContent = Math.floor(currentCount).toLocaleString();
+        }, 20);
+    }
+    
+    incrementSubscriberCount() {
+        this.subscriberCount++;
+        const countElement = document.getElementById('subscriber-count');
+        if (countElement) {
+            countElement.textContent = this.subscriberCount.toLocaleString();
+        }
+    }
+    
+    isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    showToast(message, type = 'success') {
+        const toastContainer = document.getElementById('toast-container');
+        if (!toastContainer) return;
+        
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        const icon = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+        
+        toast.innerHTML = `
+            <i class="${icon}"></i>
+            <span>${message}</span>
+        `;
+        
+        toastContainer.appendChild(toast);
+        
+        // Trigger animation
+        setTimeout(() => toast.classList.add('show'), 100);
+        
+        // Remove toast after 4 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
+        }, 4000);
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new NewsletterEnhancer();
+});
+
+// Additional utility functions for integration
+window.NewsletterUtils = {
+    // Function to pre-fill email if user is logged in
+    prefillUserEmail: function(email) {
+        const emailInput = document.getElementById('email-input');
+        if (emailInput && email) {
+            emailInput.value = email;
+        }
+    },
+    
+    // Function to get subscription data
+    getSubscriptionData: function() {
+        return JSON.parse(localStorage.getItem('newsletterSubscription') || '{}');
+    },
+    
+    // Function to check if user is subscribed
+    isUserSubscribed: function() {
+        const data = this.getSubscriptionData();
+        return data.email && data.timestamp;
+    },
+    
+    // Function to update subscriber count from server
+    updateSubscriberCount: function(count) {
+        const countElement = document.getElementById('subscriber-count');
+        if (countElement && count) {
+            countElement.textContent = count.toLocaleString();
+        }
+    }
+};
+  
+
+// Button click handlers
+function startGame() {
+    // This function can be customized to integrate with your existing game
+    gameSectionShowNotification('Starting game...', 'success');
+    
+    // Example: You can replace this with your actual game initialization
+    // If you have an existing init() function, you can call it here:
+    // if (typeof init === 'function') {
+    //     init();
+    // }
+    
+    // For demonstration, we'll just show a message
+    setTimeout(() => {
+        gameSectionShowNotification('Game ready! Use arrow keys to play.', 'info');
+    }, 1500);
+}
+
+function showInstructions() {
+    gameSectionShowModal('How to Play', `
+        <div class="game-instructions">
+            <h3>Game Controls</h3>
+            <p><strong>Left Arrow:</strong> Move players left</p>
+            <p><strong>Right Arrow:</strong> Move players right</p>
+            <p><strong>Goal:</strong> Score more goals than your opponent!</p>
+            <br>
+            <h3>Game Rules</h3>
+            <p>• Match duration: 2 minutes</p>
+            <p>• Control your team (red players)</p>
+            <p>• Beat the AI opponent (blue players)</p>
+            <p>• Score goals to win the match</p>
+        </div>
+    `);
+}
+
+function showLeaderboard() {
+    // Sample leaderboard data - you can replace this with real data
+    const leaderboardData = [
+        { rank: 1, name: 'Rasul', score: 3000 },
+        { rank: 2, name: 'Islam', score: 2000 },
+        { rank: 3, name: 'Zahra', score: 1920 },
+        { rank: 4, name: 'Ayxan', score: 1650 },
+        { rank: 5, name: 'Ruslan', score: 1200 }
+    ];
+    
+    let leaderboardHTML = '<div class="game-leaderboard"><h3>Top Players</h3>';
+    leaderboardData.forEach(player => {
+        leaderboardHTML += `
+            <div class="leaderboard-item">
+                <span class="rank">#${player.rank}</span>
+                <span class="name">${player.name}</span>
+                <span class="score">${player.score}</span>
+            </div>
+        `;
+    });
+    leaderboardHTML += '</div>';
+    
+    gameSectionShowModal('Leaderboard', leaderboardHTML);
+}
+
+// Utility functions
+function gameSectionShowNotification(message, type = 'info') {
+    // Remove existing notification
+    const existingNotification = document.querySelector('.game-section-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification
+    const notification = document.createElement('div');
+    notification.className = 'game-section-notification';
+    notification.textContent = message;
+    
+    // Style the notification
+    const bgColor = type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3';
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${bgColor};
+        color: white;
+        padding: 15px 25px;
+        border-radius: 25px;
+        font-family: 'Verdana', sans-serif;
+        font-weight: bold;
+        font-size: 0.9rem;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        z-index: 10000;
+        animation: gameSectionSlideIn 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
+    `;
+    
+    // Add animation styles if not already added
+    if (!document.querySelector('#game-section-notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'game-section-notification-styles';
+        style.textContent = `
+            @keyframes gameSectionSlideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes gameSectionSlideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.style.animation = 'gameSectionSlideOut 0.3s ease';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 300);
+        }
+    }, 3000);
+}
+
+function gameSectionShowModal(title, content) {
+    // Remove existing modal
+    const existingModal = document.querySelector('.game-section-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Create modal
+    const modal = document.createElement('div');
+    modal.className = 'game-section-modal';
+    modal.innerHTML = `
+        <div class="game-modal-overlay" onclick="gameSectionCloseModal()"></div>
+        <div class="game-modal-content">
+            <div class="game-modal-header">
+                <h2>${title}</h2>
+                <button class="game-modal-close" onclick="gameSectionCloseModal()">×</button>
+            </div>
+            <div class="game-modal-body">
+                ${content}
+            </div>
+        </div>
+    `;
+    
+    // Style the modal
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10001;
+        animation: gameSectionModalFadeIn 0.3s ease;
+    `;
+    
+    // Add modal styles if not already added
+    if (!document.querySelector('#game-section-modal-styles')) {
+        const style = document.createElement('style');
+        style.id = 'game-section-modal-styles';
+        style.textContent = `
+            @keyframes gameSectionModalFadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            .game-modal-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                backdrop-filter: blur(5px);
+            }
+            .game-modal-content {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #1b5e20, #2e7d32);
+                border-radius: 15px;
+                max-width: 500px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            }
+            .game-modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 25px;
+                border-bottom: 1px solid rgba(255,255,255,0.2);
+            }
+            .game-modal-header h2 {
+                margin: 0;
+                color: #e8f5e8;
+                font-family: 'Verdana', sans-serif;
+                font-size: 1.3rem;
+            }
+            .game-modal-close {
+                background: none;
+                border: none;
+                color: #e8f5e8;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 5px;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background 0.3s ease;
+            }
+            .game-modal-close:hover {
+                background: rgba(255,255,255,0.1);
+            }
+            .game-modal-body {
+                padding: 25px;
+                color: #c8e6c9;
+                font-family: 'Verdana', sans-serif;
+                line-height: 1.6;
+            }
+            .game-instructions h3 {
+                color: #e8f5e8;
+                margin-top: 0;
+                margin-bottom: 15px;
+            }
+            .game-instructions p {
+                margin-bottom: 10px;
+            }
+            .game-leaderboard h3 {
+                color: #e8f5e8;
+                margin-top: 0;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            .leaderboard-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 15px;
+                margin-bottom: 8px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 8px;
+                transition: background 0.3s ease;
+            }
+            .leaderboard-item:hover {
+                background: rgba(255,255,255,0.15);
+            }
+            .leaderboard-item .rank {
+                font-weight: bold;
+                color: #81c784;
+                min-width: 30px;
+            }
+            .leaderboard-item .name {
+                flex: 1;
+                margin: 0 15px;
+            }
+            .leaderboard-item .score {
+                font-weight: bold;
+                color: #a5d6a7;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(modal);
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+function gameSectionCloseModal() {
+    const modal = document.querySelector('.game-section-modal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = '';
+    }
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        gameSectionCloseModal();
+    }
+});
+
+// Add touch event handling for better mobile experience
+document.addEventListener('DOMContentLoaded', function() {
+    // Add touch feedback for buttons
+    const buttons = document.querySelectorAll('.game-btn');
+    buttons.forEach(button => {
+        button.addEventListener('touchstart', function() {
+            this.style.transform = 'translateY(-1px) scale(0.98)';
+        });
+        
+        button.addEventListener('touchend', function() {
+            this.style.transform = '';
+        });
+    });
+});
+
+function openModal(id) {
+    var modal = document.getElementById(id);
+    if (modal) modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+    var modal = document.getElementById(id);
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+}
+</script>
+</body>
+</html
+

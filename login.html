@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="auth-container">
-        <h1>Login</h1>
+        <h1 style="background-color: green;">Login</h1>
         <form id="login-form">
             <div class="input-group">
                 <label for="login-email">Email Address</label>
@@ -23,33 +23,35 @@
         <div id="login-message" class="auth-message"></div>
     </div>
     <script>
-    document.getElementById('login-form').onsubmit = async function(e) {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-        const message = document.getElementById('login-message');
-        try {
-            const res = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
-            });
-            const data = await res.json();
-            if (res.ok) {
-                localStorage.setItem('access_token', data.access_token);
-                localStorage.setItem('user', JSON.stringify(data.user));
-                if (data.user.is_admin) {
-                    window.location.href = 'admin.html';
-                } else {
-                    window.location.href = 'index.html';
-                }
+document.getElementById('login-form').onsubmit = async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    const message = document.getElementById('login-message');
+    try {
+        const res = await fetch('http://127.0.0.1:5000/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            if (data.user.is_admin) {
+                window.location.href = 'admin.html';
             } else {
-                message.textContent = data.message || 'Login failed';
+                window.location.href = 'index.html';
             }
-        } catch (err) {
-            message.textContent = 'Server error. Please make sure the backend is running.';
+        } else {
+            message.textContent = data.message || 'Login failed';
         }
-    };
+    } catch (err) {
+        message.textContent = 'Server error. Please make sure the backend is running.';
+    }
+};
+
+
     </script>
 </body>
 </html>

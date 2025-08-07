@@ -1,12 +1,15 @@
 // Global variables
 let events = [];
+let features = [];
 let currentEditingEvent = null;
+let currentEditingFeature = null;
 
 // Check if user is admin on page load
 document.addEventListener("DOMContentLoaded", function() {
     // Skip authentication check for demo purposes
     // checkAdminAuth();
     loadEvents();
+    loadFeatures();
     updateDashboardStats();
 });
 
@@ -24,6 +27,25 @@ function logout() {
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
     window.location.href = "login.html";
+}
+
+// Tab management
+function showTab(tabName) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Remove active class from all tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show selected tab content
+    document.getElementById(tabName + '-tab').classList.add('active');
+    
+    // Add active class to clicked tab button
+    event.target.classList.add('active');
 }
 
 // API helper function
@@ -78,6 +100,19 @@ async function loadEvents() {
     }
 }
 
+// Load features from API
+async function loadFeatures() {
+    try {
+        const response = await apiCall("/features");
+        features = response.features || [];
+        renderFeaturesTable();
+        updateDashboardStats();
+    } catch (error) {
+        console.error("Error loading features:", error);
+        showNotification("Failed to load features", "error");
+    }
+}
+
 // Render events table
 function renderEventsTable() {
     const tbody = document.getElementById("events-table-body");
@@ -126,20 +161,71 @@ function renderEventsTable() {
     });
 }
 
+// Render features table
+function renderFeaturesTable() {
+    const tbody = document.getElementById("features-table-body");
+    tbody.innerHTML = "";
+
+    if (features.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" style="text-align: center; padding: 2rem; color: #7f8c8d;">
+                    <i class="fas fa-cogs" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+                    No features found. Click "Add New Feature" to create your first feature.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    features.forEach(feature => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${feature.id}</td>
+            <td><strong>${feature.name}</strong></td>
+            <td>${feature.description || 'No description'}</td>
+            <td>${feature.category ? `<span class="category-badge">${feature.category}</span>` : '-'}</td>
+            <td>
+                <span class="status-badge status-${feature.status}">
+                    ${feature.status}
+                </span>
+            </td>
+            <td>${formatDate(feature.created_at)}</td>
+            <td>
+                <div class="action-buttons">
+                    <button class="btn btn-warning btn-sm" onclick="editFeature(${feature.id})">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteFeature(${feature.id})">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
 // Update dashboard statistics
 function updateDashboardStats() {
     const totalEvents = events.length;
     const featuredEvents = events.filter(event => event.featured).length;
     const today = new Date().toISOString().split("T")[0];
     const upcomingEvents = events.filter(event => event.date >= today).length;
+    
+    const totalFeatures = features.length;
+    const enabledFeatures = features.filter(feature => feature.status === 'enabled').length;
 
     document.getElementById("total-events").textContent = totalEvents;
     document.getElementById("featured-events").textContent = featuredEvents;
     document.getElementById("upcoming-events").textContent = upcomingEvents;
+    document.getElementById("total-features").textContent = totalFeatures;
+    document.getElementById("enabled-features").textContent = enabledFeatures;
 }
 
 // Format date for display
 function formatDate(dateString) {
+    if (!dateString) return 'N/A';
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
         year: "numeric",
@@ -174,10 +260,41 @@ function filterEvents() {
     events = originalEvents;
 }
 
-// Modal functions
+// Filter features
+function filterFeatures() {
+    const searchTerm = document.getElementById("search-features").value.toLowerCase();
+    const statusFilter = document.getElementById("status-filter").value;
+    const categoryFilter = document.getElementById("category-filter").value;
+
+    let filteredFeatures = features;
+
+    if (searchTerm) {
+        filteredFeatures = filteredFeatures.filter(feature =>
+            feature.name.toLowerCase().includes(searchTerm) ||
+            (feature.description && feature.description.toLowerCase().includes(searchTerm)) ||
+            (feature.category && feature.category.toLowerCase().includes(searchTerm))
+        );
+    }
+
+    if (statusFilter) {
+        filteredFeatures = filteredFeatures.filter(feature => feature.status === statusFilter);
+    }
+
+    if (categoryFilter) {
+        filteredFeatures = filteredFeatures.filter(feature => feature.category === categoryFilter);
+    }
+
+    // Temporarily replace features array for rendering
+    const originalFeatures = features;
+    features = filteredFeatures;
+    renderFeaturesTable();
+    features = originalFeatures;
+}
+
+// Event modal functions
 function openAddEventModal() {
     currentEditingEvent = null;
-    document.getElementById("modal-title").textContent = "Add New Event";
+    document.getElementById("event-modal-title").textContent = "Add New Event";
     document.getElementById("event-form").reset();
     document.getElementById("event-modal").style.display = "block";
 }
@@ -186,7 +303,7 @@ function editEvent(eventId) {
     currentEditingEvent = events.find(event => event.id === eventId);
     if (!currentEditingEvent) return;
 
-    document.getElementById("modal-title").textContent = "Edit Event";
+    document.getElementById("event-modal-title").textContent = "Edit Event";
     document.getElementById("event-title").value = currentEditingEvent.title;
     document.getElementById("event-sport").value = currentEditingEvent.sport;
     document.getElementById("event-venue").value = currentEditingEvent.venue;
@@ -202,6 +319,32 @@ function editEvent(eventId) {
 function closeEventModal() {
     document.getElementById("event-modal").style.display = "none";
     currentEditingEvent = null;
+}
+
+// Feature modal functions
+function openAddFeatureModal() {
+    currentEditingFeature = null;
+    document.getElementById("feature-modal-title").textContent = "Add New Feature";
+    document.getElementById("feature-form").reset();
+    document.getElementById("feature-modal").style.display = "block";
+}
+
+function editFeature(featureId) {
+    currentEditingFeature = features.find(feature => feature.id === featureId);
+    if (!currentEditingFeature) return;
+
+    document.getElementById("feature-modal-title").textContent = "Edit Feature";
+    document.getElementById("feature-name").value = currentEditingFeature.name;
+    document.getElementById("feature-description").value = currentEditingFeature.description || "";
+    document.getElementById("feature-status").value = currentEditingFeature.status;
+    document.getElementById("feature-category").value = currentEditingFeature.category || "";
+
+    document.getElementById("feature-modal").style.display = "block";
+}
+
+function closeFeatureModal() {
+    document.getElementById("feature-modal").style.display = "none";
+    currentEditingFeature = null;
 }
 
 // Save event (create or update)
@@ -228,43 +371,12 @@ async function saveEvent(event) {
     const dateValue = dateInput.value;
     const timeValue = timeInput.value;
 
-    // Convert date format from MM/DD/YYYY to YYYY-MM-DD (if needed)
-    let formattedDate = dateValue;
-    // Assuming dateValue is already in YYYY-MM-DD from input type="date"
-    // If user inputs MM/DD/YYYY, convert it
-    if (dateValue.includes("/")) {
-        const dateParts = dateValue.split("/");
-        if (dateParts.length === 3) {
-            formattedDate = `${dateParts[2]}-${dateParts[0].padStart(2, "0")}-${dateParts[1].padStart(2, "0")}`;
-        }
-    }
-
-    // Convert time format from 12-hour to 24-hour (if needed)
-    let formattedTime = timeValue;
-    // Assuming timeValue is already in HH:MM from input type="time"
-    // If user inputs 12-hour format, convert it
-    if (timeValue.includes("AM") || timeValue.includes("PM")) {
-        const timeStr = timeValue.replace(/\s+/g, "");
-        const isPM = timeStr.includes("PM");
-        const timeOnly = timeStr.replace(/AM|PM/g, "");
-        const [hours, minutes] = timeOnly.split(":");
-        let hour24 = parseInt(hours);
-        
-        if (isPM && hour24 !== 12) {
-            hour24 += 12;
-        } else if (!isPM && hour24 === 12) {
-            hour24 = 0;
-        }
-        
-        formattedTime = `${hour24.toString().padStart(2, "0")}:${minutes}`;
-    }
-
     const eventData = {
         title: title,
         sport: sport,
         venue: venue,
-        date: formattedDate,
-        time: formattedTime,
+        date: dateValue,
+        time: timeValue,
         price: price,
         image: image,
         featured: featured
@@ -290,6 +402,43 @@ async function saveEvent(event) {
     }
 }
 
+// Save feature (create or update)
+async function saveFeature(event) {
+    event.preventDefault();
+
+    // Get form values
+    const name = document.getElementById("feature-name").value;
+    const description = document.getElementById("feature-description").value;
+    const status = document.getElementById("feature-status").value;
+    const category = document.getElementById("feature-category").value;
+
+    const featureData = {
+        name: name,
+        description: description,
+        status: status,
+        category: category
+    };
+
+    try {
+        let response;
+        if (currentEditingFeature) {
+            // Update existing feature
+            response = await apiCall(`/features/${currentEditingFeature.id}`, "PUT", featureData);
+            showNotification("Feature updated successfully!", "success");
+        } else {
+            // Create new feature
+            response = await apiCall("/features", "POST", featureData);
+            showNotification("Feature created successfully!", "success");
+        }
+
+        closeFeatureModal();
+        loadFeatures(); // Reload features to reflect changes
+    } catch (error) {
+        console.error("Error saving feature:", error);
+        showNotification(`Error saving feature: ${error.message}`, "error");
+    }
+}
+
 // Delete event
 async function deleteEvent(eventId) {
     if (!confirm("Are you sure you want to delete this event? This action cannot be undone.")) {
@@ -303,6 +452,22 @@ async function deleteEvent(eventId) {
     } catch (error) {
         console.error("Error deleting event:", error);
         showNotification(`Error deleting event: ${error.message}`, "error");
+    }
+}
+
+// Delete feature
+async function deleteFeature(featureId) {
+    if (!confirm("Are you sure you want to delete this feature? This action cannot be undone.")) {
+        return;
+    }
+
+    try {
+        await apiCall(`/features/${featureId}`, "DELETE");
+        showNotification("Feature deleted successfully!", "success");
+        loadFeatures(); // Reload features to reflect changes
+    } catch (error) {
+        console.error("Error deleting feature:", error);
+        showNotification(`Error deleting feature: ${error.message}`, "error");
     }
 }
 
@@ -320,9 +485,14 @@ function showNotification(message, type = "success") {
 
 // Close modal when clicking outside
 window.onclick = function(event) {
-    const modal = document.getElementById("event-modal");
-    if (event.target === modal) {
+    const eventModal = document.getElementById("event-modal");
+    const featureModal = document.getElementById("feature-modal");
+    
+    if (event.target === eventModal) {
         closeEventModal();
+    }
+    if (event.target === featureModal) {
+        closeFeatureModal();
     }
 }
 
@@ -330,5 +500,7 @@ window.onclick = function(event) {
 document.addEventListener("keydown", function(event) {
     if (event.key === "Escape") {
         closeEventModal();
+        closeFeatureModal();
     }
 });
+
