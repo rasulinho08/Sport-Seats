@@ -4,19 +4,24 @@
   <meta charset="utf-8">
   <title>Seatmap</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; }
     .btn { padding: 10px 14px; background: #2b6cb0; color: #fff; border-radius: 6px; text-decoration: none; }
+    #mapid { height: 400px; width: 100%; }
   </style>
 </head>
 <body>
   <a href="/" class="btn">Back to Home</a>
   <div id="content" style="margin-top:20px">Loading...</div>
+  <div id="mapid"></div>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script>
     const pathParts = location.pathname.split('/');
     const gameId = pathParts[pathParts.length - 1];
-    if (!gameId) document.getElementById('content').innerText = 'No gameId provided.';
-    else {
+    if (!gameId) {
+      document.getElementById('content').innerText = 'No gameId provided.';
+    } else {
       fetch('/api/games/' + gameId)
         .then(r => r.ok ? r.json() : Promise.reject('Not found'))
         .then(g => {
@@ -24,43 +29,70 @@
             <h2>${g.teams}</h2>
             <p><strong>Date:</strong> ${g.date}</p>
             <p><strong>Game ID:</strong> ${g.gameId}</p>
-            <p>This is a placeholder seatmap. Replace with your seat selection UI.</p>
+            <p>Location: ${g.location || 'N/A'}</p>
           `;
+
+          // Initialize the map
+          const mymap = L.map('mapid').setView([0, 0], 2); // Default view, will be updated
+
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          }).addTo(mymap);
+
+          // Attempt to geocode the location or use provided coordinates
+          if (g.location) {
+            // Use Nominatim (OpenStreetMap's geocoding service) to get coordinates
+            const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(g.location)}`;
+            
+            fetch(geocodeUrl)
+              .then(response => response.json())
+              .then(data => {
+                if (data && data.length > 0) {
+                  const lat = parseFloat(data[0].lat);
+                  const lon = parseFloat(data[0].lon);
+                  
+                  // Set map view to the location
+                  mymap.setView([lat, lon], 13);
+                  
+                  // Add marker for the game location
+                  L.marker([lat, lon]).addTo(mymap)
+                    .bindPopup(`<b>${g.teams}</b><br>${g.location}<br>Date: ${g.date}`)
+                    .openPopup();
+                } else {
+                  console.log('Location not found');
+                  // Fallback to a default location (e.g., center of the world)
+                  mymap.setView([40.7128, -74.0060], 10); // New York as default
+                  L.marker([40.7128, -74.0060]).addTo(mymap)
+                    .bindPopup(`<b>${g.teams}</b><br>Location: ${g.location}<br>Date: ${g.date}`)
+                    .openPopup();
+                }
+              })
+              .catch(error => {
+                console.error('Geocoding error:', error);
+                // Fallback to a default location
+                mymap.setView([40.7128, -74.0060], 10); // New York as default
+                L.marker([40.7128, -74.0060]).addTo(mymap)
+                  .bindPopup(`<b>${g.teams}</b><br>Location: ${g.location}<br>Date: ${g.date}`)
+                  .openPopup();
+              });
+          } else {
+            // No location provided, show a default view
+            mymap.setView([40.7128, -74.0060], 2);
+            L.marker([40.7128, -74.0060]).addTo(mymap)
+              .bindPopup(`<b>${g.teams}</b><br>No location specified<br>Date: ${g.date}`)
+              .openPopup();
+          }
+
+
         })
-        .catch(() => document.getElementById('content').innerText = 'Game not found.');
-    }
-  </script>
-</body>
-</html><!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Seatmap</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    .btn { padding: 10px 14px; background: #2b6cb0; color: #fff; border-radius: 6px; text-decoration: none; }
-  </style>
-</head>
-<body>
-  <a href="/" class="btn">Back to Home</a>
-  <div id="content" style="margin-top:20px">Loading...</div>
-  <script>
-    const pathParts = location.pathname.split('/');
-    const gameId = pathParts[pathParts.length - 1];
-    if (!gameId) document.getElementById('content').innerText = 'No gameId provided.';
-    else {
-      fetch('/api/games/' + gameId)
-        .then(r => r.ok ? r.json() : Promise.reject('Not found'))
-        .then(g => {
-          document.getElementById('content').innerHTML = `
-            <h2>${g.teams}</h2>
-            <p><strong>Date:</strong> ${g.date}</p>
-            <p><strong>Game ID:</strong> ${g.gameId}</p>
-            <p>This is a placeholder seatmap. Replace with your seat selection UI.</p>
-          `;
-        })
-        .catch(() => document.getElementById('content').innerText = 'Game not found.');
+        .catch(() => {
+          document.getElementById('content').innerText = 'Game not found.';
+          // Still show a basic map even if game data is not found
+          const mymap = L.map('mapid').setView([40.7128, -74.0060], 2);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          }).addTo(mymap);
+        });
     }
   </script>
 </body>
