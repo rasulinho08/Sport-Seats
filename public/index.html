@@ -162,7 +162,292 @@
             </div>
         </div>
     </section>
-    
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football League Standings Board</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <section class="standings-board">
+        <div class="content-wrapper">
+            <h1>2024-25 Football League Standings</h1>
+            <div class="league-boards">
+                <!-- Premier League -->
+                <div class="league-board">
+                    <div class="league-header" data-league="premier">
+                        <h2>Premier League <i class="fas fa-caret-down"></i></h2>
+                    </div>
+                    <div class="league-content" data-league="premier">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Team</th>
+                                    <th>W</th>
+                                    <th>D</th>
+                                    <th>L</th>
+                                    <th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Liverpool</td>
+                                    <td>25</td>
+                                    <td>9</td>
+                                    <td>4</td>
+                                    <td>84</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Arsenal</td>
+                                    <td>20</td>
+                                    <td>14</td>
+                                    <td>4</td>
+                                    <td>74</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Manchester City</td>
+                                    <td>21</td>
+                                    <td>8</td>
+                                    <td>9</td>
+                                    <td>71</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Chelsea</td>
+                                    <td>20</td>
+                                    <td>9</td>
+                                    <td>9</td>
+                                    <td>69</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Newcastle United</td>
+                                    <td>20</td>
+                                    <td>6</td>
+                                    <td>12</td>
+                                    <td>66</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- LaLiga -->
+                <div class="league-board">
+                    <div class="league-header" data-league="laliga">
+                        <h2>LaLiga <i class="fas fa-caret-down"></i></h2>
+                    </div>
+                    <div class="league-content" data-league="laliga">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Team</th>
+                                    <th>W</th>
+                                    <th>D</th>
+                                    <th>L</th>
+                                    <th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Barcelona</td>
+                                    <td>28</td>
+                                    <td>4</td>
+                                    <td>6</td>
+                                    <td>88</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Real Madrid</td>
+                                    <td>26</td>
+                                    <td>6</td>
+                                    <td>6</td>
+                                    <td>84</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Atlético Madrid</td>
+                                    <td>22</td>
+                                    <td>10</td>
+                                    <td>6</td>
+                                    <td>76</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Athletic Bilbao</td>
+                                    <td>19</td>
+                                    <td>13</td>
+                                    <td>6</td>
+                                    <td>70</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Villarreal</td>
+                                    <td>20</td>
+                                    <td>10</td>
+                                    <td>8</td>
+                                    <td>70</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Süper Lig -->
+                <div class="league-board">
+                    <div class="league-header" data-league="superlig">
+                        <h2>Süper Lig <i class="fas fa-caret-down"></i></h2>
+                    </div>
+                    <div class="league-content" data-league="superlig">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Team</th>
+                                    <th>W</th>
+                                    <th>D</th>
+                                    <th>L</th>
+                                    <th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Galatasaray</td>
+                                    <td>30</td>
+                                    <td>5</td>
+                                    <td>1</td>
+                                    <td>95</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Fenerbahçe</td>
+                                    <td>26</td>
+                                    <td>6</td>
+                                    <td>4</td>
+                                    <td>84</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Samsunspor</td>
+                                    <td>19</td>
+                                    <td>7</td>
+                                    <td>10</td>
+                                    <td>64</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Beşiktaş</td>
+                                    <td>17</td>
+                                    <td>11</td>
+                                    <td>8</td>
+                                    <td>62</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Başakşehir</td>
+                                    <td>16</td>
+                                    <td>6</td>
+                                    <td>14</td>
+                                    <td>54</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Misli Premier League -->
+                <div class="league-board">
+                    <div class="league-header" data-league="misli">
+                        <h2>Misli Premier League <i class="fas fa-caret-down"></i></h2>
+                    </div>
+                    <div class="league-content" data-league="misli">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Team</th>
+                                    <th>W</th>
+                                    <th>D</th>
+                                    <th>L</th>
+                                    <th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Qarabağ</td>
+                                    <td>28</td>
+                                    <td>5</td>
+                                    <td>3</td>
+                                    <td>89</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Zira FK</td>
+                                    <td>23</td>
+                                    <td>5</td>
+                                    <td>8</td>
+                                    <td>74</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Araz Naxçıvan</td>
+                                    <td>15</td>
+                                    <td>13</td>
+                                    <td>8</td>
+                                    <td>58</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Turan Tovuz</td>
+                                    <td>14</td>
+                                    <td>13</td>
+                                    <td>9</td>
+                                    <td>55</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Sabah FK</td>
+                                    <td>10</td>
+                                    <td>18</td>
+                                    <td>8</td>
+                                    <td>48</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>l
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const headers = document.querySelectorAll('.league-header');
+            headers.forEach(header => {
+                header.addEventListener('click', function() {
+                    const league = this.getAttribute('data-league');
+                    const content = document.querySelector(`.league-content[data-league="${league}"]`);
+                    const icon = this.querySelector('i');
+                    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                    icon.classList.toggle('fa-caret-down');
+                    icon.classList.toggle('fa-caret-up');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
     <!-- Sports Categories -->
     <section class="categories-section">
         <div class="content-wrapper">
@@ -330,7 +615,7 @@
                                 <button type="button" class="btn-primary next-step">Continue</button>
                             </div>
                         </div>
-                        
+                         
                         <div class="form-step" data-step="2">
                             <div class="step-header">
                                 <h3>Choose Your Interests</h3>
