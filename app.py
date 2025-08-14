@@ -436,3 +436,29 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
 
 
+
+
+@app.route("/public/<path:filename>")
+def public_files(filename):
+    return send_from_directory("public", filename)
+
+
+
+
+@app.route("/api/games/<int:game_id>")
+def get_game(game_id):
+    # This is a placeholder for actual game data retrieval
+    # In a real application, you would fetch this from a database
+    # For now, let's return some dummy data
+    games = {
+        1: {"teams": "Team A vs Team B", "date": "2025-09-01", "gameId": 1, "location": "New York, NY"},
+        2: {"teams": "Team C vs Team D", "date": "2025-09-05", "gameId": 2, "location": "Los Angeles, CA"},
+        3: {"teams": "Team E vs Team F", "date": "2025-09-10", "gameId": 3, "location": "Chicago, IL"},
+    }
+    game = games.get(game_id)
+    if game:
+        return jsonify(game), 200
+    else:
+        return jsonify({"message": "Game not found"}), 404
+
+
