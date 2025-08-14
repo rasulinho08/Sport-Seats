@@ -102,7 +102,46 @@
             </div>
         </div>
     </section>
-     
+     <!-- Map Section -->
+<section class="map-section">
+    <div class="content-wrapper">
+        <div class="section-title">
+            <h2>Global Sports Events Map</h2>
+            <p>See where upcoming games and tournaments are happening</p>
+        </div>
+        <div id="events-map"></div>
+    </div>
+</section>
+
+<!-- Leaflet CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Initialize the map
+    const map = L.map('events-map').setView([20, 0], 2);
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Event data
+    const events = [
+        { title: "Champions League Final", date: "2025-06-01", coords: [51.5074, -0.1278], venue: "Wembley Stadium, London" },
+        { title: "NBA Finals Game 1", date: "2025-06-04", coords: [34.0522, -118.2437], venue: "Crypto.com Arena, Los Angeles" },
+        { title: "Australian Open Final", date: "2025-01-29", coords: [-37.8136, 144.9631], venue: "Rod Laver Arena, Melbourne" }
+    ];
+
+    // Add markers
+    events.forEach(event => {
+        L.marker(event.coords).addTo(map)
+            .bindPopup(`<strong>${event.title}</strong><br>${event.date}<br>${event.venue}`);
+    });
+});
+</script>
+
 
     <!-- Featured Events -->
     <section class="events-section" id="events">
