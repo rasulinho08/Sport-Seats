@@ -7,7 +7,9 @@ const sportFilter = document.getElementById("sport-filter");
 const dateFilter = document.getElementById("date-filter");
 const toastWrapper = document.getElementById("toast-wrapper");
 
-// Sample events data (replace with actual API data in production)
+
+
+// ...existing code...
 const sampleEvents = [
     {
         id: 1,
@@ -16,7 +18,7 @@ const sampleEvents = [
         date: "2025-08-15",
         sport: "football",
         price: 99,
-        image: "https://example.com/patriots-jets.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
         featured: true
     },
     {
@@ -26,14 +28,65 @@ const sampleEvents = [
         date: "2025-08-20",
         sport: "basketball",
         price: 150,
-        image: "https://example.com/lakers-celtics.jpg",
+        image: "",
         featured: true
     },
-    // Add more sample events as needed
+    {
+        id: 3,
+        title: "MLB: Yankees vs. Red Sox",
+        venue: "Yankee Stadium",
+        date: "2025-08-25",
+        sport: "baseball",
+        price: 85,
+        image: "",
+        featured: false
+    },
+    {
+        id: 4,
+        title: "MLS: LA Galaxy vs. Seattle Sounders",
+        venue: "Dignity Health Sports Park",
+        date: "2025-09-05",
+        sport: "soccer",
+        price: 70,
+        image: "",
+        featured: true
+    },
+    {
+        id: 5,
+        title: "UFC 310: Main Event",
+        venue: "T-Mobile Arena",
+        date: "2025-09-12",
+        sport: "mma",
+        price: 250,
+        image: "https://example.com/ufc-310.jpg",
+        featured: false
+    },
+    {
+        id: 6,
+        title: "NHL: Rangers vs. Islanders",
+        venue: "Madison Square Garden",
+        date: "2025-10-10",
+        sport: "hockey",
+        price: 120,
+        image: "https://example.com/rangers-islanders.jpg",
+        featured: true
+    },
+    {
+        id: 7,
+        title: "F1: United States Grand Prix",
+        venue: "Circuit of the Americas",
+        date: "2025-10-19",
+        sport: "motorsport",
+        price: 300,
+        image: "https://example.com/f1-usgp.jpg",
+        featured: false
+    }
 ];
 
 // State
 let currentEvents = sampleEvents.filter(event => event.featured);
+// ...existing
+// State
 let filteredEvents = [...currentEvents];
 
 // Initialize the application

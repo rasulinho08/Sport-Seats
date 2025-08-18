@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - SportsSeat</title>
+    <link rel="stylesheet" href="venues.css"> <!-- Reusing venues.css for general styling -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Specific styles for events.html */
+        .events-section {
+            padding: 120px 0 60px 0;
+            background-color: var(--background-light);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .event-card {
+            background: var(--background-white);
+            border-radius: var(--border-radius-xl);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .event-image-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .event-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .event-title {
+            font-size: 1.4rem;
+            color: var(--neutral-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .event-meta {
+            font-size: 0.9rem;
+            color: var(--neutral-medium);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-meta i {
+            color: var(--primary-color);
+        }
+
+        .event-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: auto; /* Pushes price to the bottom */
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-actions .btn-primary {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+        }
+
+        .no-events-message {
+            text-align: center;
+            color: var(--neutral-medium);
+            font-size: 1.2rem;
+            padding: 4rem 0;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 4rem 0;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .loading-spinner i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-wrapper">
+            <div class="brand-logo">
+                <i class="fas fa-ticket-alt"></i>
+                <span>SportsSeat</span>
+            </div>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="events.html" class="nav-item active">Events</a>
+                <a href="venues.html" class="nav-item">Venues</a>
+                <a href="about.html" class="nav-item">About</a>
+                <a href="shop.html" class="nav-item">Shop</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn-outline">Login</a>
+                <a href="register.html" class="btn-primary">Sign Up</a>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="events-section">
+        <div class="content-wrapper">
+            <div class="section-title">
+                <h2>Upcoming Events</h2>
+                <p>Discover exciting sports events happening around the world.</p>
+            </div>
+            
+            <div class="events-grid" id="events-grid">
+                <!-- Events will be loaded here dynamically -->
+                <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading events...</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-ticket-alt"></i>
+                <span>SportsSeat</span>
+            </div>
+            <div class="footer-links">
+                <a href="#" >Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="social-media">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 SportsSeat. All rights reserved.</p>
+        </div>
+    </footer>
+
+<script src="app.py"></script>
+    <script src="events.js"></script> <!-- New JS for events page -->
+</body>
+</html>
+
+

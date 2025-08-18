@@ -214,11 +214,11 @@
         <div class="nav-wrapper">
             <div class="brand-logo">
                 <i class="fas fa-ticket-alt"></i>
-                <span>SportsSeat</span>
+       <a style="color: green;" href="index.html">SportsSeat</a>
             </div>
             <div class="nav-links" id="nav-links">
                 <a href="index.html" class="nav-item">Home</a>
-                <a href="#events" class="nav-item">Events</a>
+   <a href="index.html#events" class="nav-item" onclick="window.location.href='index.html#events'">Events</a>
                 <a href="venues.html" class="nav-item active">Venues</a>
                 <a href="about.html" class="nav-item">About</a>
                 <a href="shop.html" class="nav-item">Shop</a>
@@ -332,7 +332,8 @@
                             <span class="sport-tag">Hockey</span>
                         </div>
                         <div class="venue-actions">
-                            <a href="#" class="btn-primary">View Events</a>
+                            <a  class="btn-primary"  onclick="window.location.href='index.html#events'" style="color: white;">View Events</a>
+                               <!-- <a href="index.html#events" class="nav-item" onclick="window.location.href='index.html#events'">Events</a> -->
                             <button class="btn-outline view-map-btn" data-venue="grand-arena">
                                 <i class="fas fa-map-marker-alt"></i>
                                 View on Map
@@ -362,7 +363,7 @@
             <span class="sport-tag">Soccer</span>
         </div>
         <div class="venue-actions">
-            <a href="#" class="btn-primary">View Events</a>
+       <a  class="btn-primary"  onclick="window.location.href='index.html#events'" style="color: white;">View Events</a>
             <button class="btn-outline view-map-btn" data-venue="wembley-stadium">
                 <i class="fas fa-map-marker-alt"></i> View on Map
             </button>
@@ -689,7 +690,9 @@
         </div>
     </footer>
     
-    <script src="venues.js"></script>
+    <script src="venues.js">
+
+    </script>
 </body>
 </html>
 

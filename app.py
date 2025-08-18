@@ -60,7 +60,147 @@ except Exception as e:
     logger.error(f"Failed to create tables: {e}")
 
 # In-memory storage for events (for simplicity)
-events = []
+events = [
+    # Grand Arena Events
+    {
+        "id": 1,
+        "title": "NBA Finals Game 1",
+        "sport": "Basketball",
+        "venue": "Grand Arena",
+        "date": "2025-09-15",
+        "time": "19:00",
+        "price": 125.00,
+        "image": "/static/images/basketball.jpg",
+        "featured": True
+    },
+    {
+        "id": 2,
+        "title": "NHL Stanley Cup Playoffs",
+        "sport": "Hockey",
+        "venue": "Grand Arena",
+        "date": "2025-09-20",
+        "time": "20:00",
+        "price": 95.00,
+        "image": "/static/images/hockey.jpg",
+        "featured": False
+    },
+    {
+        "id": 3,
+        "title": "College Basketball Tournament",
+        "sport": "Basketball",
+        "venue": "Grand Arena",
+        "date": "2025-09-25",
+        "time": "18:30",
+        "price": 45.00,
+        "image": "/static/images/basketball.jpg",
+        "featured": True
+    },
+    
+    # Wembley Stadium Events
+    {
+        "id": 4,
+        "title": "England vs Germany",
+        "sport": "Football",
+        "venue": "Wembley Stadium",
+        "date": "2025-10-01",
+        "time": "15:00",
+        "price": 85.00,
+        "image": "/static/images/football.jpg",
+        "featured": True
+    },
+    {
+        "id": 5,
+        "title": "FA Cup Final",
+        "sport": "Soccer",
+        "venue": "Wembley Stadium",
+        "date": "2025-10-05",
+        "time": "17:00",
+        "price": 120.00,
+        "image": "/static/images/soccer.jpg",
+        "featured": False
+    },
+    {
+        "id": 6,
+        "title": "Champions League Final",
+        "sport": "Soccer",
+        "venue": "Wembley Stadium",
+        "date": "2025-10-10",
+        "time": "20:00",
+        "price": 200.00,
+        "image": "/static/images/soccer.jpg",
+        "featured": True
+    },
+    
+    # Camp Nou Events
+    {
+        "id": 7,
+        "title": "Barcelona vs Real Madrid",
+        "sport": "Football",
+        "venue": "Camp Nou",
+        "date": "2025-10-15",
+        "time": "21:00",
+        "price": 150.00,
+        "image": "/static/images/football.jpg",
+        "featured": True
+    },
+    {
+        "id": 8,
+        "title": "La Liga Championship",
+        "sport": "Football",
+        "venue": "Camp Nou",
+        "date": "2025-10-20",
+        "time": "19:30",
+        "price": 75.00,
+        "image": "/static/images/football.jpg",
+        "featured": False
+    },
+    {
+        "id": 9,
+        "title": "Copa del Rey Semi-Final",
+        "sport": "Football",
+        "venue": "Camp Nou",
+        "date": "2025-10-25",
+        "time": "20:30",
+        "price": 90.00,
+        "image": "/static/images/football.jpg",
+        "featured": True
+    },
+    
+    # MetLife Stadium Events
+    {
+        "id": 10,
+        "title": "NFL Super Bowl",
+        "sport": "Football",
+        "venue": "MetLife Stadium",
+        "date": "2025-11-01",
+        "time": "18:30",
+        "price": 300.00,
+        "image": "/static/images/football.jpg",
+        "featured": True
+    },
+    {
+        "id": 11,
+        "title": "Giants vs Cowboys",
+        "sport": "Football",
+        "venue": "MetLife Stadium",
+        "date": "2025-11-05",
+        "time": "13:00",
+        "price": 65.00,
+        "image": "/static/images/football.jpg",
+        "featured": False
+    },
+    {
+        "id": 12,
+        "title": "Jets vs Patriots",
+        "sport": "Football",
+        "venue": "MetLife Stadium",
+        "date": "2025-11-10",
+        "time": "16:00",
+        "price": 55.00,
+        "image": "/static/images/football.jpg",
+        "featured": True
+    }
+]
 next_event_id = 1
 
 # Routes for serving HTML files
@@ -435,4 +575,49 @@ if __name__ == "__main__":
     logger.info("Starting Flask application...")
     app.run(host="0.0.0.0", port=5000, debug=True)
 
+
+
+
+
+
+
+
+
+@app.route("/events.html")
+def events_page():
+    """Serve the events page"""
+    return render_template("events.html")
+
+@app.route("/api/events", methods=["GET"])
+def get_all_events():
+    """Get all events"""
+    try:
+        return jsonify({"events": events}), 200
+    except Exception as e:
+        logger.error(f"Get all events error: {e}")
+        return jsonify({"message": f"Failed to get events: {str(e)}"}), 500
+
+@app.route("/api/events/venue/<venue_name>", methods=["GET"])
+def get_events_by_venue(venue_name):
+    """Get all events for a specific venue"""
+    try:
+        venue_events = [event for event in events if event["venue"] == venue_name]
+        return jsonify({"events": venue_events, "venue": venue_name}), 200
+    except Exception as e:
+        logger.error(f"Get events by venue error: {e}")
+        return jsonify({"message": f"Failed to get events for venue: {str(e)}"}), 500
+
+
+
+if __name__ == "__main__":
+    try:
+        # Create database tables
+        Base.metadata.create_all(engine)
+        logger.info("Database tables created successfully")
+        
+        logger.info("Starting Flask application...")
+        app.run(host="0.0.0.0", port=5000, debug=True)
+    except Exception as e:
+        logger.error(f"Failed to start application: {e}")
+        raise
 

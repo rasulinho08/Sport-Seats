@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
-    <script src="/static/main.js" defer></script>
+    <script src="main.js" defer></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -20,11 +20,11 @@
         <div class="nav-wrapper">
             <div class="brand-logo">
                 <i class="fas fa-ticket-alt"></i>
-                <span>SportsSeat</span>
+             <a style="color: green;" href="index.html">SportsSeat</a>
             </div>
             <div class="nav-links" id="nav-links">
                 <a href="#home" class="nav-item active">Home</a>
-                <a href="#events" class="nav-item">Events</a>
+    <a href="index.html#events" class="nav-item" onclick="window.location.href='index.html#events'">Events</a>
                 <a href="venues.html" class="nav-item">Venues</a>
                 <a href="about.html" class="nav-item">About</a>
                 <a href="shop.html" class="nav-item">Shop</a>
@@ -34,7 +34,7 @@
                 <a href="register.html" class="btn-primary" id="signup-btn">Sign Up</a>
                 <div class="user-avatar" id="user-avatar" style="display:none;"></div>
                 <button id="logout-btn" style="display:none; background:#f44336; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Logout</button>
-                <a href="dashboard.html" id="account-btn" style="display:none; background:#2196f3; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Account</a>
+                <a href="dashboard.html" id="account-btn" style="display:none; background:#257500; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Account</a>
                 <div class="mobile-menu-btn" id="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -104,48 +104,8 @@
     </section>
      
 
+
     <!-- Featured Events -->
-    <!-- Interactive Stadium Map -->
-    <section class="map-section">
-        <div class="content-wrapper">
-            <div class="section-title">
-                <h2>Explore Stadiums</h2>
-                <p>Click a stadium to see upcoming games</p>
-            </div>
-            <div id="map" style="height: 600px; width: 100%; margin-top: 20px;"></div>
-        </div>
-    </section>
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const map = L.map('map').setView([40.7128, -74.0060], 4);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data © OpenStreetMap contributors',
-            maxZoom: 18
-        }).addTo(map);
-
-        Promise.all([
-            fetch('/api/stadiums').then(res => res.json()),
-            fetch('/api/games').then(res => res.json())
-        ]).then(([stadiums, games]) => {
-            stadiums.forEach(stadium => {
-                const relatedGames = games.filter(g => g.stadiumId === stadium.id);
-                let popup = '<strong>' + stadium.name + '</strong><br>';
-                if (!relatedGames.length) {
-                    popup += 'No upcoming games.';
-                } else {
-                    relatedGames.forEach(game => {
-                        popup += `<a href="/seatmap/${game.gameId}">${game.teams}</a> (${game.date})<br>`;
-                    });
-                }
-                L.marker([stadium.lat, stadium.lng]).addTo(map).bindPopup(popup);
-            });
-        }).catch(err => console.error(err));
-    });
-    </script>
-
     <section class="events-section" id="events">
         <div class="content-wrapper">
             <div class="section-title">
@@ -285,20 +245,14 @@
                     <h3>Secure Booking</h3>
                     <p>Bank-level security with instant confirmation and mobile tickets delivered straight to your phone.</p>
                 </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>24/7 Support</h3>
-                    <p>Our dedicated support team is here to help you before, during, and after your event experience.</p>
-                </div>
+     
             </div>
         </div>
     </section>
 
     <!-- Newsletter Section -->
 <!-- Enhanced Newsletter Section -->
-<section class="newsletter-section">
+<section  class="newsletter-section">
     <div class="content-wrapper">
         <div class="newsletter-content">
             <div class="newsletter-info">
@@ -462,7 +416,9 @@
                     </form>
                     
                     <!-- Progress Indicator -->
-                    <div class="progress-indicator">
+
+                </div>
+                                    <div class="progress-indicator">
                         <div class="progress-step active" data-step="1">
                             <div class="step-circle">1</div>
                             <span>Email</span>
@@ -476,7 +432,6 @@
                             <span>Preferences</span>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
@@ -497,15 +452,15 @@
                 <h4>Spin for Your Welcome Bonus!</h4>
                 <div class="wheel-container">
                     <div class="wheel" id="bonus-wheel">
-                        <div class="wheel-section" data-prize="10% Off">10% Off</div>
+                        <div class="wheel-section" data-prize="10% Off" style="padding: 40px;">10% Off</div>
                         <div class="wheel-section" data-prize="Free Shipping">Free Shipping</div>
                         <div class="wheel-section" data-prize="15% Off">15% Off</div>
                         <div class="wheel-section" data-prize="Early Access">Early Access</div>
                         <div class="wheel-section" data-prize="20% Off">20% Off</div>
-                        <div class="wheel-section" data-prize="VIP Status">VIP Status</div>
+                        <div class="wheel-section" data-prize="VIP Status" style="padding-left: 20px;">VIP Status</div>
                     </div>
                     <button class="spin-btn" id="spin-btn">
-                        <i class="fas fa-play"></i>
+                        <!-- <i class="fas fa-play"></i> -->
                         Spin Now!
                     </button>
                 </div>
@@ -523,7 +478,6 @@
 
 <!-- Toast Notifications -->
 <div class="toast-container" id="toast-container"></div>
-
 
     <!-- Footer -->
     <footer class="main-footer">
@@ -987,13 +941,6 @@
     </div>
 </div>
 
-<!-- Toast Notifications -->
-<div class="toast-container" id="toastContainer"></div>
-
-
-    <!-- Toast Notifications -->
-    <div class="toast-wrapper" id="toast-wrapper"></div>
-
 <script>
 document.getElementById('register-form').onsubmit = async function(e) {
     e.preventDefault();
@@ -1298,6 +1245,17 @@ class NewsletterEnhancer {
             
             // Store subscription data
             localStorage.setItem('newsletterSubscription', JSON.stringify(formData));
+
+            // Hide spin button if user already has a welcome bonus
+            const spinBtn = document.getElementById('spin-btn');
+            const subscription = JSON.parse(localStorage.getItem('newsletterSubscription') || '{}');
+            if (spinBtn) {
+                if (subscription.welcomeBonus) {
+                    spinBtn.style.display = 'none';
+                } else {
+                    spinBtn.style.display = 'inline-block';
+                }
+            }
         }
     }
     
@@ -1353,9 +1311,8 @@ class NewsletterEnhancer {
             document.getElementById('prize-text').textContent = prize;
             prizeResult.style.display = 'block';
             
-            // Re-enable button
-            spinBtn.disabled = false;
-            spinBtn.innerHTML = '<i class="fas fa-redo"></i> Spin Again!';
+            // Hide the spin button after the spin is complete
+            spinBtn.style.display = 'none';
             
             // Store prize in localStorage
             const subscription = JSON.parse(localStorage.getItem('newsletterSubscription') || '{}');
@@ -1797,7 +1754,63 @@ function closeModal(id) {
     if (modal) modal.style.display = 'none';
     document.body.style.overflow = '';
 }
+window.addEventListener("load", () => {
+  document.querySelectorAll("h1, h2, h3, p, div, span")
+    .forEach((el, i) => {
+      if (!el.closest(".newsletter-section")) { // skip anything inside
+        el.style.opacity = 0;
+        el.style.transform = "translateY(30px)";
+        el.style.transition = "all 0.5s ease";
+        setTimeout(() => {
+          el.style.opacity = 1;
+          el.style.transform = "translateY(0)";
+        }, i * 30);
+      }
+    });
+});
+
+// Scroll-based nav highlight for events section
+(function() {
+  const eventsSection = document.getElementById('events');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  function setActiveByHref(fragment) {
+    navItems.forEach(n => {
+      const href = n.getAttribute('href') || '';
+      if (href.includes(fragment)) {
+        n.classList.add('active');
+      } else {
+        n.classList.remove('active');
+      }
+    });
+  }
+
+  if (eventsSection) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveByHref('#events');
+        } else {
+          // If events is not visible, optionally restore Home when near top
+          const homeRect = document.getElementById('home')?.getBoundingClientRect();
+          if (homeRect && homeRect.top >= 0 && homeRect.top < window.innerHeight / 2) {
+            setActiveByHref('#home');
+          }
+        }
+      });
+    }, { threshold: 0.4 });
+
+    obs.observe(eventsSection);
+
+    // Ensure correct state on load
+    const rect = eventsSection.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setActiveByHref('#events');
+    }
+  }
+})();
+
+
 </script>
 </body>
-</html
-
+</html>

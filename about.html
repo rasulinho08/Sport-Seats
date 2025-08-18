@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About SportsSeat</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
     <meta name="description" content="Learn about SportsSeat - your premier destination for sports tickets with interactive seat selection and real-time availability.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,13 +17,13 @@
         <div class="nav-wrapper">
             <div class="brand-logo">
                 <i class="fas fa-ticket-alt"></i>
-                <span>SportsSeat</span>
+             <a style="color: green;" href="index.html">SportsSeat</a>
             </div>
             <div class="nav-links" id="nav-links">
-                <a href="index.html" class="nav-item active">Home</a>
-                <a href="#index.html#events" class="nav-item">Events</a>
+                <a href="index.html" onclick="window.location.href='index.html'" class="nav-item">Home</a>
+                <a href="index.html#events" class="nav-item" onclick="window.location.href='index.html#events'">Events</a>
                 <a href="venues.html" class="nav-item">Venues</a>
-                <a href="about.html" class="nav-item">About</a>
+                <a href="about.html" class="nav-item active">About</a>
                 <a href="shop.html" class="nav-item">Shop</a>
             </div>
             <div class="nav-buttons">
@@ -143,7 +143,7 @@
             </div>
             <div class="section-actions">
                 <a href="index.html" class="btn-primary" style="margin-right: 1rem;">Browse Events</a>
-                <button class="btn-outline" onclick="openModal('registerModal')">Create Account</button>
+                <a href="venues.html"  class="btn-primary" style="margin-right: 1rem;">Browse Venues</a>
             </div>
         </div>
     </section>
@@ -332,6 +332,21 @@
             const navLinks = document.getElementById('nav-links');
             navLinks.classList.toggle('active');
         });
+        window.addEventListener("load", () => {
+  document.querySelectorAll("h1, h2, h3, p, div, span")
+    .forEach((el, i) => {
+      if (!el.closest(".newsletter-section")) { // skip anything inside
+        el.style.opacity = 0;
+        el.style.transform = "translateY(30px)";
+        el.style.transition = "all 0.5s ease";
+        setTimeout(() => {
+          el.style.opacity = 1;
+          el.style.transform = "translateY(0)";
+        }, i * 30);
+      }
+    });
+});
+
     </script>
 </body>
 </html>

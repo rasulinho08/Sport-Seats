@@ -746,3 +746,17 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Enhanced Venue Listing with Map Integration initialized successfully!');
 });
 
+window.addEventListener("load", () => {
+  document.querySelectorAll("h1, h2, h3, p, div, span")
+    .forEach((el, i) => {
+      if (!el.closest(".newsletter-section")) { // skip anything inside
+        el.style.opacity = 0;
+        el.style.transform = "translateY(30px)";
+        el.style.transition = "all 0.5s ease";
+        setTimeout(() => {
+          el.style.opacity = 1;
+          el.style.transform = "translateY(0)";
+        }, i * 30);
+      }
+    });
+});

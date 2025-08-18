@@ -1112,6 +1112,7 @@ section {
 .progress-indicator {
     display: flex;
     justify-content: center;
+
     gap: 2rem;
     margin-top: 2rem;
     padding-top: 2rem;
@@ -1277,6 +1278,8 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
+        padding-right: 21px;
+    padding-top: 31px;
     font-size: 0.8rem;
     font-weight: 600;
     color: white;
@@ -3346,6 +3349,9 @@ section {
     border-bottom-left-radius: 6px;
 }
 
+.game-instructions p{
+    color: rgb(255, 255, 255);
+}
 .message-info {
     display: flex;
     align-items: center;
@@ -3676,6 +3682,32 @@ section {
     color: var(--primary-color);
     font-size: 0.9rem;
 }
+
+
+.faq-category-btn, .faq-question-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    background-color: #f3f4f6;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition:  0.2s ease;
+}
+
+.faq-category-btn:hover, .faq-question-btn:hover {
+    background-color: #e5e7eb;
+}
+
+.chat-bubble.agent-bubble {
+    background-color: #e0f2fe;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
 
 /* Proactive Chat Trigger */
 .proactive-chat-trigger {
@@ -4213,4 +4245,99 @@ select:focus {
     .game-feature-icon {
         font-size: 2.2rem;
     }
+}
+ /* Starting animation state */
+.animate {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.5s ease;
+}
+
+/* Final state */
+.animate.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+ /* About Section */
+.about {
+  background: #f9fafb; /* soft background */
+  padding: 120px 20px;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.about .content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about .section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.about .section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.about .section-header p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.about .about-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: center;
+}
+
+.about .about-text {
+  flex: 1 1 55%;
+}
+
+.about .about-text h3 {
+  font-size: 1.5rem;
+  color: green;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+.about .about-text p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+.about .about-image {
+  flex: 1 1 40%;
+  text-align: center;
+}
+
+.about .about-image img {
+  max-width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+
+.about .about-image img:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .about .about-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .about .about-text {
+    flex: 1 1 100%;
+  }
+  .about .about-image {
+    flex: 1 1 100%;
+  }
 }

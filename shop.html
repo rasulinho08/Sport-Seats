@@ -13,14 +13,14 @@
         <div class="nav-wrapper">
             <div class="brand-logo">
                 <i class="fas fa-ticket-alt"></i>
-                <span>SportsSeat</span>
+       <a style="color: green;" href="index.html">SportsSeat</a>
             </div>
             <div class="nav-links" id="nav-links">
-                <a href="index.html" class="nav-item active">Home</a>
-                <a href="index.html#events" class="nav-item">Events</a>
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="index.html#events" class="nav-item" onclick="window.location.href='index.html#events'">Events</a>
                 <a href="venues.html" class="nav-item">Venues</a>
                 <a href="about.html" class="nav-item">About</a>
-                <a href="shop.html" class="nav-item">Shop</a>
+                <a href="shop.html" class="nav-item active">Shop</a>
             </div>
             <div class="nav-buttons">
                 <button class="wishlist-btn" id="wishlist-btn">
@@ -30,9 +30,6 @@
                 <button class="cart-btn" id="cart-btn">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">0</span>
-                </button>
-                <button class="mobile-menu-btn" id="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
@@ -390,6 +387,21 @@ document.getElementById('next-btn').onclick = function() {
 };
 // Show first slide on load
 showSlide(0);
+window.addEventListener("load", () => {
+  document.querySelectorAll("h1, h2, h3, p, div, span")
+    .forEach((el, i) => {
+      if (!el.closest(".newsletter-section")) { // skip anything inside
+        el.style.opacity = 0;
+        el.style.transform = "translateY(30px)";
+        el.style.transition = "all 0.5s ease";
+        setTimeout(() => {
+          el.style.opacity = 1;
+          el.style.transform = "translateY(0)";
+        }, i * 30);
+      }
+    });
+});
+
 </script>
 
 </body>
