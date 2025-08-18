@@ -1,4 +1,8 @@
 {
+<<<<<<< HEAD
     "liveServer.settings.port": 5501,
     "liveServer.settings.multiRootWorkspaceName": "Sport-Seats-9"
+=======
+    "liveServer.settings.port": 5501
+>>>>>>> f3b041a8055514ac6188500a7cbfdf4fa09e7ef9
 }

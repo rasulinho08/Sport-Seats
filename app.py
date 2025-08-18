@@ -576,6 +576,7 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
 
 
+<<<<<<< HEAD
 
 
 
@@ -621,3 +622,5 @@ if __name__ == "__main__":
         logger.error(f"Failed to start application: {e}")
         raise
 
+=======
+>>>>>>> f3b041a8055514ac6188500a7cbfdf4fa09e7ef9

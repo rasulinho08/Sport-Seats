@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Seatmap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .btn { padding: 10px 14px; background: #2b6cb0; color: #fff; border-radius: 6px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <a href="/" class="btn">Back to Home</a>
+  <div id="content" style="margin-top:20px">Loading...</div>
+  <script>
+    const pathParts = location.pathname.split('/');
+    const gameId = pathParts[pathParts.length - 1];
+    if (!gameId) document.getElementById('content').innerText = 'No gameId provided.';
+    else {
+      fetch('/api/games/' + gameId)
+        .then(r => r.ok ? r.json() : Promise.reject('Not found'))
+        .then(g => {
+          document.getElementById('content').innerHTML = `
+            <h2>${g.teams}</h2>
+            <p><strong>Date:</strong> ${g.date}</p>
+            <p><strong>Game ID:</strong> ${g.gameId}</p>
+            <p>This is a placeholder seatmap. Replace with your seat selection UI.</p>
+          `;
+        })
+        .catch(() => document.getElementById('content').innerText = 'Game not found.');
+    }
+  </script>
+</body>
+</html><!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Seatmap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .btn { padding: 10px 14px; background: #2b6cb0; color: #fff; border-radius: 6px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <a href="/" class="btn">Back to Home</a>
+  <div id="content" style="margin-top:20px">Loading...</div>
+  <script>
+    const pathParts = location.pathname.split('/');
+    const gameId = pathParts[pathParts.length - 1];
+    if (!gameId) document.getElementById('content').innerText = 'No gameId provided.';
+    else {
+      fetch('/api/games/' + gameId)
+        .then(r => r.ok ? r.json() : Promise.reject('Not found'))
+        .then(g => {
+          document.getElementById('content').innerHTML = `
+            <h2>${g.teams}</h2>
+            <p><strong>Date:</strong> ${g.date}</p>
+            <p><strong>Game ID:</strong> ${g.gameId}</p>
+            <p>This is a placeholder seatmap. Replace with your seat selection UI.</p>
+          `;
+        })
+        .catch(() => document.getElementById('content').innerText = 'Game not found.');
+    }
+  </script>
+</body>
+</html>
+

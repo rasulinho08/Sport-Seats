@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
-    <script src="main.js" defer></script>
+    <script src="/static/main.js" defer></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -20,11 +20,11 @@
         <div class="nav-wrapper">
             <div class="brand-logo">
                 <i class="fas fa-ticket-alt"></i>
-             <a style="color: green;" href="index.html">SportsSeat</a>
+                <span>SportsSeat</span>
             </div>
             <div class="nav-links" id="nav-links">
                 <a href="#home" class="nav-item active">Home</a>
-    <a href="index.html#events" class="nav-item" onclick="window.location.href='index.html#events'">Events</a>
+                <a href="#events" class="nav-item">Events</a>
                 <a href="venues.html" class="nav-item">Venues</a>
                 <a href="about.html" class="nav-item">About</a>
                 <a href="shop.html" class="nav-item">Shop</a>
@@ -34,11 +34,7 @@
                 <a href="register.html" class="btn-primary" id="signup-btn">Sign Up</a>
                 <div class="user-avatar" id="user-avatar" style="display:none;"></div>
                 <button id="logout-btn" style="display:none; background:#f44336; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Logout</button>
-<<<<<<< HEAD
-                <a href="dashboard.html" id="account-btn" style="display:none; background:#257500; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Account</a>
-=======
                 <a href="dashboard.html" id="account-btn" style="display:none; background:#2196f3; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Account</a>
->>>>>>> f3b041a8055514ac6188500a7cbfdf4fa09e7ef9
                 <div class="mobile-menu-btn" id="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -106,11 +102,46 @@
             </div>
         </div>
     </section>
-     
-<<<<<<< HEAD
+     <!-- Map Section -->
+<section class="map-section">
+    <div class="content-wrapper">
+        <div class="section-title">
+            <h2>Global Sports Events Map</h2>
+            <p>See where upcoming games and tournaments are happening</p>
+        </div>
+        <div id="events-map"></div>
+    </div>
+</section>
 
-=======
->>>>>>> f3b041a8055514ac6188500a7cbfdf4fa09e7ef9
+<!-- Leaflet CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Initialize the map
+    const map = L.map('events-map').setView([20, 0], 2);
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Event data
+    const events = [
+        { title: "Champions League Final", date: "2025-06-01", coords: [51.5074, -0.1278], venue: "Wembley Stadium, London" },
+        { title: "NBA Finals Game 1", date: "2025-06-04", coords: [34.0522, -118.2437], venue: "Crypto.com Arena, Los Angeles" },
+        { title: "Australian Open Final", date: "2025-01-29", coords: [-37.8136, 144.9631], venue: "Rod Laver Arena, Melbourne" }
+    ];
+
+    // Add markers
+    events.forEach(event => {
+        L.marker(event.coords).addTo(map)
+            .bindPopup(`<strong>${event.title}</strong><br>${event.date}<br>${event.venue}`);
+    });
+});
+</script>
+
 
     <!-- Featured Events -->
     <section class="events-section" id="events">
@@ -170,7 +201,292 @@
             </div>
         </div>
     </section>
-    
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football League Standings Board</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <section class="standings-board">
+        <div class="content-wrapper">
+            <h1>2024-25 Football League Standings</h1>
+            <div class="league-boards">
+                <!-- Premier League -->
+                <div class="league-board">
+                    <div class="league-header" data-league="premier">
+                        <h2>Premier League <i class="fas fa-caret-down"></i></h2>
+                    </div>
+                    <div class="league-content" data-league="premier">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Team</th>
+                                    <th>W</th>
+                                    <th>D</th>
+                                    <th>L</th>
+                                    <th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Liverpool</td>
+                                    <td>25</td>
+                                    <td>9</td>
+                                    <td>4</td>
+                                    <td>84</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Arsenal</td>
+                                    <td>20</td>
+                                    <td>14</td>
+                                    <td>4</td>
+                                    <td>74</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Manchester City</td>
+                                    <td>21</td>
+                                    <td>8</td>
+                                    <td>9</td>
+                                    <td>71</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Chelsea</td>
+                                    <td>20</td>
+                                    <td>9</td>
+                                    <td>9</td>
+                                    <td>69</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Newcastle United</td>
+                                    <td>20</td>
+                                    <td>6</td>
+                                    <td>12</td>
+                                    <td>66</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- LaLiga -->
+                <div class="league-board">
+                    <div class="league-header" data-league="laliga">
+                        <h2>LaLiga <i class="fas fa-caret-down"></i></h2>
+                    </div>
+                    <div class="league-content" data-league="laliga">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Team</th>
+                                    <th>W</th>
+                                    <th>D</th>
+                                    <th>L</th>
+                                    <th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Barcelona</td>
+                                    <td>28</td>
+                                    <td>4</td>
+                                    <td>6</td>
+                                    <td>88</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Real Madrid</td>
+                                    <td>26</td>
+                                    <td>6</td>
+                                    <td>6</td>
+                                    <td>84</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Atlético Madrid</td>
+                                    <td>22</td>
+                                    <td>10</td>
+                                    <td>6</td>
+                                    <td>76</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Athletic Bilbao</td>
+                                    <td>19</td>
+                                    <td>13</td>
+                                    <td>6</td>
+                                    <td>70</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Villarreal</td>
+                                    <td>20</td>
+                                    <td>10</td>
+                                    <td>8</td>
+                                    <td>70</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Süper Lig -->
+                <div class="league-board">
+                    <div class="league-header" data-league="superlig">
+                        <h2>Süper Lig <i class="fas fa-caret-down"></i></h2>
+                    </div>
+                    <div class="league-content" data-league="superlig">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Team</th>
+                                    <th>W</th>
+                                    <th>D</th>
+                                    <th>L</th>
+                                    <th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Galatasaray</td>
+                                    <td>30</td>
+                                    <td>5</td>
+                                    <td>1</td>
+                                    <td>95</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Fenerbahçe</td>
+                                    <td>26</td>
+                                    <td>6</td>
+                                    <td>4</td>
+                                    <td>84</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Samsunspor</td>
+                                    <td>19</td>
+                                    <td>7</td>
+                                    <td>10</td>
+                                    <td>64</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Beşiktaş</td>
+                                    <td>17</td>
+                                    <td>11</td>
+                                    <td>8</td>
+                                    <td>62</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Başakşehir</td>
+                                    <td>16</td>
+                                    <td>6</td>
+                                    <td>14</td>
+                                    <td>54</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Misli Premier League -->
+                <div class="league-board">
+                    <div class="league-header" data-league="misli">
+                        <h2>Misli Premier League <i class="fas fa-caret-down"></i></h2>
+                    </div>
+                    <div class="league-content" data-league="misli">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Team</th>
+                                    <th>W</th>
+                                    <th>D</th>
+                                    <th>L</th>
+                                    <th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Qarabağ</td>
+                                    <td>28</td>
+                                    <td>5</td>
+                                    <td>3</td>
+                                    <td>89</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Zira FK</td>
+                                    <td>23</td>
+                                    <td>5</td>
+                                    <td>8</td>
+                                    <td>74</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Araz Naxçıvan</td>
+                                    <td>15</td>
+                                    <td>13</td>
+                                    <td>8</td>
+                                    <td>58</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Turan Tovuz</td>
+                                    <td>14</td>
+                                    <td>13</td>
+                                    <td>9</td>
+                                    <td>55</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Sabah FK</td>
+                                    <td>10</td>
+                                    <td>18</td>
+                                    <td>8</td>
+                                    <td>48</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>l
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const headers = document.querySelectorAll('.league-header');
+            headers.forEach(header => {
+                header.addEventListener('click', function() {
+                    const league = this.getAttribute('data-league');
+                    const content = document.querySelector(`.league-content[data-league="${league}"]`);
+                    const icon = this.querySelector('i');
+                    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                    icon.classList.toggle('fa-caret-down');
+                    icon.classList.toggle('fa-caret-up');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
     <!-- Sports Categories -->
     <section class="categories-section">
         <div class="content-wrapper">
@@ -252,14 +568,20 @@
                     <h3>Secure Booking</h3>
                     <p>Bank-level security with instant confirmation and mobile tickets delivered straight to your phone.</p>
                 </div>
-     
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Our dedicated support team is here to help you before, during, and after your event experience.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Newsletter Section -->
 <!-- Enhanced Newsletter Section -->
-<section  class="newsletter-section">
+<section class="newsletter-section">
     <div class="content-wrapper">
         <div class="newsletter-content">
             <div class="newsletter-info">
@@ -332,7 +654,7 @@
                                 <button type="button" class="btn-primary next-step">Continue</button>
                             </div>
                         </div>
-                        
+                         
                         <div class="form-step" data-step="2">
                             <div class="step-header">
                                 <h3>Choose Your Interests</h3>
@@ -423,9 +745,7 @@
                     </form>
                     
                     <!-- Progress Indicator -->
-
-                </div>
-                                    <div class="progress-indicator">
+                    <div class="progress-indicator">
                         <div class="progress-step active" data-step="1">
                             <div class="step-circle">1</div>
                             <span>Email</span>
@@ -439,6 +759,7 @@
                             <span>Preferences</span>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -459,15 +780,15 @@
                 <h4>Spin for Your Welcome Bonus!</h4>
                 <div class="wheel-container">
                     <div class="wheel" id="bonus-wheel">
-                        <div class="wheel-section" data-prize="10% Off" style="padding: 40px;">10% Off</div>
+                        <div class="wheel-section" data-prize="10% Off">10% Off</div>
                         <div class="wheel-section" data-prize="Free Shipping">Free Shipping</div>
                         <div class="wheel-section" data-prize="15% Off">15% Off</div>
                         <div class="wheel-section" data-prize="Early Access">Early Access</div>
                         <div class="wheel-section" data-prize="20% Off">20% Off</div>
-                        <div class="wheel-section" data-prize="VIP Status" style="padding-left: 20px;">VIP Status</div>
+                        <div class="wheel-section" data-prize="VIP Status">VIP Status</div>
                     </div>
                     <button class="spin-btn" id="spin-btn">
-                        <!-- <i class="fas fa-play"></i> -->
+                        <i class="fas fa-play"></i>
                         Spin Now!
                     </button>
                 </div>
@@ -948,6 +1269,13 @@
     </div>
 </div>
 
+<!-- Toast Notifications -->
+<div class="toast-container" id="toastContainer"></div>
+
+
+    <!-- Toast Notifications -->
+    <div class="toast-wrapper" id="toast-wrapper"></div>
+
 <script>
 document.getElementById('register-form').onsubmit = async function(e) {
     e.preventDefault();
@@ -1252,17 +1580,6 @@ class NewsletterEnhancer {
             
             // Store subscription data
             localStorage.setItem('newsletterSubscription', JSON.stringify(formData));
-
-            // Hide spin button if user already has a welcome bonus
-            const spinBtn = document.getElementById('spin-btn');
-            const subscription = JSON.parse(localStorage.getItem('newsletterSubscription') || '{}');
-            if (spinBtn) {
-                if (subscription.welcomeBonus) {
-                    spinBtn.style.display = 'none';
-                } else {
-                    spinBtn.style.display = 'inline-block';
-                }
-            }
         }
     }
     
@@ -1318,8 +1635,9 @@ class NewsletterEnhancer {
             document.getElementById('prize-text').textContent = prize;
             prizeResult.style.display = 'block';
             
-            // Hide the spin button after the spin is complete
-            spinBtn.style.display = 'none';
+            // Re-enable button
+            spinBtn.disabled = false;
+            spinBtn.innerHTML = '<i class="fas fa-redo"></i> Spin Again!';
             
             // Store prize in localStorage
             const subscription = JSON.parse(localStorage.getItem('newsletterSubscription') || '{}');
@@ -1444,381 +1762,6 @@ window.NewsletterUtils = {
     }
 };
   
-<<<<<<< HEAD
-
-// Button click handlers
-function startGame() {
-    // This function can be customized to integrate with your existing game
-    gameSectionShowNotification('Starting game...', 'success');
-    
-    // Example: You can replace this with your actual game initialization
-    // If you have an existing init() function, you can call it here:
-    // if (typeof init === 'function') {
-    //     init();
-    // }
-    
-    // For demonstration, we'll just show a message
-    setTimeout(() => {
-        gameSectionShowNotification('Game ready! Use arrow keys to play.', 'info');
-    }, 1500);
-}
-
-function showInstructions() {
-    gameSectionShowModal('How to Play', `
-        <div class="game-instructions">
-            <h3>Game Controls</h3>
-            <p><strong>Left Arrow:</strong> Move players left</p>
-            <p><strong>Right Arrow:</strong> Move players right</p>
-            <p><strong>Goal:</strong> Score more goals than your opponent!</p>
-            <br>
-            <h3>Game Rules</h3>
-            <p>• Match duration: 2 minutes</p>
-            <p>• Control your team (red players)</p>
-            <p>• Beat the AI opponent (blue players)</p>
-            <p>• Score goals to win the match</p>
-        </div>
-    `);
-}
-
-function showLeaderboard() {
-    // Sample leaderboard data - you can replace this with real data
-    const leaderboardData = [
-        { rank: 1, name: 'Rasul', score: 3000 },
-        { rank: 2, name: 'Islam', score: 2000 },
-        { rank: 3, name: 'Zahra', score: 1920 },
-        { rank: 4, name: 'Ayxan', score: 1650 },
-        { rank: 5, name: 'Ruslan', score: 1200 }
-    ];
-    
-    let leaderboardHTML = '<div class="game-leaderboard"><h3>Top Players</h3>';
-    leaderboardData.forEach(player => {
-        leaderboardHTML += `
-            <div class="leaderboard-item">
-                <span class="rank">#${player.rank}</span>
-                <span class="name">${player.name}</span>
-                <span class="score">${player.score}</span>
-            </div>
-        `;
-    });
-    leaderboardHTML += '</div>';
-    
-    gameSectionShowModal('Leaderboard', leaderboardHTML);
-}
-
-// Utility functions
-function gameSectionShowNotification(message, type = 'info') {
-    // Remove existing notification
-    const existingNotification = document.querySelector('.game-section-notification');
-    if (existingNotification) {
-        existingNotification.remove();
-    }
-    
-    // Create notification
-    const notification = document.createElement('div');
-    notification.className = 'game-section-notification';
-    notification.textContent = message;
-    
-    // Style the notification
-    const bgColor = type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3';
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${bgColor};
-        color: white;
-        padding: 15px 25px;
-        border-radius: 25px;
-        font-family: 'Verdana', sans-serif;
-        font-weight: bold;
-        font-size: 0.9rem;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        z-index: 10000;
-        animation: gameSectionSlideIn 0.3s ease;
-        max-width: 300px;
-        word-wrap: break-word;
-    `;
-    
-    // Add animation styles if not already added
-    if (!document.querySelector('#game-section-notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'game-section-notification-styles';
-        style.textContent = `
-            @keyframes gameSectionSlideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes gameSectionSlideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    document.body.appendChild(notification);
-    
-    // Auto remove after 3 seconds
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.style.animation = 'gameSectionSlideOut 0.3s ease';
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.remove();
-                }
-            }, 300);
-        }
-    }, 3000);
-}
-
-function gameSectionShowModal(title, content) {
-    // Remove existing modal
-    const existingModal = document.querySelector('.game-section-modal');
-    if (existingModal) {
-        existingModal.remove();
-    }
-    
-    // Create modal
-    const modal = document.createElement('div');
-    modal.className = 'game-section-modal';
-    modal.innerHTML = `
-        <div class="game-modal-overlay" onclick="gameSectionCloseModal()"></div>
-        <div class="game-modal-content">
-            <div class="game-modal-header">
-                <h2>${title}</h2>
-                <button class="game-modal-close" onclick="gameSectionCloseModal()">×</button>
-            </div>
-            <div class="game-modal-body">
-                ${content}
-            </div>
-        </div>
-    `;
-    
-    // Style the modal
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 10001;
-        animation: gameSectionModalFadeIn 0.3s ease;
-    `;
-    
-    // Add modal styles if not already added
-    if (!document.querySelector('#game-section-modal-styles')) {
-        const style = document.createElement('style');
-        style.id = 'game-section-modal-styles';
-        style.textContent = `
-            @keyframes gameSectionModalFadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            .game-modal-overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.7);
-                backdrop-filter: blur(5px);
-            }
-            .game-modal-content {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: linear-gradient(135deg, #1b5e20, #2e7d32);
-                border-radius: 15px;
-                max-width: 500px;
-                width: 90%;
-                max-height: 80vh;
-                overflow-y: auto;
-                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            }
-            .game-modal-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 20px 25px;
-                border-bottom: 1px solid rgba(255,255,255,0.2);
-            }
-            .game-modal-header h2 {
-                margin: 0;
-                color: #e8f5e8;
-                font-family: 'Verdana', sans-serif;
-                font-size: 1.3rem;
-            }
-            .game-modal-close {
-                background: none;
-                border: none;
-                color: #e8f5e8;
-                font-size: 1.5rem;
-                cursor: pointer;
-                padding: 5px;
-                border-radius: 50%;
-                width: 30px;
-                height: 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: background 0.3s ease;
-            }
-            .game-modal-close:hover {
-                background: rgba(255,255,255,0.1);
-            }
-            .game-modal-body {
-                padding: 25px;
-                color: #c8e6c9;
-                font-family: 'Verdana', sans-serif;
-                line-height: 1.6;
-            }
-            .game-instructions h3 {
-                color: #e8f5e8;
-                margin-top: 0;
-                margin-bottom: 15px;
-            }
-            .game-instructions p {
-                margin-bottom: 10px;
-            }
-            .game-leaderboard h3 {
-                color: #e8f5e8;
-                margin-top: 0;
-                margin-bottom: 20px;
-                text-align: center;
-            }
-            .leaderboard-item {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 12px 15px;
-                margin-bottom: 8px;
-                background: rgba(255,255,255,0.1);
-                border-radius: 8px;
-                transition: background 0.3s ease;
-            }
-            .leaderboard-item:hover {
-                background: rgba(255,255,255,0.15);
-            }
-            .leaderboard-item .rank {
-                font-weight: bold;
-                color: #81c784;
-                min-width: 30px;
-            }
-            .leaderboard-item .name {
-                flex: 1;
-                margin: 0 15px;
-            }
-            .leaderboard-item .score {
-                font-weight: bold;
-                color: #a5d6a7;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    document.body.appendChild(modal);
-    
-    // Prevent body scroll
-    document.body.style.overflow = 'hidden';
-}
-
-function gameSectionCloseModal() {
-    const modal = document.querySelector('.game-section-modal');
-    if (modal) {
-        modal.remove();
-        document.body.style.overflow = '';
-    }
-}
-
-// Close modal on Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        gameSectionCloseModal();
-    }
-});
-
-// Add touch event handling for better mobile experience
-document.addEventListener('DOMContentLoaded', function() {
-    // Add touch feedback for buttons
-    const buttons = document.querySelectorAll('.game-btn');
-    buttons.forEach(button => {
-        button.addEventListener('touchstart', function() {
-            this.style.transform = 'translateY(-1px) scale(0.98)';
-        });
-        
-        button.addEventListener('touchend', function() {
-            this.style.transform = '';
-        });
-    });
-});
-
-function openModal(id) {
-    var modal = document.getElementById(id);
-    if (modal) modal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-}
-function closeModal(id) {
-    var modal = document.getElementById(id);
-    if (modal) modal.style.display = 'none';
-    document.body.style.overflow = '';
-}
-window.addEventListener("load", () => {
-  document.querySelectorAll("h1, h2, h3, p, div, span")
-    .forEach((el, i) => {
-      if (!el.closest(".newsletter-section")) { // skip anything inside
-        el.style.opacity = 0;
-        el.style.transform = "translateY(30px)";
-        el.style.transition = "all 0.5s ease";
-        setTimeout(() => {
-          el.style.opacity = 1;
-          el.style.transform = "translateY(0)";
-        }, i * 30);
-      }
-    });
-});
-
-// Scroll-based nav highlight for events section
-(function() {
-  const eventsSection = document.getElementById('events');
-  const navItems = document.querySelectorAll('.nav-item');
-
-  function setActiveByHref(fragment) {
-    navItems.forEach(n => {
-      const href = n.getAttribute('href') || '';
-      if (href.includes(fragment)) {
-        n.classList.add('active');
-      } else {
-        n.classList.remove('active');
-      }
-    });
-  }
-
-  if (eventsSection) {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveByHref('#events');
-        } else {
-          // If events is not visible, optionally restore Home when near top
-          const homeRect = document.getElementById('home')?.getBoundingClientRect();
-          if (homeRect && homeRect.top >= 0 && homeRect.top < window.innerHeight / 2) {
-            setActiveByHref('#home');
-          }
-        }
-      });
-    }, { threshold: 0.4 });
-
-    obs.observe(eventsSection);
-
-    // Ensure correct state on load
-    const rect = eventsSection.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-      setActiveByHref('#events');
-    }
-  }
-})();
-=======
->>>>>>> f3b041a8055514ac6188500a7cbfdf4fa09e7ef9
 
 // Button click handlers
 function startGame() {

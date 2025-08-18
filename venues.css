@@ -1,6 +1,10 @@
 /* Variables */
 :root {
     --primary-color: green;
+<<<<<<< HEAD
+=======
+    --primary-dark: #1E3A8A;
+>>>>>>> f3b041a8055514ac6188500a7cbfdf4fa09e7ef9
     --primary-hover: #1d4ed8;
     --secondary-color: #f97316;
     --background-light: #f8fafc;
