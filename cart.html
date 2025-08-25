@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - SportsSeat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Basic Styling for Shopping Cart Page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .header {
+            background-color: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1 );
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #28a745;
+            text-decoration: none;
+        }
+        .nav-links a {
+            color: #555;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #28a745;
+        }
+        .nav-buttons .btn-outline, .nav-buttons .btn-primary {
+            margin-left: 15px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nav-buttons .btn-outline {
+            border: 1px solid #28a745;
+            color: #28a745;
+            background-color: transparent;
+        }
+        .nav-buttons .btn-primary {
+            background-color: #28a745;
+            color: #fff;
+            border: 1px solid #28a745;
+        }
+        .cart-container {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .cart-details {
+            flex: 2;
+        }
+        .cart-summary {
+            flex: 1;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            color: #28a745;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .event-card {
+            display: flex;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .event-card-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .event-card-content {
+            padding: 15px;
+            flex-grow: 1;
+        }
+        .event-card-content h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .event-card-content p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .seat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .seat-item:last-child {
+            border-bottom: none;
+        }
+        .seat-info {
+            font-weight: bold;
+        }
+        .seat-price {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .remove-seat-btn {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .promo-code-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .promo-code-section input {
+            width: calc(100% - 80px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .promo-code-section button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .promo-code-section button:hover {
+            background-color: #0056b3;
+        }
+        .pricing-details div {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.95rem;
+        }
+        .pricing-details .total {
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        .checkout-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .checkout-button:hover {
+            background-color: #218838;
+        }
+        .continue-shopping-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #6c757d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .continue-shopping-button:hover {
+            background-color: #5a6268;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .cart-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">SportsSeat</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="events.html">Events</a>
+                <a href="venues.html">Venues</a>
+                <a href="about.html">About</a>
+                <a href="#">Shop</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn-outline">Login</a>
+                <a href="register.html" class="btn-primary">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="cart-container">
+        <div class="cart-details">
+            <h2 class="section-title">Your Tickets</h2>
+            <div class="event-card">
+                <img src="images/event1.jpg" alt="Event Image" class="event-card-image">
+                <div class="event-card-content">
+                    <h3 id="cart-event-title"></h3>
+                    <p><i class="far fa-calendar-alt"></i> <span id="cart-event-date"></span></p>
+                    <p><i class="far fa-clock"></i> <span id="cart-event-time"></span></p>
+                    <p><i class="fas fa-map-marker-alt"></i> <span id="cart-event-venue"></span></p>
+                </div>
+            </div>
+            <div id="cart-seats-list">
+                <!-- Seats will be loaded here -->
+            </div>
+        </div>
+
+        <div class="cart-summary">
+            <h2 class="section-title">Order Summary</h2>
+            <div class="pricing-details">
+                <div>Subtotal: <span id="cart-subtotal">$0.00</span></div>
+                <div>Service Fee: <span id="cart-service-fee">$0.00</span></div>
+                <div id="discount-row" style="display: none;">Discount: <span id="cart-discount">-$0.00</span></div>
+                <div class="total">Total: <span id="cart-total">$0.00</span></div>
+            </div>
+
+            <div class="promo-code-section">
+                <label for="promo-code">Promo Code</label>
+                <input type="text" id="promo-code" placeholder="Enter promo code">
+                <button onclick="applyPromoCode()">Apply</button>
+            </div>
+
+            <button class="checkout-button" id="proceed-to-checkout">Proceed to Checkout ($0.00)</button>
+            <button class="continue-shopping-button" onclick="window.location.href='index.html'">Continue Shopping</button>
+        </div>
+    </div>
+
+    <script src="cart.js"></script>
+</body>
+</html>

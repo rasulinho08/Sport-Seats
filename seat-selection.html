@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Selection - SportsSeat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Basic Styling for Seat Selection Page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .header {
+            background-color: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1 );
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #28a745;
+            text-decoration: none;
+        }
+        .nav-links a {
+            color: #555;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #28a745;
+        }
+        .nav-buttons .btn-outline, .nav-buttons .btn-primary {
+            margin-left: 15px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nav-buttons .btn-outline {
+            border: 1px solid #28a745;
+            color: #28a745;
+            background-color: transparent;
+        }
+        .nav-buttons .btn-primary {
+            background-color: #28a745;
+            color: #fff;
+            border: 1px solid #28a745;
+        }
+        .main-content {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .event-details-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .event-details-card h2 {
+            color: #28a745;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .event-details-card p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 0.95rem;
+        }
+        .event-details-card p i {
+            margin-right: 8px;
+            color: #777;
+        }
+        .stadium-map-container {
+            flex: 2;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .stadium-field {
+            width: 90%;
+            height: 385px;
+            background-color: #4CAF50; /* Green field */
+            border-radius: 10px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+        .stand {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            padding: 10px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            margin: 10px 0;
+            width: 90%;
+        }
+        .stand-label {
+            position: absolute;
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .north-stand-label {
+            top: 5px;
+        }
+        .south-stand-label {
+            bottom: 5px;
+        }
+        .seat {
+            width: 20px;
+            height: 20px;
+            background-color: #FF9800; /* Orange for available */
+            border: 1px solid #e68a00;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        .seat:hover {
+            transform: scale(1.1);
+        }
+        .seat.selected {
+            background-color: #2196F3; /* Blue for selected */
+            border-color: #1976D2;
+        }
+        .seat.occupied {
+            background-color: #B0BEC5; /* Grey for occupied */
+            border-color: #90A4AE;
+            cursor: not-allowed;
+        }
+        .seat.premium {
+            background-color: #9C27B0; /* Purple for premium */
+            border-color: #7B1FA2;
+        }
+        .seat.selected.premium {
+            background-color: #673AB7; /* Darker purple for selected premium */
+        }
+        .seat-info {
+            position: absolute;
+            background-color: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            transform: translateY(-10px);
+            z-index: 10;
+        }
+        .seat:hover .seat-info {
+            opacity: 1;
+            transform: translateY(-20px);
+        }
+        .selection-summary {
+            flex: 1;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .selection-summary h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            margin-right: 10px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .selected-seats-list {
+            min-height: 100px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: #fff;
+        }
+        .selected-seat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .selected-seat-item:last-child {
+            border-bottom: none;
+        }
+        .selected-seat-item .remove-seat {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .pricing-summary div {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.95rem;
+        }
+        .pricing-summary .total {
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        .continue-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .continue-button:hover {
+            background-color: #218838;
+        }
+        .continue-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .stadium-field {
+                width: 100%;
+                height: 200px;
+            }
+            .stand {
+                padding: 5px;
+                gap: 3px;
+            }
+            .seat {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">SportsSeat</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="events.html">Events</a>
+                <a href="venues.html">Venues</a>
+                <a href="about.html">About</a>
+                <a href="#">Shop</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn-outline">Login</a>
+                <a href="register.html" class="btn-primary">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <div class="stadium-map-container">
+            <div class="event-details-card">
+                <h2 id="event-title"></h2>
+                <p><i class="far fa-calendar-alt"></i> <span id="event-date"></span></p>
+                <p><i class="far fa-clock"></i> <span id="event-time"></span></p>
+                <p><i class="fas fa-map-marker-alt"></i> <span id="event-venue"></span></p>
+            </div>
+            <h3>Select Your Seats</h3>
+            <div class="stadium-field">
+                <span class="stand-label north-stand-label">North Stand - Premium</span>
+                <div class="stand north-stand" id="north-stand"></div>
+                <span class="stand-label south-stand-label">South Stand - Premium</span>
+                <div class="stand south-stand" id="south-stand"></div>
+            </div>
+        </div>
+
+        <div class="selection-summary">
+            <h3>Seat Selection</h3>
+            <div class="legend">
+                <div class="legend-item"><span class="legend-color" style="background-color: #FF9800;"></span> Available</div>
+                <div class="legend-item"><span class="legend-color" style="background-color: #2196F3;"></span> Selected</div>
+                <div class="legend-item"><span class="legend-color" style="background-color: #B0BEC5;"></span> Occupied</div>
+                <div class="legend-item"><span class="legend-color" style="background-color: #9C27B0;"></span> Premium</div>
+            </div>
+
+            <h4>Selected Seats</h4>
+            <div class="selected-seats-list" id="selected-seats-list">
+                No seats selected
+            </div>
+
+            <div class="pricing-summary">
+                <div>Subtotal: <span id="subtotal">$0.00</span></div>
+                <div>Service Fee: <span id="service-fee">$0.00</span></div>
+                <div class="total">Total: <span id="total">$0.00</span></div>
+            </div>
+
+            <button class="continue-button" id="continue-to-cart" disabled>Continue to Cart</button>
+        </div>
+    </div>
+
+    <script src="seat-selection.js"></script>
+</body>
+</html>

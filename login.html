@@ -2,56 +2,193 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - SportsSeat</title>
     <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="static/auth-animation.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <div class="auth-container">
-        <h1 style="background-color: green;">Login</h1>
-        <form id="login-form">
-            <div class="input-group">
-                <label for="login-email">Email Address</label>
-                <input type="email" id="login-email" required>
-            </div>
-            <div class="input-group">
-                <label for="login-password">Password</label>
-                <input type="password" id="login-password" required>
-            </div>
-            <button type="submit" class="btn-primary btn-full">Sign In</button>
-        </form>
-        <p>Don't have an account? <a href="register.html">Sign up</a></p>
-        <div id="login-message" class="auth-message"></div>
+<body style="background-color: #374151;">
+    <!-- Animated Sports Background -->
+    <div class="auth-background">
+        <!-- Stadium lights -->
+        <div class="stadium-lights"></div>
+        
+        <!-- Floating particles -->
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
+        <!-- Field lines -->
+        <div class="field-lines"></div>
+        
+        <!-- Crowd silhouette -->
+        <div class="crowd-silhouette"></div>
+        
+        <!-- Moving spotlights -->
+        <div class="spotlight"></div>
+        <div class="spotlight"></div>
     </div>
+
+    <!-- Main Content -->
+    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+        <div class="auth-container">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <i class="fas fa-ticket-alt" style="font-size: 3rem; color: #059669; margin-bottom: 1rem;"></i>
+                <h1>Welcome Back</h1>
+                <p style="color: #6b7280; margin: 0;">Sign in to your SportsSeat account</p>
+            </div>
+            
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="login-email">
+                        <i class="fas fa-envelope" style="margin-right: 0.5rem; color: #059669;"></i>
+                        Email Address
+                    </label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="login-password">
+                        <i class="fas fa-lock" style="margin-right: 0.5rem; color: #059669;"></i>
+                        Password
+                    </label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <label style="display: flex; align-items: center; font-size: 0.9rem; color: #6b7280;">
+                        <input type="checkbox" style="margin-right: 0.5rem;">
+                        Remember me
+                    </label>
+                    <a href="#" style="font-size: 0.9rem; color: #059669; text-decoration: none;">
+                        Forgot password?
+                    </a>
+                </div>
+                
+                <button type="submit" class="btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt" style="margin-right: 0.5rem;"></i>
+                    Sign In
+                </button>
+            </form>
+            
+            <p>Don't have an account? <a href="register.html">Create one now</a></p>
+            
+            <div id="login-message" class="auth-message" style="display: none;"></div>
+            
+            <!-- Social login options -->
+            <div style="margin-top: 2rem; text-align: center;">
+                <div style="position: relative; margin-bottom: 1rem;">
+                    <hr style="border: none; height: 1px; background: #e5e7eb;">
+                    <span style="position: absolute; top: -0.5rem; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.95); padding: 0 1rem; color: #6b7280; font-size: 0.9rem;">
+                        Or continue with
+                    </span>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <button type="button" style="flex: 1; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #374151; font-weight: 500; transition: all 0.3s ease;">
+                        <i class="fab fa-google" style="margin-right: 0.5rem; color: #ea4335;"></i>
+                        Google
+                    </button>
+                    <button type="button" style="flex: 1; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #374151; font-weight: 500; transition: all 0.3s ease;">
+                        <i class="fab fa-facebook" style="margin-right: 0.5rem; color: #1877f2;"></i>
+                        Facebook
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-document.getElementById('login-form').onsubmit = async function(e) {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    const message = document.getElementById('login-message');
-    try {
-        const res = await fetch('http://127.0.0.1:5000/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (res.ok) {
-            localStorage.setItem('access_token', data.access_token);
-            localStorage.setItem('user', JSON.stringify(data.user));
-            if (data.user.is_admin) {
-                window.location.href = 'admin.html';
-            } else {
-                window.location.href = 'index.html';
+        document.getElementById('login-form').onsubmit = async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const message = document.getElementById('login-message');
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 0.5rem;"></i>Signing In...';
+            submitBtn.disabled = true;
+            
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await res.json();
+                
+                if (res.ok) {
+                    localStorage.setItem('access_token', data.access_token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    message.textContent = 'Login successful! Redirecting...';
+                    message.className = 'auth-message success';
+                    message.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        if (data.user.is_admin) {
+                            window.location.href = 'admin.html';
+                        } else {
+                            window.location.href = 'index.html';
+                        }
+                    }, 1500);
+                } else {
+                    message.textContent = data.message || 'Login failed';
+                    message.className = 'auth-message error';
+                    message.style.display = 'block';
+                }
+            } catch (err) {
+                message.textContent = 'Server error. Please make sure the backend is running.';
+                message.className = 'auth-message error';
+                message.style.display = 'block';
+            } finally {
+                // Restore button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
             }
-        } else {
-            message.textContent = data.message || 'Login failed';
-        }
-    } catch (err) {
-        message.textContent = 'Server error. Please make sure the backend is running.';
-    }
-};
+        };
 
+        // Add hover effects to social buttons
+        document.querySelectorAll('button[type="button"]').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.borderColor = '#059669';
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 12px rgba(5, 150, 105, 0.15)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.borderColor = '#e5e7eb';
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
 
+        // Add input focus effects
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
     </script>
 </body>
 </html>
+

@@ -34,11 +34,11 @@
                 <a href="register.html" class="btn-primary" id="signup-btn">Sign Up</a>
                 <div class="user-avatar" id="user-avatar" style="display:none;"></div>
                 <button id="logout-btn" style="display:none; background:#f44336; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Logout</button>
-<<<<<<< HEAD
+
                 <a href="dashboard.html" id="account-btn" style="display:none; background:#257500; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Account</a>
-=======
+
                 <a href="dashboard.html" id="account-btn" style="display:none; background:#2196f3; color:white; border:none; border-radius:20px; padding:8px 18px; font-weight:bold; margin-left:10px; cursor:pointer;">Account</a>
->>>>>>> f3b041a8055514ac6188500a7cbfdf4fa09e7ef9
+
                 <div class="mobile-menu-btn" id="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -107,11 +107,6 @@
         </div>
     </section>
      
-<<<<<<< HEAD
-
-=======
->>>>>>> f3b041a8055514ac6188500a7cbfdf4fa09e7ef9
-
     <!-- Featured Events -->
     <section class="events-section" id="events">
         <div class="content-wrapper">
@@ -122,13 +117,14 @@
             <div class="events-list" id="events-list">
                 <!-- Events will be populated by JavaScript -->
             </div>
+     
             <div class="section-actions">
                 <button class="btn-outline" onclick="loadMoreEvents()">View All Events</button>
             </div>
         </div>
     </section>
 
-      <!-- Green Game Section -  -->
+      <!-- Green Game Section -  -->    
     <section class="game-section-green">
         <div class="game-section-container">
             <div class="game-section-content">
@@ -1004,6 +1000,7 @@ document.addEventListener('DOMContentLoaded', showUserAvatar);
 if (document.getElementById('logout-btn')) {
     document.getElementById('logout-btn').onclick = function() {
         localStorage.removeItem('user');
+        localStorage.removeItem('access_token'); // Also remove the access token
         showUserAvatar();
         location.reload();
     };
@@ -1444,7 +1441,7 @@ window.NewsletterUtils = {
     }
 };
   
-<<<<<<< HEAD
+
 
 // Button click handlers
 function startGame() {
@@ -1817,8 +1814,7 @@ window.addEventListener("load", () => {
     }
   }
 })();
-=======
->>>>>>> f3b041a8055514ac6188500a7cbfdf4fa09e7ef9
+
 
 // Button click handlers
 function startGame() {
@@ -1849,7 +1845,7 @@ function showInstructions() {
             <p>• Match duration: 2 minutes</p>
             <p>• Control your team (red players)</p>
             <p>• Beat the AI opponent (blue players)</p>
-            <p>• Score goals to win the match</p>
+            <p> • Score goals to win the match</p>
         </div>
     `);
 }

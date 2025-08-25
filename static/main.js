@@ -24,3 +24,16 @@ socket.on('receive_message', function(data) {
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }); 
+// Original bookEvent function
+function bookEvent(eventId) {
+    const event = sampleEvents.find(e => e.id === eventId);
+    if (event) {
+        showToast(`Redirecting to seat selection...`, "success");
+        // Store event data for seat selection page
+        localStorage.setItem('selectedEvent', JSON.stringify(event));
+        // Redirect to seat selection page
+        setTimeout(() => {
+            window.location.href = 'seat-selection.html';
+        }, 1000);
+    }
+}

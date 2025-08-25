@@ -690,9 +690,33 @@
         </div>
     </footer>
     
-    <script src="venues.js">
+    <script src="venues.js"></script>
+    <script>
+// Ensure map view is shown and venue is focused when 'View on Map' is clicked
 
-    </script>
+document.addEventListener('DOMContentLoaded', function() {
+    const mapContainer = document.getElementById('map-container');
+    const viewMapBtns = document.querySelectorAll('.view-map-btn');
+    // If venues.js exposes showVenueOnMap, use it
+    viewMapBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Show map view if hidden
+            if (mapContainer.style.display === 'none') {
+                mapContainer.style.display = 'block';
+            }
+            // Optionally hide venues list if you want only map
+            // document.getElementById('venues-list').style.display = 'none';
+            // Get venue id
+            const venueId = btn.getAttribute('data-venue');
+            // Call function from venues.js if available
+            if (typeof showVenueOnMap === 'function') {
+                showVenueOnMap(venueId);
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
 

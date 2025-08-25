@@ -2,52 +2,309 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - SportsSeat</title>
     <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="static/auth-animation.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="auth-container">
-        <h1>Register</h1>
-        <form id="register-form">
-            <div class="input-group">
-                <label for="register-email">Email Address</label>
-                <input type="email" id="register-email" required>
-            </div>
-            <div class="input-group">
-                <label for="register-password">Password</label>
-                <input type="password" id="register-password" required>
-            </div>
-            <button type="submit" class="btn-primary btn-full">Sign Up</button>
-        </form>
-        <p>Already have an account? <a href="login.html">Sign in</a></p>
-        <div id="register-message" class="auth-message"></div>
+    <!-- Animated Sports Background -->
+    <div class="auth-background">
+        <!-- Stadium lights -->
+        <div class="stadium-lights"></div>
+        
+        <!-- Floating particles -->
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
+        <!-- Field lines -->
+        <div class="field-lines"></div>
+        
+        <!-- Crowd silhouette -->
+        <div class="crowd-silhouette"></div>
+        
+        <!-- Moving spotlights -->
+        <div class="spotlight"></div>
+        <div class="spotlight"></div>
     </div>
-    <script>
-document.getElementById('register-form').onsubmit = async function (e) {
-    e.preventDefault();
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-    const message = document.getElementById('register-message');
-    try {
-        const res = await fetch('http://127.0.0.1:5000/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (res.ok) {
-            message.textContent = 'Registration successful! Please login.';
-            message.style.color = 'green';
-        } else {
-            message.textContent = data.message || 'Registration failed';
-            message.style.color = 'red';
-        }
-    } catch (err) {
-        message.textContent = 'Server error. Please make sure the backend is running.';
-        message.style.color = 'red';
-    }
-};
 
+    <!-- Main Content -->
+    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+        <div class="auth-container">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <i class="fas fa-ticket-alt" style="font-size: 3rem; color: #059669; margin-bottom: 1rem;"></i>
+                <h1>Join SportsSeat</h1>
+                <p style="color: #6b7280; margin: 0;">Create your account and start booking amazing seats</p>
+            </div>
+            
+            <form id="register-form">
+                <div class="input-group">
+                    <label for="register-name">
+                        <i class="fas fa-user" style="margin-right: 0.5rem; color: #059669;"></i>
+                        Full Name
+                    </label>
+                    <input type="text" id="register-name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="register-email">
+                        <i class="fas fa-envelope" style="margin-right: 0.5rem; color: #059669;"></i>
+                        Email Address
+                    </label>
+                    <input type="email" id="register-email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="register-password">
+                        <i class="fas fa-lock" style="margin-right: 0.5rem; color: #059669;"></i>
+                        Password
+                    </label>
+                    <input type="password" id="register-password" placeholder="Create a strong password" required>
+                    <div id="password-strength" style="margin-top: 0.5rem; font-size: 0.8rem; display: none;">
+                        <div style="display: flex; gap: 2px; margin-bottom: 0.25rem;">
+                            <div class="strength-bar" style="flex: 1; height: 3px; background: #e5e7eb; border-radius: 2px;"></div>
+                            <div class="strength-bar" style="flex: 1; height: 3px; background: #e5e7eb; border-radius: 2px;"></div>
+                            <div class="strength-bar" style="flex: 1; height: 3px; background: #e5e7eb; border-radius: 2px;"></div>
+                            <div class="strength-bar" style="flex: 1; height: 3px; background: #e5e7eb; border-radius: 2px;"></div>
+                        </div>
+                        <span id="strength-text" style="color: #6b7280;">Password strength</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="register-confirm-password">
+                        <i class="fas fa-lock" style="margin-right: 0.5rem; color: #059669;"></i>
+                        Confirm Password
+                    </label>
+                    <input type="password" id="register-confirm-password" placeholder="Confirm your password" required>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: flex; align-items: flex-start; font-size: 0.9rem; color: #6b7280; cursor: pointer;">
+                        <input type="checkbox" id="terms-checkbox" style="margin-right: 0.75rem; margin-top: 0.25rem;" required>
+                        <span>I agree to the <a href="#" style="color: #059669; text-decoration: none;">Terms of Service</a> and <a href="#" style="color: #059669; text-decoration: none;">Privacy Policy</a></span>
+                    </label>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: flex; align-items: center; font-size: 0.9rem; color: #6b7280; cursor: pointer;">
+                        <input type="checkbox" id="newsletter-checkbox" style="margin-right: 0.75rem;">
+                        <span>Subscribe to our newsletter for exclusive offers and updates</span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-primary btn-full">
+                    <i class="fas fa-user-plus" style="margin-right: 0.5rem;"></i>
+                    Create Account
+                </button>
+            </form>
+            
+            <p>Already have an account? <a href="login.html">Sign in here</a></p>
+            
+            <div id="register-message" class="auth-message" style="display: none;"></div>
+            
+            <!-- Social registration options -->
+            <div style="margin-top: 2rem; text-align: center;">
+                <div style="position: relative; margin-bottom: 1rem;">
+                    <hr style="border: none; height: 1px; background: #e5e7eb;">
+                    <span style="position: absolute; top: -0.5rem; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.95); padding: 0 1rem; color: #6b7280; font-size: 0.9rem;">
+                        Or sign up with
+                    </span>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <button type="button" style="flex: 1; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #374151; font-weight: 500; transition: all 0.3s ease;">
+                        <i class="fab fa-google" style="margin-right: 0.5rem; color: #ea4335;"></i>
+                        Google
+                    </button>
+                    <button type="button" style="flex: 1; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #374151; font-weight: 500; transition: all 0.3s ease;">
+                        <i class="fab fa-facebook" style="margin-right: 0.5rem; color: #1877f2;"></i>
+                        Facebook
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            const checks = {
+                length: password.length >= 8,
+                lowercase: /[a-z]/.test(password),
+                uppercase: /[A-Z]/.test(password),
+                numbers: /\d/.test(password),
+                special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+            };
+            
+            strength = Object.values(checks).filter(Boolean).length;
+            
+            const strengthTexts = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
+            const strengthColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#059669'];
+            
+            return {
+                score: strength,
+                text: strengthTexts[strength - 1] || 'Very Weak',
+                color: strengthColors[strength - 1] || '#ef4444'
+            };
+        }
+        
+        // Update password strength indicator
+        document.getElementById('register-password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthIndicator = document.getElementById('password-strength');
+            const strengthBars = strengthIndicator.querySelectorAll('.strength-bar');
+            const strengthText = document.getElementById('strength-text');
+            
+            if (password.length > 0) {
+                strengthIndicator.style.display = 'block';
+                const strength = checkPasswordStrength(password);
+                
+                // Update bars
+                strengthBars.forEach((bar, index) => {
+                    if (index < strength.score) {
+                        bar.style.background = strength.color;
+                    } else {
+                        bar.style.background = '#e5e7eb';
+                    }
+                });
+                
+                // Update text
+                strengthText.textContent = strength.text;
+                strengthText.style.color = strength.color;
+            } else {
+                strengthIndicator.style.display = 'none';
+            }
+        });
+        
+        // Check password confirmation
+        document.getElementById('register-confirm-password').addEventListener('input', function() {
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword.length > 0) {
+                if (password === confirmPassword) {
+                    this.style.borderColor = '#22c55e';
+                } else {
+                    this.style.borderColor = '#ef4444';
+                }
+            } else {
+                this.style.borderColor = '#e5e7eb';
+            }
+        });
+        
+        // Form submission
+        document.getElementById('register-form').onsubmit = async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            const termsAccepted = document.getElementById('terms-checkbox').checked;
+            const message = document.getElementById('register-message');
+            
+            // Validation
+            if (password !== confirmPassword) {
+                message.textContent = 'Passwords do not match';
+                message.className = 'auth-message error';
+                message.style.display = 'block';
+                return;
+            }
+            
+            if (!termsAccepted) {
+                message.textContent = 'Please accept the Terms of Service';
+                message.className = 'auth-message error';
+                message.style.display = 'block';
+                return;
+            }
+            
+            const strength = checkPasswordStrength(password);
+            if (strength.score < 3) {
+                message.textContent = 'Please choose a stronger password';
+                message.className = 'auth-message error';
+                message.style.display = 'block';
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 0.5rem;"></i>Creating Account...';
+            submitBtn.disabled = true;
+            
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password, name })
+                });
+                
+                const data = await res.json();
+                
+                if (res.ok) {
+                    message.textContent = 'Registration successful! Redirecting to login...';
+                    message.className = 'auth-message success';
+                    message.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'login_new.html';
+                    }, 2000);
+                } else {
+                    message.textContent = data.message || 'Registration failed';
+                    message.className = 'auth-message error';
+                    message.style.display = 'block';
+                }
+            } catch (err) {
+                message.textContent = 'Server error. Please make sure the backend is running.';
+                message.className = 'auth-message error';
+                message.style.display = 'block';
+            } finally {
+                // Restore button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        };
+
+        // Add hover effects to social buttons
+        document.querySelectorAll('button[type="button"]').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.borderColor = '#059669';
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 12px rgba(5, 150, 105, 0.15)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.borderColor = '#e5e7eb';
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Add input focus effects
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
     </script>
 </body>
 </html>
+

@@ -11,77 +11,129 @@ const toastWrapper = document.getElementById("toast-wrapper");
 
 // ...existing code...
 const sampleEvents = [
-    {
-        id: 1,
-        title: "NFL: Patriots vs. Jets",
-        venue: "Gillette Stadium",
-        date: "2025-08-15",
-        sport: "football",
-        price: 99,
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
-        featured: true
-    },
-    {
-        id: 2,
-        title: "NBA: Lakers vs. Celtics",
-        venue: "Staples Center",
-        date: "2025-08-20",
-        sport: "basketball",
-        price: 150,
-        image: "",
-        featured: true
-    },
-    {
-        id: 3,
-        title: "MLB: Yankees vs. Red Sox",
-        venue: "Yankee Stadium",
-        date: "2025-08-25",
-        sport: "baseball",
-        price: 85,
-        image: "",
-        featured: false
-    },
-    {
-        id: 4,
-        title: "MLS: LA Galaxy vs. Seattle Sounders",
-        venue: "Dignity Health Sports Park",
-        date: "2025-09-05",
-        sport: "soccer",
-        price: 70,
-        image: "",
-        featured: true
-    },
-    {
-        id: 5,
-        title: "UFC 310: Main Event",
-        venue: "T-Mobile Arena",
-        date: "2025-09-12",
-        sport: "mma",
-        price: 250,
-        image: "https://example.com/ufc-310.jpg",
-        featured: false
-    },
-    {
-        id: 6,
-        title: "NHL: Rangers vs. Islanders",
-        venue: "Madison Square Garden",
-        date: "2025-10-10",
-        sport: "hockey",
-        price: 120,
-        image: "https://example.com/rangers-islanders.jpg",
-        featured: true
-    },
-    {
-        id: 7,
-        title: "F1: United States Grand Prix",
-        venue: "Circuit of the Americas",
-        date: "2025-10-19",
-        sport: "motorsport",
-        price: 300,
-        image: "https://example.com/f1-usgp.jpg",
-        featured: false
-    }
+  {
+    id: 1,
+    title: "NFL: Detroit Lions vs. Los Angeles Chargers (Hall of Fame Game)",
+    venue: "Tom Benson Hall of Fame Stadium",
+    date: "2025-07-31",
+    sport: "football",
+    price: 99, // example placeholder
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNDOyWCKH7kwU77C3n3fv76CUrNFheasx9YA&s", // (no official image URL available)
+    featured: true
+  },
+  {
+    id: 2,
+    title: "NFL Preseason: Pittsburgh Steelers vs. Carolina Panthers",
+    venue: "Bank of America Stadium",
+    date: "2025-08-21",
+    sport: "football",
+    price: 75, // placeholder
+    image: "https://s.yimg.com/ny/api/res/1.2/UrmCbeIMELKIITp30PIjHQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQzMTtjZj13ZWJw/https://media.zenfs.com/en/beaver-county-times/9095f38f2491fc023b39027f33f1d89a",
+    featured: true
+  },
+  {
+    id: 3,
+    title: "NFL Preseason: Philadelphia Eagles vs. New York Jets",
+    venue: "MetLife Stadium",
+    date: "2025-08-22",
+    sport: "football",
+    price: 80,
+    image: "",
+    featured: false
+  },
+  {
+    id: 4,
+    title: "NFL Preseason: Multiple matchups on August 23, 2025",
+    venue: "Various (e.g., Ford Field, etc.)",
+    date: "2025-08-23",
+    sport: "football",
+    price: 65,
+    image: "",
+    featured: false
+  },
+  {
+    id: 5,
+    title: "NFL Regular Season Opener: Philadelphia Eagles vs. Dallas Cowboys",
+    venue: "Lincoln Financial Field",
+    date: "2025-09-04",
+    sport: "football",
+    price: 150,
+    image: "",
+    featured: true
+  },
+  {
+    id: 6,
+    title: "NBA Preseason: Los Angeles Lakers vs. Phoenix Suns",
+    venue: "Greater Palm Springs Arena (Palm Desert, CA)",
+    date: "2025-10-03",
+    sport: "basketball",
+    price: 120,
+    image: "",
+    featured: false
+  },
+  {
+    id: 7,
+    title: "NBA Regular Season: Los Angeles Lakers at Sacramento Kings",
+    venue: "Sacramento (away)",
+    date: "2025-10-26",
+    sport: "basketball",
+    price: 110,
+    image: "",
+    featured: true
+  },
+  {
+    id: 1,
+    title: "NBA: Rockets vs. Thunder – Opening Night",
+    venue: "TBD (Home team’s arena)",
+    date: "2025-10-21",
+    sport: "basketball",
+    price: 120, // placeholder
+    image: "",
+    featured: true
+  },
+  {
+    id: 2,
+    title: "NBA Cup Finals – In-Season Tournament",
+    venue: "Las Vegas (venue TBD)",
+    date: "2025-12-16",
+    sport: "basketball",
+    price: 200,
+    image: "",
+    featured: true
+  },
+  {
+    id: 3,
+    title: "MLB: Dodgers vs. Cubs – Tokyo Opening Series",
+    venue: "Tokyo Dome",
+    date: "2025-03-18",
+    sport: "baseball",
+    price: 250,
+    image: "",
+    featured: true
+  },
+  {
+    id: 4,
+    title: "NHL: Blackhawks @ Panthers – Opening Night",
+    venue: "Florida (away)",
+    date: "2025-10-07",
+    sport: "hockey",
+    price: 150,
+    image: "",
+    featured: true
+  },
+  {
+    id: 5,
+    title: "MLB: World Series Game 1",
+    venue: "TBD",
+    date: "2025-10-24",
+    sport: "baseball",
+    price: 300,
+    image: "",
+    featured: true
+  }
 ];
+
+
 
 // State
 let currentEvents = sampleEvents.filter(event => event.featured);
@@ -441,11 +493,7 @@ function viewEvent(eventId) {
 }
 
 function bookEvent(eventId) {
-    const event = sampleEvents.find(e => e.id === eventId);
-    if (event) {
-        showToast(`Booking ${event.title}...`, "success");
-        console.log("Booking event:", event);
-    }
+    window.location.href = 'seat-selection.html';
 }
 
 function loadMoreEvents() {

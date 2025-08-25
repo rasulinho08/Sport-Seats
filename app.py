@@ -2,13 +2,14 @@ from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-from sqlalchemy import create_engine, Column, Integer, String, Boolean
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, Text, Float, ForeignKey
+from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from sqlalchemy.exc import IntegrityError, OperationalError
-from datetime import timedelta
+from datetime import timedelta, datetime
 import os
 import logging
 from flask_socketio import SocketIO, emit
+import uuid
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -25,8 +26,8 @@ app.config['SECRET_KEY'] = 'secret!'
 jwt = JWTManager(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-# Database configuration - Using PostgreSQL
-DATABASE_URL = "sqlite:///users.db"
+# Database configuration - Using SQLite
+DATABASE_URL = "sqlite:///sport_seats_enhanced.db"
 
 try:
     engine = create_engine(DATABASE_URL, echo=True)
@@ -37,19 +38,151 @@ except Exception as e:
     logger.error(f"Database connection failed: {e}")
     raise
 
-# User model
+# Enhanced User model
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     email = Column(String(120), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
     is_admin = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relationship to profile
+    profile = relationship("UserProfile", back_populates="user", uselist=False, cascade="all, delete-orphan")
+    bookings = relationship("Booking", back_populates="user", cascade="all, delete-orphan")
+    payments = relationship("Payment", back_populates="user", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
             "id": self.id,
             "email": self.email,
-            "is_admin": self.is_admin
+            "is_admin": self.is_admin,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "profile": self.profile.to_dict() if self.profile else None
+        }
+
+# User Profile model
+class UserProfile(Base):
+    __tablename__ = "user_profiles"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    full_name = Column(String(100))
+    phone = Column(String(20))
+    date_of_birth = Column(String(10))  # YYYY-MM-DD format
+    gender = Column(String(10))
+    country = Column(String(50))
+    avatar_url = Column(String(255))
+    bio = Column(Text)
+    preferences = Column(Text)  # JSON string for user preferences
+    email_verified = Column(Boolean, default=False)
+    sms_2fa_enabled = Column(Boolean, default=False)
+    app_2fa_enabled = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relationship
+    user = relationship("User", back_populates="profile")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "full_name": self.full_name,
+            "phone": self.phone,
+            "date_of_birth": self.date_of_birth,
+            "gender": self.gender,
+            "country": self.country,
+            "avatar_url": self.avatar_url,
+            "bio": self.bio,
+            "preferences": self.preferences,
+            "email_verified": self.email_verified,
+            "sms_2fa_enabled": self.sms_2fa_enabled,
+            "app_2fa_enabled": self.app_2fa_enabled,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None
+        }
+
+# Booking model
+class Booking(Base):
+    __tablename__ = "bookings"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    event_id = Column(Integer, nullable=False)
+    booking_reference = Column(String(20), unique=True, nullable=False)
+    event_title = Column(String(200), nullable=False)
+    event_venue = Column(String(100), nullable=False)
+    event_date = Column(String(10), nullable=False)
+    event_time = Column(String(10), nullable=False)
+    seat_section = Column(String(50))
+    seat_row = Column(String(10))
+    seat_number = Column(String(10))
+    ticket_price = Column(Float, nullable=False)
+    booking_fee = Column(Float, default=0.0)
+    total_amount = Column(Float, nullable=False)
+    status = Column(String(20), default='confirmed')  # confirmed, cancelled, completed
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relationship
+    user = relationship("User", back_populates="bookings")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "event_id": self.event_id,
+            "booking_reference": self.booking_reference,
+            "event_title": self.event_title,
+            "event_venue": self.event_venue,
+            "event_date": self.event_date,
+            "event_time": self.event_time,
+            "seat_section": self.seat_section,
+            "seat_row": self.seat_row,
+            "seat_number": self.seat_number,
+            "ticket_price": self.ticket_price,
+            "booking_fee": self.booking_fee,
+            "total_amount": self.total_amount,
+            "status": self.status,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None
+        }
+
+# Payment model
+class Payment(Base):
+    __tablename__ = "payments"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    booking_id = Column(Integer, ForeignKey('bookings.id'))
+    payment_reference = Column(String(50), unique=True, nullable=False)
+    amount = Column(Float, nullable=False)
+    currency = Column(String(3), default='USD')
+    payment_method = Column(String(50))  # card, paypal, etc.
+    card_last_four = Column(String(4))
+    card_brand = Column(String(20))  # visa, mastercard, etc.
+    status = Column(String(20), default='completed')  # pending, completed, failed, refunded
+    transaction_id = Column(String(100))
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relationship
+    user = relationship("User", back_populates="payments")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "booking_id": self.booking_id,
+            "payment_reference": self.payment_reference,
+            "amount": self.amount,
+            "currency": self.currency,
+            "payment_method": self.payment_method,
+            "card_last_four": self.card_last_four,
+            "card_brand": self.card_brand,
+            "status": self.status,
+            "transaction_id": self.transaction_id,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None
         }
 
 # Create tables
@@ -59,9 +192,8 @@ try:
 except Exception as e:
     logger.error(f"Failed to create tables: {e}")
 
-# In-memory storage for events (for simplicity)
+# Sample events data
 events = [
-    # Grand Arena Events
     {
         "id": 1,
         "title": "NBA Finals Game 1",
@@ -86,19 +218,6 @@ events = [
     },
     {
         "id": 3,
-        "title": "College Basketball Tournament",
-        "sport": "Basketball",
-        "venue": "Grand Arena",
-        "date": "2025-09-25",
-        "time": "18:30",
-        "price": 45.00,
-        "image": "/static/images/basketball.jpg",
-        "featured": True
-    },
-    
-    # Wembley Stadium Events
-    {
-        "id": 4,
         "title": "England vs Germany",
         "sport": "Football",
         "venue": "Wembley Stadium",
@@ -107,130 +226,37 @@ events = [
         "price": 85.00,
         "image": "/static/images/football.jpg",
         "featured": True
-    },
-    {
-        "id": 5,
-        "title": "FA Cup Final",
-        "sport": "Soccer",
-        "venue": "Wembley Stadium",
-        "date": "2025-10-05",
-        "time": "17:00",
-        "price": 120.00,
-        "image": "/static/images/soccer.jpg",
-        "featured": False
-    },
-    {
-        "id": 6,
-        "title": "Champions League Final",
-        "sport": "Soccer",
-        "venue": "Wembley Stadium",
-        "date": "2025-10-10",
-        "time": "20:00",
-        "price": 200.00,
-        "image": "/static/images/soccer.jpg",
-        "featured": True
-    },
-    
-    # Camp Nou Events
-    {
-        "id": 7,
-        "title": "Barcelona vs Real Madrid",
-        "sport": "Football",
-        "venue": "Camp Nou",
-        "date": "2025-10-15",
-        "time": "21:00",
-        "price": 150.00,
-        "image": "/static/images/football.jpg",
-        "featured": True
-    },
-    {
-        "id": 8,
-        "title": "La Liga Championship",
-        "sport": "Football",
-        "venue": "Camp Nou",
-        "date": "2025-10-20",
-        "time": "19:30",
-        "price": 75.00,
-        "image": "/static/images/football.jpg",
-        "featured": False
-    },
-    {
-        "id": 9,
-        "title": "Copa del Rey Semi-Final",
-        "sport": "Football",
-        "venue": "Camp Nou",
-        "date": "2025-10-25",
-        "time": "20:30",
-        "price": 90.00,
-        "image": "/static/images/football.jpg",
-        "featured": True
-    },
-    
-    # MetLife Stadium Events
-    {
-        "id": 10,
-        "title": "NFL Super Bowl",
-        "sport": "Football",
-        "venue": "MetLife Stadium",
-        "date": "2025-11-01",
-        "time": "18:30",
-        "price": 300.00,
-        "image": "/static/images/football.jpg",
-        "featured": True
-    },
-    {
-        "id": 11,
-        "title": "Giants vs Cowboys",
-        "sport": "Football",
-        "venue": "MetLife Stadium",
-        "date": "2025-11-05",
-        "time": "13:00",
-        "price": 65.00,
-        "image": "/static/images/football.jpg",
-        "featured": False
-    },
-    {
-        "id": 12,
-        "title": "Jets vs Patriots",
-        "sport": "Football",
-        "venue": "MetLife Stadium",
-        "date": "2025-11-10",
-        "time": "16:00",
-        "price": 55.00,
-        "image": "/static/images/football.jpg",
-        "featured": True
     }
 ]
-next_event_id = 1
+
+# Helper function to generate booking reference
+def generate_booking_reference():
+    return f"SS{datetime.now().strftime('%Y%m%d')}{str(uuid.uuid4())[:6].upper()}"
+
+# Helper function to generate payment reference
+def generate_payment_reference():
+    return f"PAY{datetime.now().strftime('%Y%m%d')}{str(uuid.uuid4())[:8].upper()}"
 
 # Routes for serving HTML files
 @app.route("/")
 def index():
     return render_template("index.html")
 
-@app.route("/about.html")
-def about_page():
-    return render_template("about.html")
+@app.route("/login_new.html")
+def login_new_page():
+    return send_from_directory('.', 'login_new.html')
 
-@app.route("/admin.html")
-def admin_page():
-    return render_template("admin.html")
+@app.route("/register_new.html")
+def register_new_page():
+    return send_from_directory('.', 'register_new.html')
 
-@app.route("/shop.html")
-def shop_page():
-    return render_template("shop.html")
+@app.route("/dashboard.html")
+def dashboard_page():
+    return send_from_directory('.', 'dashboard.html')
 
-@app.route("/register.html")
-def register_page():
-    return render_template("register.html")
-
-@app.route("/login.html")
-def login_page():
-    return render_template("login.html")
-
-@app.route("/venues.html")
-def venues_page():
-    return render_template("venues.html")
+@app.route("/dashboard_enhanced.html")
+def dashboard_enhanced_page():
+    return send_from_directory('.', 'dashboard_enhanced.html')
 
 # API Routes for User Management
 @app.route("/api/register", methods=["POST"])
@@ -242,6 +268,7 @@ def register():
             
         email = data.get("email")
         password = data.get("password")
+        name = data.get("name", "")
 
         if not email or not password:
             return jsonify({"message": "Email and password are required"}), 400
@@ -267,6 +294,15 @@ def register():
             
             new_user = User(email=email, password=hashed_password, is_admin=is_admin)
             session.add(new_user)
+            session.flush()  # Get the user ID
+            
+            # Create default profile
+            profile = UserProfile(
+                user_id=new_user.id,
+                full_name=name if name else "User",
+                email_verified=False
+            )
+            session.add(profile)
             session.commit()
             
             logger.info(f"New user registered: {email}")
@@ -328,6 +364,202 @@ def login():
         logger.error(f"Login endpoint error: {e}")
         return jsonify({"message": "Server error"}), 500
 
+# User Profile API Routes
+@app.route("/api/me", methods=["GET"])
+@jwt_required()
+def get_current_user():
+    try:
+        identity = get_jwt_identity()
+        user_id = identity["id"]
+        
+        session = Session()
+        try:
+            user = session.query(User).filter_by(id=user_id).first()
+            if not user:
+                return jsonify({"message": "User not found"}), 404
+
+
+
+            
+            return jsonify({"user": user.to_dict()}), 200
+            
+        finally:
+            session.close()
+            
+    except Exception as e:
+        logger.error(f"Get current user error: {e}")
+        return jsonify({"message": "Server error"}), 500
+
+@app.route("/api/me", methods=["PUT"])
+@jwt_required()
+def update_current_user():
+    try:
+        identity = get_jwt_identity()
+        user_id = identity["id"]
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({"message": "No data provided"}), 400
+        
+        session = Session()
+        try:
+            user = session.query(User).filter_by(id=user_id).first()
+            if not user:
+                return jsonify({"message": "User not found"}), 404
+            
+            # Update profile
+            if not user.profile:
+                user.profile = UserProfile(user_id=user_id)
+                session.add(user.profile)
+            
+            profile = user.profile
+            
+            # Update profile fields
+            if "full_name" in data:
+                profile.full_name = data["full_name"]
+            if "phone" in data:
+                profile.phone = data["phone"]
+            if "date_of_birth" in data:
+                profile.date_of_birth = data["date_of_birth"]
+            if "gender" in data:
+                profile.gender = data["gender"]
+            if "country" in data:
+                profile.country = data["country"]
+            if "bio" in data:
+                profile.bio = data["bio"]
+            if "preferences" in data:
+                profile.preferences = data["preferences"]
+            if "sms_2fa_enabled" in data:
+                profile.sms_2fa_enabled = data["sms_2fa_enabled"]
+            if "app_2fa_enabled" in data:
+                profile.app_2fa_enabled = data["app_2fa_enabled"]
+            
+            profile.updated_at = datetime.utcnow()
+            session.commit()
+            
+            logger.info(f"User profile updated: {user.email}")
+            return jsonify({"user": user.to_dict()}), 200
+            
+        finally:
+            session.close()
+            
+    except Exception as e:
+        logger.error(f"Update current user error: {e}")
+        return jsonify({"message": "Server error"}), 500
+
+@app.route("/api/me/bookings", methods=["GET"])
+@jwt_required()
+def get_user_bookings():
+    try:
+        identity = get_jwt_identity()
+        user_id = identity["id"]
+        
+        session = Session()
+        try:
+            bookings = session.query(Booking).filter_by(user_id=user_id).order_by(Booking.created_at.desc()).all()
+            bookings_data = [booking.to_dict() for booking in bookings]
+            
+            return jsonify({"bookings": bookings_data}), 200
+            
+        finally:
+            session.close()
+            
+    except Exception as e:
+        logger.error(f"Get user bookings error: {e}")
+        return jsonify({"message": "Server error"}), 500
+
+@app.route("/api/me/payments", methods=["GET"])
+@jwt_required()
+def get_user_payments():
+    try:
+        identity = get_jwt_identity()
+        user_id = identity["id"]
+        
+        session = Session()
+        try:
+            payments = session.query(Payment).filter_by(user_id=user_id).order_by(Payment.created_at.desc()).all()
+            payments_data = [payment.to_dict() for payment in payments]
+            
+            return jsonify({"payments": payments_data}), 200
+            
+        finally:
+            session.close()
+            
+    except Exception as e:
+        logger.error(f"Get user payments error: {e}")
+        return jsonify({"message": "Server error"}), 500
+
+# Booking API Routes
+@app.route("/api/bookings", methods=["POST"])
+@jwt_required()
+def create_booking():
+    try:
+        identity = get_jwt_identity()
+        user_id = identity["id"]
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({"message": "No data provided"}), 400
+        
+        required_fields = ["event_id", "event_title", "event_venue", "event_date", "event_time", "ticket_price"]
+        missing_fields = [field for field in required_fields if field not in data]
+        
+        if missing_fields:
+            return jsonify({"message": f"Missing required fields: {', '.join(missing_fields)}"}), 400
+        
+        session = Session()
+        try:
+            booking_fee = data.get("booking_fee", 5.0)
+            total_amount = float(data["ticket_price"]) + booking_fee
+            
+            booking = Booking(
+                user_id=user_id,
+                event_id=data["event_id"],
+                booking_reference=generate_booking_reference(),
+                event_title=data["event_title"],
+                event_venue=data["event_venue"],
+                event_date=data["event_date"],
+                event_time=data["event_time"],
+                seat_section=data.get("seat_section", "General"),
+                seat_row=data.get("seat_row", "A"),
+                seat_number=data.get("seat_number", "1"),
+                ticket_price=float(data["ticket_price"]),
+                booking_fee=booking_fee,
+                total_amount=total_amount,
+                status="confirmed"
+            )
+            
+            session.add(booking)
+            session.flush()
+            
+            # Create payment record
+            payment = Payment(
+                user_id=user_id,
+                booking_id=booking.id,
+                payment_reference=generate_payment_reference(),
+                amount=total_amount,
+                currency="USD",
+                payment_method=data.get("payment_method", "card"),
+                card_last_four=data.get("card_last_four", "4242"),
+                card_brand=data.get("card_brand", "visa"),
+                status="completed",
+                transaction_id=f"txn_{str(uuid.uuid4())[:12]}"
+            )
+            
+            session.add(payment)
+            session.commit()
+            
+            logger.info(f"Booking created: {booking.booking_reference}")
+            return jsonify({"booking": booking.to_dict()}), 201
+            
+        finally:
+            session.close()
+            
+    except Exception as e:
+        logger.error(f"Create booking error: {e}")
+        return jsonify({"message": "Server error"}), 500
+
+# Admin API Routes
 @app.route("/api/admin/check", methods=["GET"])
 @jwt_required()
 def admin_check():
@@ -358,103 +590,25 @@ def get_users():
         logger.error(f"Get users error: {e}")
         return jsonify({"message": "Server error"}), 500
 
-@app.route("/api/users/<int:user_id>", methods=["DELETE"])
-@jwt_required()
-def delete_user(user_id):
-    try:
-        identity = get_jwt_identity()
-        if not identity["is_admin"]:
-            return jsonify({"message": "Admin access required"}), 403
-
-        session = Session()
-        try:
-            user = session.query(User).filter_by(id=user_id).first()
-            if not user:
-                return jsonify({"message": "User not found"}), 404
-
-            # Prevent admin from deleting themselves
-            if user.id == identity["id"]:
-                return jsonify({"message": "Cannot delete your own account"}), 400
-
-            session.delete(user)
-            session.commit()
-            
-            logger.info(f"User deleted by admin: {user.email}")
-            return jsonify({"message": "User deleted successfully"}), 200
-
-        finally:
-            session.close()
-
-    except Exception as e:
-        logger.error(f"Delete user error: {e}")
-        return jsonify({"message": "Server error"}), 500
-# In-memory features list
-features = []
-next_feature_id = 1
-
-@app.route("/api/features", methods=["GET"])
-def get_features():
-    return jsonify({"features": features}), 200
-
-@app.route("/api/features", methods=["POST"])
-def create_feature():
-    global next_feature_id
-    data = request.get_json(force=True)
-    name = data.get("name")
-    status = data.get("status")
-
-    if not name or not status:
-        return jsonify({"message": "Feature name and status are required"}), 400
-
-    feature = {
-        "id": next_feature_id,
-        "name": name,
-        "description": data.get("description", ""),
-        "status": status,
-        "category": data.get("category", ""),
-        "created_at": data.get("created_at", "")
-    }
-    features.append(feature)
-    next_feature_id += 1
-    return jsonify(feature), 201
-
-@app.route("/api/features/<int:feature_id>", methods=["PUT"])
-def update_feature(feature_id):
-    data = request.get_json(force=True)
-    for feature in features:
-        if feature["id"] == feature_id:
-            feature.update(data)
-            return jsonify(feature), 200
-    return jsonify({"message": "Feature not found"}), 404
-
-@app.route("/api/features/<int:feature_id>", methods=["DELETE"])
-def delete_feature(feature_id):
-    global features
-    features = [f for f in features if f["id"] != feature_id]
-    return jsonify({"message": "Feature deleted"}), 200
-
+# Events API Routes
 @app.route("/api/events", methods=["GET"])
 def get_events():
     return jsonify({"events": events}), 200
 
-
 @app.route("/api/events", methods=["POST"])
 def create_event():
-    global next_event_id
     try:
         data = request.get_json(force=True)
         
         if not data:
             return jsonify({"message": "No data provided"}), 400
 
-        # Check for required fields
         required_fields = ["title", "sport", "venue", "date", "time", "price"]
         missing_fields = [field for field in required_fields if field not in data or not data[field]]
         
         if missing_fields:
             return jsonify({"message": f"Missing required fields: {', '.join(missing_fields)}"}), 400
 
-        # Validate price
         try:
             price = float(data["price"])
             if price < 0:
@@ -462,8 +616,9 @@ def create_event():
         except (ValueError, TypeError):
             return jsonify({"message": "Price must be a valid number"}), 400
 
+        event_id = max([e["id"] for e in events], default=0) + 1
         event = {
-            "id": next_event_id,
+            "id": event_id,
             "title": data["title"],
             "sport": data["sport"],
             "venue": data["venue"],
@@ -475,8 +630,6 @@ def create_event():
         }
 
         events.append(event)
-        next_event_id += 1
-
         logger.info(f"New event created: {event['title']}")
         return jsonify(event), 201
         
@@ -484,143 +637,122 @@ def create_event():
         logger.error(f"Create event error: {e}")
         return jsonify({"message": f"Failed to create event: {str(e)}"}), 500
 
-@app.route("/api/events/<int:event_id>", methods=["PUT"])
-def update_event(event_id):
+# Initialize sample data
+def initialize_sample_data():
+    session = Session()
     try:
-        data = request.get_json(force=True)
-        
-        if not data:
-            return jsonify({"message": "No data provided"}), 400
+        # Check if admin user exists
+        admin_user = session.query(User).filter_by(email="mamishovrasul028@gmail.com").first()
+        if not admin_user:
+            # Create admin user
+            hashed_password = bcrypt.generate_password_hash("admin123").decode("utf-8")
+            admin_user = User(
+                email="mamishovrasul028@gmail.com",
+                password=hashed_password,
+                is_admin=True
+            )
+            session.add(admin_user)
+            session.flush()
             
-        for event in events:
-            if event["id"] == event_id:
-                # Validate price if provided
-                if "price" in data:
-                    try:
-                        price = float(data["price"])
-                        if price < 0:
-                            return jsonify({"message": "Price must be a positive number"}), 400
-                        data["price"] = price
-                    except (ValueError, TypeError):
-                        return jsonify({"message": "Price must be a valid number"}), 400
-                
-                event.update(data)
-                logger.info(f"Event updated: {event['title']}")
-                return jsonify(event), 200
-                
-        return jsonify({"message": "Event not found"}), 404
-        
-    except Exception as e:
-        logger.error(f"Update event error: {e}")
-        return jsonify({"message": f"Failed to update event: {str(e)}"}), 500
-
-@app.route("/api/events/<int:event_id>", methods=["DELETE"])
-def delete_event(event_id):
-    global events
-    try:
-        original_length = len(events)
-        events = [event for event in events if event["id"] != event_id]
-        
-        if len(events) == original_length:
-            return jsonify({"message": "Event not found"}), 404
+            # Create admin profile
+            admin_profile = UserProfile(
+                user_id=admin_user.id,
+                full_name="Rasul Mamishov",
+                email_verified=True,
+                country="Azerbaijan"
+            )
+            session.add(admin_profile)
             
-        logger.info(f"Event deleted: ID {event_id}")
-        return jsonify({"message": "Event deleted successfully"}), 200
+        # Create sample user if doesn't exist
+        sample_user = session.query(User).filter_by(email="user@example.com").first()
+        if not sample_user:
+            hashed_password = bcrypt.generate_password_hash("user123").decode("utf-8")
+            sample_user = User(
+                email="user@example.com",
+                password=hashed_password,
+                is_admin=False
+            )
+            session.add(sample_user)
+            session.flush()
+            
+            # Create sample profile
+            sample_profile = UserProfile(
+                user_id=sample_user.id,
+                full_name="John Doe",
+                phone="+1 (555) 123-4567",
+                date_of_birth="1995-06-15",
+                gender="Male",
+                country="United States",
+                email_verified=True,
+                bio="Sports enthusiast and regular event attendee"
+            )
+            session.add(sample_profile)
+            
+            # Create sample bookings
+            sample_bookings = [
+                Booking(
+                    user_id=sample_user.id,
+                    event_id=1,
+                    booking_reference=generate_booking_reference(),
+                    event_title="NBA Finals Game 1",
+                    event_venue="Grand Arena",
+                    event_date="2025-09-15",
+                    event_time="19:00",
+                    seat_section="Lower Bowl",
+                    seat_row="C",
+                    seat_number="15",
+                    ticket_price=125.00,
+                    booking_fee=5.00,
+                    total_amount=130.00,
+                    status="confirmed"
+                ),
+                Booking(
+                    user_id=sample_user.id,
+                    event_id=2,
+                    booking_reference=generate_booking_reference(),
+                    event_title="NHL Stanley Cup Playoffs",
+                    event_venue="Grand Arena",
+                    event_date="2025-09-20",
+                    event_time="20:00",
+                    seat_section="Upper Deck",
+                    seat_row="M",
+                    seat_number="8",
+                    ticket_price=95.00,
+                    booking_fee=5.00,
+                    total_amount=100.00,
+                    status="confirmed"
+                )
+            ]
+            
+            for booking in sample_bookings:
+                session.add(booking)
+                session.flush()
+                
+                # Create corresponding payment
+                payment = Payment(
+                    user_id=sample_user.id,
+                    booking_id=booking.id,
+                    payment_reference=generate_payment_reference(),
+                    amount=booking.total_amount,
+                    currency="USD",
+                    payment_method="card",
+                    card_last_four="4242",
+                    card_brand="visa",
+                    status="completed",
+                    transaction_id=f"txn_{str(uuid.uuid4())[:12]}"
+                )
+                session.add(payment)
+        
+        session.commit()
+        logger.info("Sample data initialized successfully")
         
     except Exception as e:
-        logger.error(f"Delete event error: {e}")
-        return jsonify({"message": f"Failed to delete event: {str(e)}"}), 500
-
-# Health check endpoint
-@app.route("/api/health", methods=["GET"])
-def health_check():
-    try:
-        # Test database connection
-        session = Session()
-        try:
-            session.execute("SELECT 1")
-            db_status = "healthy"
-        except Exception as e:
-            db_status = f"unhealthy: {str(e)}"
-        finally:
-            session.close()
-
-        return jsonify({
-            "status": "healthy",
-            "database": db_status,
-            "events_count": len(events)
-        }), 200
-
-    except Exception as e:
-        return jsonify({
-            "status": "unhealthy",
-            "error": str(e)
-        }), 500
-
-# Error handlers
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({"message": "Endpoint not found"}), 404
-
-@app.errorhandler(500)
-def internal_error(error):
-    return jsonify({"message": "Internal server error"}), 500
-
-@socketio.on('send_message')
-def handle_send_message(data):
-    # Broadcast the message to all clients
-    emit('receive_message', data, broadcast=True)
+        session.rollback()
+        logger.error(f"Failed to initialize sample data: {e}")
+    finally:
+        session.close()
 
 if __name__ == "__main__":
-    logger.info("Starting Flask application...")
+    initialize_sample_data()
     app.run(host="0.0.0.0", port=5000, debug=True)
 
-
-<<<<<<< HEAD
-
-
-
-
-
-
-
-@app.route("/events.html")
-def events_page():
-    """Serve the events page"""
-    return render_template("events.html")
-
-@app.route("/api/events", methods=["GET"])
-def get_all_events():
-    """Get all events"""
-    try:
-        return jsonify({"events": events}), 200
-    except Exception as e:
-        logger.error(f"Get all events error: {e}")
-        return jsonify({"message": f"Failed to get events: {str(e)}"}), 500
-
-@app.route("/api/events/venue/<venue_name>", methods=["GET"])
-def get_events_by_venue(venue_name):
-    """Get all events for a specific venue"""
-    try:
-        venue_events = [event for event in events if event["venue"] == venue_name]
-        return jsonify({"events": venue_events, "venue": venue_name}), 200
-    except Exception as e:
-        logger.error(f"Get events by venue error: {e}")
-        return jsonify({"message": f"Failed to get events for venue: {str(e)}"}), 500
-
-
-
-if __name__ == "__main__":
-    try:
-        # Create database tables
-        Base.metadata.create_all(engine)
-        logger.info("Database tables created successfully")
-        
-        logger.info("Starting Flask application...")
-        app.run(host="0.0.0.0", port=5000, debug=True)
-    except Exception as e:
-        logger.error(f"Failed to start application: {e}")
-        raise
-
-=======
->>>>>>> f3b041a8055514ac6188500a7cbfdf4fa09e7ef9

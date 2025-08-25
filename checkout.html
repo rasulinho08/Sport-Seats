@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - SportsSeat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Basic Styling for Checkout Page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .header {
+            background-color: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1 );
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #28a745;
+            text-decoration: none;
+        }
+        .nav-links a {
+            color: #555;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #28a745;
+        }
+        .nav-buttons .btn-outline, .nav-buttons .btn-primary {
+            margin-left: 15px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nav-buttons .btn-outline {
+            border: 1px solid #28a745;
+            color: #28a745;
+            background-color: transparent;
+        }
+        .nav-buttons .btn-primary {
+            background-color: #28a745;
+            color: #fff;
+            border: 1px solid #28a745;
+        }
+        .checkout-progress {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            position: relative;
+        }
+        .checkout-progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 150px;
+        }
+        .checkout-progress-step .icon {
+            width: 40px;
+            height: 40px;
+            background-color: #ccc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            z-index: 1;
+        }
+        .checkout-progress-step .text {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        .checkout-progress-step.active .icon {
+            background-color: #28a745;
+        }
+        .checkout-progress-step.active .text {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .checkout-progress-step.completed .icon {
+            background-color: #28a745;
+        }
+        .checkout-progress-step.completed .text {
+            color: #28a745;
+        }
+        .checkout-progress-step:not(:last-child)::after {
+            content: ">\A0";
+            position: absolute;
+            left: calc(50% + 75px);
+            top: 15px;
+            color: #ccc;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .checkout-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 40px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .checkout-form-section {
+            flex: 2;
+            padding: 20px;
+        }
+        .checkout-summary-section {
+            flex: 1;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        h2 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-group input[type="text"], 
+        .form-group input[type="email"], 
+        .form-group input[type="tel"], 
+        .form-group input[type="date"], 
+        .form-group select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .form-group input.error {
+            border-color: #dc3545;
+        }
+        .form-group .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        .form-row > .form-group {
+            flex: 1;
+        }
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .payment-method {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #f0f0f0;
+        }
+        .payment-method:hover {
+            border-color: #28a745;
+            background-color: #e6ffe6;
+        }
+        .payment-method.selected {
+            border-color: #28a745;
+            background-color: #e6ffe6;
+            box-shadow: 0 0 0 2px #28a745;
+        }
+        .payment-method i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .payment-method.selected i {
+            color: #28a745;
+        }
+        .credit-card-form {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        .order-summary-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .order-summary-card h3 {
+            margin-top: 0;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+        .order-summary-card p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 0.95rem;
+        }
+        .order-summary-card p i {
+            margin-right: 8px;
+            color: #777;
+        }
+        .order-summary-seats-list {
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        .seat-summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            font-size: 0.9rem;
+        }
+        .seat-summary-item:last-child {
+            border-bottom: none;
+        }
+        .pricing-summary-checkout div {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.95rem;
+        }
+        .pricing-summary-checkout .total {
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        .place-order-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .place-order-button:hover {
+            background-color: #218838;
+        }
+        .place-order-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .security-info {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #777;
+        }
+        .security-info i {
+            margin-right: 5px;
+            color: #28a745;
+        }
+
+        /* Success Modal */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 10000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+            max-width: 500px;
+            width: 90%;
+        }
+        .modal-content .icon-check {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .modal-content h2 {
+            color: #28a745;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .modal-content p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .modal-buttons button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0 10px;
+        }
+        .modal-buttons .btn-home {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .modal-buttons .btn-home:hover {
+            background-color: #0056b3;
+        }
+        .modal-buttons .btn-download {
+            background-color: #6c757d;
+            color: #fff;
+        }
+        .modal-buttons .btn-download:hover {
+            background-color: #5a6268;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .toast.toast-success {
+            background-color: #28a745;
+        }
+        .toast.toast-error {
+            background-color: #dc3545;
+        }
+        .toast.toast-info {
+            background-color: #007bff;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .checkout-container {
+                flex-direction: column;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .payment-methods {
+                flex-direction: column;
+            }
+            .modal-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .modal-buttons button {
+                width: 100%;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">SportsSeat</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="events.html">Events</a>
+                <a href="venues.html">Venues</a>
+                <a href="about.html">About</a>
+                <a href="#">Shop</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn-outline">Login</a>
+                <a href="register.html" class="btn-primary">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="checkout-progress">
+        <div class="checkout-progress-step completed">
+            <div class="icon"><i class="fas fa-check"></i></div>
+            <div class="text">Seats Selected</div>
+        </div>
+        <div class="checkout-progress-step completed">
+            <div class="icon"><i class="fas fa-check"></i></div>
+            <div class="text">Cart Review</div>
+        </div>
+        <div class="checkout-progress-step active">
+            <div class="icon"><i class="fas fa-shopping-cart"></i></div>
+            <div class="text">Checkout</div>
+        </div>
+    </div>
+
+    <div class="checkout-container">
+        <div class="checkout-form-section">
+            <form id="checkout-form">
+                <h2>Personal Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name *</label>
+                        <input type="text" id="first-name" name="first-name" required>
+                        <div class="error-message" id="first-name-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name *</label>
+                        <input type="text" id="last-name" name="last-name" required>
+                        <div class="error-message" id="last-name-error"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="error-message" id="email-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <div class="error-message" id="phone-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob">
+                </div>
+
+                <h2>Billing Address</h2>
+                <div class="form-group">
+                    <label for="address">Street Address *</label>
+                    <input type="text" id="address" name="address" required>
+                    <div class="error-message" id="address-error"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" name="city" required>
+                        <div class="error-message" id="city-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State/Province *</label>
+                        <input type="text" id="state" name="state" required>
+                        <div class="error-message" id="state-error"></div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="zip">ZIP/Postal Code *</label>
+                        <input type="text" id="zip" name="zip" required>
+                        <div class="error-message" id="zip-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country *</label>
+                        <select id="country" name="country" required>
+                            <option value="">Select Country</option>
+                            <option value="United States">United States</option>
+                            <option value="Canada">Canada</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Germany">Germany</option>
+                            <option value="France">France</option>
+                            <option value="Spain">Spain</option>
+                            <option value="Italy">Italy</option>
+                        </select>
+                        <div class="error-message" id="country-error"></div>
+                    </div>
+                </div>
+
+                <h2>Payment Information</h2>
+                <div class="payment-methods">
+                    <div class="payment-method selected" data-method="credit-card">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Credit Card</span>
+                    </div>
+                    <div class="payment-method" data-method="paypal">
+                        <i class="fab fa-paypal"></i>
+                        <span>PayPal</span>
+                    </div>
+                    <div class="payment-method" data-method="apple-pay">
+                        <i class="fab fa-apple-pay"></i>
+                        <span>Apple Pay</span>
+                    </div>
+                    <div class="payment-method" data-method="google-pay">
+                        <i class="fab fa-google-pay"></i>
+                        <span>Google Pay</span>
+                    </div>
+                </div>
+
+                <div class="credit-card-form" id="credit-card-form">
+                    <div class="form-group">
+                        <label for="card-number">Card Number *</label>
+                        <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" required>
+                        <div class="error-message" id="card-number-error"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiry-date">Expiry Date *</label>
+                            <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required>
+                            <div class="error-message" id="expiry-date-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="security-code">Security Code *</label>
+                            <input type="text" id="security-code" name="security-code" placeholder="123" required>
+                            <div class="error-message" id="security-code-error"></div>
+                            <small>3-4 digits on the back of your card</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardholder-name">Cardholder Name *</label>
+                        <input type="text" id="cardholder-name" name="cardholder-name" required>
+                        <div class="error-message" id="cardholder-name-error"></div>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a> *</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="newsletter" name="newsletter">
+                    <label for="newsletter">Subscribe to our newsletter for exclusive offers and event updates</label>
+                </div>
+
+                <button type="submit" class="place-order-button" id="place-order-btn" disabled>Complete Order - $0.00</button>
+                <button class="place-order-button" onclick="window.location.href='seat-selection.html'">Book Now</button>
+            </form>
+            <div class="security-info">
+                <i class="fas fa-lock"></i> SSL Secured | 256-bit Encryption
+            </div>
+        </div>
+
+        <div class="checkout-summary-section">
+            <h2>Order Summary</h2>
+            <div class="order-summary-card">
+                <h3 id="event-summary-title"></h3>
+                <p><i class="far fa-calendar-alt"></i> <span id="event-summary-date"></span> at <span id="event-summary-time"></span></p>
+                <p><i class="fas fa-map-marker-alt"></i> <span id="event-summary-venue"></span></p>
+            </div>
+
+            <h4>Selected Seats</h4>
+            <div class="order-summary-seats-list" id="seats-summary-list">
+                <!-- Seats will be loaded here -->
+            </div>
+
+            <div class="pricing-summary-checkout">
+                <div>Subtotal: <span id="pricing-subtotal">$0.00</span></div>
+                <div>Service Fee: <span id="pricing-service-fee">$0.00</span></div>
+                <div id="pricing-discount-row" style="display: none;">Discount: <span id="pricing-discount">-$0.00</span></div>
+                <div class="total">Total: <span id="pricing-total">$0.00</span></div>
+            </div>
+        </div>
+    </div>
+
+    
+ <!-- <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <div class="icon-check"><i class="fas fa-check-circle"></i></div>
+            <h2>Payment Successful!</h2>
+            <p>Your booking has been confirmed. You will receive a confirmation email with your tickets shortly.</p>
+            <div class="modal-buttons">
+                <button class="btn-home" onclick="goToHome()">Back to Home</button>
+                <button class="btn-download" onclick="downloadTickets()">Download Tickets</button>
+            </div>
+        </div>
+    </div>  -->
+
+    <script src="checkout.js"></script>
+</body>
+</html>
