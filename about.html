@@ -102,7 +102,7 @@
                     <div class="category-icon">
                         <i class="fas fa-cube"></i>
                     </div>
-                    <h3>3D Seat Maps</h3>
+                    <h3>2D Seat Maps</h3>
                     <p>Interactive 2D visualization</p>
                     <span class="event-badge">Revolutionary</span>
                 </div>
@@ -177,30 +177,129 @@
     </section>
 
     
-
     <!-- Testimonials Section -->
-    <section class="testimonials-section"  style="background-color: rgb(8, 190, 8);">
+    <section class="testimonials-section">
         <div class="content-wrapper">
             <div class="section-title">
                 <h2>What Our Fans Say</h2>
-                <p style="color: wheat;">Real experiences from real SportsSeat customers</p>
+                <p>Real experiences from real SportsSeat customers</p>
             </div>
+            
+            <!-- Existing Testimonials -->
             <div class="testimonials-list">
                 <div class="testimonial-card">
-                    <p>"SportsSeat made booking tickets so easy! The 3D seat view is a game-changer."</p>
-                    <h4>- Alex, Football Fan</h4>
+                    <div class="quote-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <p>"SportsSeat made booking tickets so easy! The 2D seat view is a game-changer."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h4>Alex</h4>
+                            <span>Football Fan</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
                 </div>
+                
                 <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" fill="currentColor"/>
+                        </svg>
+                    </div>
                     <p>"Fast, secure, and I always get the best seats. Highly recommend!"</p>
-                    <h4>- Maria, Basketball Enthusiast</h4>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <h4>Maria</h4>
+                            <span>Basketball Enthusiast</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
                 </div>
+                
                 <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" fill="currentColor"/>
+                        </svg>
+                    </div>
                     <p>"Customer service was amazing when I had an issue. They solved it instantly!"</p>
-                    <h4>- John, Baseball Supporter</h4>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">J</div>
+                        <div class="author-info">
+                            <h4>John</h4>
+                            <span>Baseball Supporter</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
                 </div>
+            </div>
+            
+            <!-- Submit Review Form -->
+            <div class="submit-review-section">
+                <h3>Share Your Experience</h3>
+                <p>Tell us about your SportsSeat experience</p>
+                
+                <form class="review-form" id="reviewForm">
+                    <div class="form-group">
+                        <label for="reviewerName">Your Name</label>
+                        <input type="text" id="reviewerName" name="reviewerName" placeholder="Enter your name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reviewText">Your Review</label>
+                        <textarea id="reviewText" name="reviewText" placeholder="Share your experience with SportsSeat..." rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <div class="rating-input">
+                            <input type="radio" id="star5" name="rating" value="5" required>
+                            <label for="star5" class="star-label">★</label>
+                            <input type="radio" id="star4" name="rating" value="4">
+                            <label for="star4" class="star-label">★</label>
+                            <input type="radio" id="star3" name="rating" value="3">
+                            <label for="star3" class="star-label">★</label>
+                            <input type="radio" id="star2" name="rating" value="2">
+                            <label for="star2" class="star-label">★</label>
+                            <input type="radio" id="star1" name="rating" value="1">
+                            <label for="star1" class="star-label">★</label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span>Submit Review</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </form>
             </div>
         </div>
     </section>
+
 
 
     <!-- Footer -->
@@ -341,11 +440,287 @@
             </div>
         </div>
     </div>
+    
 
     <!-- Toast Notifications -->
     <div class="toast-wrapper" id="toast-wrapper"></div>
     <!-- Scripts -->
     <script>
+        // Testimonials Form Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const reviewForm = document.getElementById('reviewForm');
+    const submitBtn = reviewForm.querySelector('.submit-btn');
+    const testimonialsList = document.querySelector('.testimonials-list');
+    
+    // Handle form submission
+    reviewForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(reviewForm);
+        const reviewerName = formData.get('reviewerName').trim();
+        const reviewText = formData.get('reviewText').trim();
+        const rating = formData.get('rating');
+        
+        // Validate form
+        if (!reviewerName || !reviewText || !rating) {
+            showNotification('Please fill in all fields', 'error');
+            return;
+        }
+        
+        // Show loading state
+        showLoadingState();
+        
+        // Simulate API call delay
+        setTimeout(() => {
+            // Create new testimonial card
+            const newTestimonial = createTestimonialCard(reviewerName, reviewText, rating);
+            
+            // Add to testimonials list
+            testimonialsList.appendChild(newTestimonial);
+            
+            // Reset form
+            reviewForm.reset();
+            resetRatingStars();
+            
+            // Hide loading state
+            hideLoadingState();
+            
+            // Show success message
+            showNotification('Thank you for your review! It has been added successfully.', 'success');
+            
+            // Scroll to new testimonial
+            setTimeout(() => {
+                newTestimonial.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }, 500);
+            
+        }, 1500);
+    });
+    
+    // Create testimonial card
+    function createTestimonialCard(name, text, rating) {
+        const card = document.createElement('div');
+        card.className = 'testimonial-card new-testimonial';
+        
+        const initial = name.charAt(0).toUpperCase();
+        const stars = '★'.repeat(parseInt(rating));
+        
+        card.innerHTML = `
+            <div class="quote-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" fill="currentColor"/>
+                </svg>
+            </div>
+            <p>"${text}"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">${initial}</div>
+                <div class="author-info">
+                    <h4>${name}</h4>
+                    <span>SportsSeat Customer</span>
+                </div>
+            </div>
+            <div class="rating">
+                ${stars.split('').map(star => `<span class="star">${star}</span>`).join('')}
+            </div>
+        `;
+        
+        // Add entrance animation
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px) scale(0.9)';
+        
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0) scale(1)';
+        }, 100);
+        
+        return card;
+    }
+    
+    // Show loading state
+    function showLoadingState() {
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+            <div class="loading-spinner"></div>
+            <span>Submitting...</span>
+        `;
+        submitBtn.style.background = 'linear-gradient(135deg, #6c757d, #5a6268)';
+    }
+    
+    // Hide loading state
+    function hideLoadingState() {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+            <span>Submit Review</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        `;
+        submitBtn.style.background = 'linear-gradient(135deg, #08be08, #06a006)';
+    }
+    
+    // Reset rating stars
+    function resetRatingStars() {
+        const ratingInputs = document.querySelectorAll('input[name="rating"]');
+        ratingInputs.forEach(input => input.checked = false);
+    }
+    
+    // Show notification
+    function showNotification(message, type) {
+        // Remove existing notifications
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notification => notification.remove());
+        
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <span class="notification-icon">${type === 'success' ? '✓' : '⚠'}</span>
+                <span class="notification-message">${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 100);
+        
+        // Hide notification after 4 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 4000);
+    }
+    
+    // Add smooth scrolling for better UX
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Add intersection observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe testimonial cards
+    document.querySelectorAll('.testimonial-card').forEach(card => {
+        observer.observe(card);
+    });
+});
+
+// Add CSS for notifications and loading spinner
+const additionalStyles = `
+    .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        padding: 16px 20px;
+        transform: translateX(400px);
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 1000;
+        border-left: 4px solid #08be08;
+    }
+    
+    .notification.notification-error {
+        border-left-color: #dc3545;
+    }
+    
+    .notification.show {
+        transform: translateX(0);
+    }
+    
+    .notification-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .notification-icon {
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    
+    .notification-success .notification-icon {
+        color: #08be08;
+    }
+    
+    .notification-error .notification-icon {
+        color: #dc3545;
+    }
+    
+    .notification-message {
+        color: #2c3e50;
+        font-weight: 500;
+    }
+    
+    .loading-spinner {
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top: 2px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .new-testimonial {
+        border: 2px solid #08be08;
+        box-shadow: 0 8px 32px rgba(8, 190, 8, 0.2);
+    }
+    
+    @media (max-width: 768px) {
+        .notification {
+            top: 10px;
+            right: 10px;
+            left: 10px;
+            transform: translateY(-100px);
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+        }
+    }
+`;
+
+// Inject additional styles
+const styleSheet = document.createElement('style');
+styleSheet.textContent = additionalStyles;
+document.head.appendChild(styleSheet);
+
+
         // Basic modal functionality for the about page
         function openModal(modalId) {
             const modal = document.getElementById(modalId);

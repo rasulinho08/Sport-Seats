@@ -3,267 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SportsSeat Admin Panel</title>
+    <title>Admin Panel - SportsSeat</title>
+    <link rel="stylesheet" href="/static/admin_enhanced.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
-    <div class="admin-container">
-        <header class="admin-header">
-            <div class="header-content">
-                <h1><i class="fas fa-tachometer-alt"></i> SportsSeat Admin Panel</h1>
-                <div class="header-actions">
-                    <span class="user-info" id="user-info">Welcome, Admin</span>
-                    <button class="btn btn-danger" onclick="logout()">Logout</button>
-                </div>
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-ticket-alt"></i> SportsSeat Admin
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#dashboard" data-section="dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#users" data-section="users"><i class="fas fa-users"></i> User Management</a></li>
+                <li><a href="#events" data-section="events"><i class="fas fa-calendar-alt"></i> Event Management</a></li>
+                <li><a href="#bookings" data-section="bookings"><i class="fas fa-book"></i> Booking Management</a></li>
+                <li><a href="#payments" data-section="payments"><i class="fas fa-dollar-sign"></i> Payment Management</a></li>
+                <li><a href="#reports" data-section="reports"><i class="fas fa-chart-line"></i> Reports & Analytics</a></li>
+                <li><a href="#settings" data-section="settings"><i class="fas fa-cog"></i> Site Settings</a></li>
+                <li><a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Admin Panel</h1>
+            <div class="user-profile">
+                <span>Welcome, Admin</span>
+                <i class="fas fa-user-circle"></i>
             </div>
         </header>
 
-        <main class="admin-main">
-            <!-- Dashboard Stats -->
-            <div class="dashboard-stats">
+        <section id="dashboard" class="admin-section active">
+            <h2>Dashboard Overview</h2>
+            <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
-                    <div class="stat-info">
-                        <h3 id="total-events">0</h3>
-                        <p>Total Events</p>
-                    </div>
+                    <h3>Total Users</h3>
+                    <p id="totalUsers">0</p>
+                    <i class="fas fa-users"></i>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-star"></i></div>
-                    <div class="stat-info">
-                        <h3 id="featured-events">0</h3>
-                        <p>Featured Events</p>
-                    </div>
+                    <h3>Total Events</h3>
+                    <p id="totalEvents">0</p>
+                    <i class="fas fa-calendar-alt"></i>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                    <div class="stat-info">
-                        <h3 id="upcoming-events">0</h3>
-                        <p>Upcoming Events</p>
-                    </div>
+                    <h3>Total Bookings</h3>
+                    <p id="totalBookings">0</p>
+                    <i class="fas fa-book"></i>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-cogs"></i></div>
-                    <div class="stat-info">
-                        <h3 id="total-features">0</h3>
-                        <p>Total Features</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-toggle-on"></i></div>
-                    <div class="stat-info">
-                        <h3 id="enabled-features">0</h3>
-                        <p>Enabled Features</p>
-                    </div>
+                    <h3>Total Revenue</h3>
+                    <p id="totalRevenue">$0.00</p>
+                    <i class="fas fa-dollar-sign"></i>
                 </div>
             </div>
 
-            <!-- Navigation Tabs -->
-            <div class="admin-tabs">
-                <button class="tab-btn active" onclick="showTab('events')">
-                    <i class="fas fa-calendar-alt"></i> Event Management
-                </button>
-                <button class="tab-btn" onclick="showTab('features')">
-                    <i class="fas fa-cogs"></i> Feature Management
-                </button>
+            <div class="chart-container">
+                <h3>Revenue Over Time</h3>
+                <canvas id="revenueChart"></canvas>
             </div>
+        </section>
 
-            <!-- Event Management -->
-            <section class="tab-content active" id="events-tab">
-                <div class="section-header">
-                    <h2><i class="fas fa-calendar-alt"></i> Event Management</h2>
-                    <button class="btn btn-primary" onclick="openAddEventModal()">
-                        <i class="fas fa-plus"></i> Add New Event
-                    </button>
-                </div>
-                <div class="search-filter">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="search-events" placeholder="Search events..." oninput="filterEvents()">
-                    </div>
-                    <select id="sport-filter" onchange="filterEvents()">
-                        <option value="">All Sports</option>
-                        <option value="football">Football</option>
-                        <option value="basketball">Basketball</option>
-                        <option value="baseball">Baseball</option>
-                        <option value="hockey">Hockey</option>
-                        <option value="tennis">Tennis</option>
-                    </select>
-                </div>
-                <div class="table-container">
-                    <table class="events-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Title</th>
-                                <th>Sport</th>
-                                <th>Venue</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="events-table-body"></tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Feature Management -->
-            <section class="tab-content" id="features-tab">
-                <div class="section-header">
-                    <h2><i class="fas fa-cogs"></i> Feature Management</h2>
-                    <button class="btn btn-primary" onclick="openAddFeatureModal()">
-                        <i class="fas fa-plus"></i> Add New Feature
-                    </button>
-                </div>
-                <div class="search-filter">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="search-features" placeholder="Search features..." oninput="filterFeatures()">
-                    </div>
-                    <select id="status-filter" onchange="filterFeatures()">
-                        <option value="">All Status</option>
-                        <option value="enabled">Enabled</option>
-                        <option value="disabled">Disabled</option>
-                    </select>
-                    <select id="category-filter" onchange="filterFeatures()">
-                        <option value="">All Categories</option>
-                        <option value="ui">UI</option>
-                        <option value="api">API</option>
-                        <option value="security">Security</option>
-                        <option value="performance">Performance</option>
-                    </select>
-                </div>
-                <div class="table-container">
-                    <table class="features-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Category</th>
-                                <th>Status</th>
-                                <th>Created</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="features-table-body"></tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Event Modal -->
-            <div class="modal" id="event-modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 id="event-modal-title">Add New Event</h3>
-                        <span class="close" onclick="closeEventModal()">&times;</span>
-                    </div>
-                    <form id="event-form" onsubmit="saveEvent(event)">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="event-title">Event Title</label>
-                                <input type="text" id="event-title" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="event-sport">Sport</label>
-                                <select id="event-sport" required>
-                                    <option value="football">Football</option>
-                                    <option value="basketball">Basketball</option>
-                                    <option value="baseball">Baseball</option>
-                                    <option value="hockey">Hockey</option>
-                                    <option value="tennis">Tennis</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="event-venue">Venue</label>
-                            <input type="text" id="event-venue" required>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="event-date">Date</label>
-                                <input type="date" id="event-date" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="event-time">Time</label>
-                                <input type="time" id="event-time" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="event-price">Price ($)</label>
-                            <input type="number" id="event-price" step="0.01" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="event-image">Image URL</label>
-                            <input type="text" id="event-image">
-                        </div>
-                        <div class="form-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="event-featured">
-                                Featured Event
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" onclick="closeEventModal()">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save Event</button>
-                        </div>
-                    </form>
-                </div>
+        <section id="users" class="admin-section">
+            <h2>User Management</h2>
+            <button class="add-button" id="addUserBtn"><i class="fas fa-plus"></i> Add New User</button>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Admin</th>
+                            <th>Created At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <!-- User data will be loaded here -->
+                    </tbody>
+                </table>
             </div>
+        </section>
 
-            <!-- Feature Modal -->
-            <div class="modal" id="feature-modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 id="feature-modal-title">Add New Feature</h3>
-                        <span class="close" onclick="closeFeatureModal()">&times;</span>
-                    </div>
-                    <form id="feature-form" onsubmit="saveFeature(event)">
-                        <div class="form-group">
-                            <label for="feature-name">Feature Name</label>
-                            <input type="text" id="feature-name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="feature-description">Description</label>
-                            <textarea id="feature-description" rows="3"></textarea>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="feature-status">Status</label>
-                                <select id="feature-status" required>
-                                    <option value="disabled">Disabled</option>
-                                    <option value="enabled">Enabled</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="feature-category">Category</label>
-                                <select id="feature-category">
-                                    <option value="">Select Category</option>
-                                    <option value="ui">UI</option>
-                                    <option value="api">API</option>
-                                    <option value="security">Security</option>
-                                    <option value="performance">Performance</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" onclick="closeFeatureModal()">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save Feature</button>
-                        </div>
-                    </form>
-                </div>
+        <section id="events" class="admin-section">
+            <h2>Event Management</h2>
+            <button class="add-button" id="addEventBtn"><i class="fas fa-plus"></i> Add New Event</button>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Sport</th>
+                            <th>Venue</th>
+                            <th>Date</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventTableBody">
+                        <!-- Event data will be loaded here -->
+                    </tbody>
+                </table>
             </div>
+        </section>
 
-            <!-- Notification -->
-            <div class="notification" id="notification"></div>
-        </main>
+        <section id="bookings" class="admin-section">
+            <h2>Booking Management</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>User Email</th>
+                            <th>Event Title</th>
+                            <th>Tickets</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingTableBody">
+                        <!-- Booking data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="payments" class="admin-section">
+            <h2>Payment Management</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>User Email</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentTableBody">
+                        <!-- Payment data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="reports" class="admin-section">
+            <h2>Reports & Analytics</h2>
+            <div class="chart-container">
+                <h3>Users by Registration Month</h3>
+                <canvas id="usersByMonthChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Bookings by Event</h3>
+                <canvas id="bookingsByEventChart"></canvas>
+            </div>
+        </section>
+
+        <section id="settings" class="admin-section">
+            <h2>Site Settings</h2>
+            <form id="settingsForm">
+                <div class="form-group">
+                    <label for="siteName">Site Name:</label>
+                    <input type="text" id="siteName" value="SportsSeat">
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Contact Email:</label>
+                    <input type="email" id="contactEmail" value="support@sportsseat.com">
+                </div>
+                <button type="submit" class="save-button"><i class="fas fa-save"></i> Save Settings</button>
+            </form>
+        </section>
     </div>
-    <script src="admin.js"></script>
+
+    <!-- Modals -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Add/Edit User</h3>
+            <form id="userForm">
+                <input type="hidden" id="userId">
+                <div class="form-group">
+                    <label for="userEmail">Email:</label>
+                    <input type="email" id="userEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="userPassword">Password (leave blank to keep current ):</label>
+                    <input type="password" id="userPassword">
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="userIsAdmin">
+                    <label for="userIsAdmin">Is Admin</label>
+                </div>
+                <button type="submit" class="save-button">Save User</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Add/Edit Event</h3>
+            <form id="eventForm">
+                <input type="hidden" id="eventId">
+                <div class="form-group">
+                    <label for="eventTitle">Title:</label>
+                    <input type="text" id="eventTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventSport">Sport:</label>
+                    <input type="text" id="eventSport" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventVenue">Venue:</label>
+                    <input type="text" id="eventVenue" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventDate">Date:</label>
+                    <input type="date" id="eventDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventTime">Time:</label>
+                    <input type="time" id="eventTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventPrice">Price:</label>
+                    <input type="number" id="eventPrice" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventImage">Image URL:</label>
+                    <input type="text" id="eventImage">
+                </div>
+                <button type="submit" class="save-button">Save Event</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/admin_enhanced.js"></script>
 </body>
 </html>
-

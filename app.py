@@ -689,40 +689,40 @@ def initialize_sample_data():
             session.add(sample_profile)
             
             # Create sample bookings
-            sample_bookings = [
-                Booking(
-                    user_id=sample_user.id,
-                    event_id=1,
-                    booking_reference=generate_booking_reference(),
-                    event_title="NBA Finals Game 1",
-                    event_venue="Grand Arena",
-                    event_date="2025-09-15",
-                    event_time="19:00",
-                    seat_section="Lower Bowl",
-                    seat_row="C",
-                    seat_number="15",
-                    ticket_price=125.00,
-                    booking_fee=5.00,
-                    total_amount=130.00,
-                    status="confirmed"
-                ),
-                Booking(
-                    user_id=sample_user.id,
-                    event_id=2,
-                    booking_reference=generate_booking_reference(),
-                    event_title="NHL Stanley Cup Playoffs",
-                    event_venue="Grand Arena",
-                    event_date="2025-09-20",
-                    event_time="20:00",
-                    seat_section="Upper Deck",
-                    seat_row="M",
-                    seat_number="8",
-                    ticket_price=95.00,
-                    booking_fee=5.00,
-                    total_amount=100.00,
-                    status="confirmed"
-                )
-            ]
+            # sample_bookings = [
+            #     Booking(
+            #         user_id=sample_user.id,
+            #         event_id=1,
+            #         booking_reference=generate_booking_reference(),
+            #         event_title="NBA Finals Game 1",
+            #         event_venue="Grand Arena",
+            #         event_date="2025-09-15",
+            #         event_time="19:00",
+            #         seat_section="Lower Bowl",
+            #         seat_row="C",
+            #         seat_number="15",
+            #         ticket_price=125.00,
+            #         booking_fee=5.00,
+            #         total_amount=130.00,
+            #         status="confirmed"
+            #     ),
+            #     Booking(
+            #         user_id=sample_user.id,
+            #         event_id=2,
+            #         booking_reference=generate_booking_reference(),
+            #         event_title="NHL Stanley Cup Playoffs",
+            #         event_venue="Grand Arena",
+            #         event_date="2025-09-20",
+            #         event_time="20:00",
+            #         seat_section="Upper Deck",
+            #         seat_row="M",
+            #         seat_number="8",
+            #         ticket_price=95.00,
+            #         booking_fee=5.00,
+            #         total_amount=100.00,
+            #         status="confirmed"
+            #     )
+            # ]
             
             for booking in sample_bookings:
                 session.add(booking)

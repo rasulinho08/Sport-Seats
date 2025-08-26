@@ -485,15 +485,13 @@ function initializeCategoryCards() {
 
 // Event actions
 function viewEvent(eventId) {
-    const event = sampleEvents.find(e => e.id === eventId);
-    if (event) {
-        showToast(`Viewing ${event.title} details...`, "success");
-        console.log("Viewing event:", event);
-    }
+  console.log(`Viewing event ${eventId}`);
+  // In a real app, you'd open a detailed event view
+  showToast(`Event ${eventId} details coming soon!`, "info");
 }
 
 function bookEvent(eventId) {
-    window.location.href = 'seat-selection.html';
+    alert('Successful Payment');
 }
 
 function loadMoreEvents() {

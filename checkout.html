@@ -519,7 +519,7 @@
                             <option value="United States">United States</option>
                             <option value="Canada">Canada</option>
                             <option value="United Kingdom">United Kingdom</option>
-                            <option value="Australia">Australia</option>
+                            <option value="Australia">Azerbaijan</option>
                             <option value="Germany">Germany</option>
                             <option value="France">France</option>
                             <option value="Spain">Spain</option>
@@ -585,7 +585,7 @@
                 </div>
 
                 <button type="submit" class="place-order-button" id="place-order-btn" disabled>Complete Order - $0.00</button>
-                <button class="place-order-button" onclick="window.location.href='seat-selection.html'">Book Now</button>
+                <button class="place-order-button" onclick="window.location.href='index.html'">Book Now</button>
             </form>
             <div class="security-info">
                 <i class="fas fa-lock"></i> SSL Secured | 256-bit Encryption
@@ -627,6 +627,425 @@
         </div>
     </div>  -->
 
-    <script src="checkout.js"></script>
+    <script >
+
+        function placeOrder() {
+    alert("✅ Payment Successful! Your booking has been confirmed.");
+    window.location.href = "index.html";
+}
+        // Checkout JavaScript Functionality
+class CheckoutManager {
+    constructor() {
+        this.cart = {
+            items: [
+                { id: 1, name: 'Wireless Headphones', price: 99.99, quantity: 1, specs: 'Color: Black, Size: Standard' },
+                { id: 2, name: 'Smartphone Case', price: 14.99, quantity: 2, specs: 'Color: Blue, Material: Silicone' },
+                { id: 3, name: 'USB Cable', price: 19.99, quantity: 1, specs: 'Length: 6ft, Type: USB-C' }
+            ],
+            shipping: 9.99,
+            tax: 0.085, // 8.5% tax rate
+            discount: 0
+        };
+        
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.updatePricing();
+        this.setupFormValidation();
+        this.setupPaymentMethods();
+    }
+
+    setupEventListeners() {
+        // Quantity buttons
+        document.querySelectorAll('.qty-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => this.handleQuantityChange(e));
+        });
+
+        // Promo code
+        document.querySelector('.apply-btn').addEventListener('click', () => this.applyPromoCode());
+
+        // Place order button
+        document.getElementById('placeOrderBtn').addEventListener('click', () => this.processOrder());
+
+        // Payment method selection
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', (e) => this.selectPaymentMethod(e));
+        });
+
+        // Form inputs for real-time validation
+        document.querySelectorAll('input, select').forEach(input => {
+            input.addEventListener('blur', (e) => this.validateField(e.target));
+            input.addEventListener('input', (e) => this.clearError(e.target));
+        });
+
+        // Terms checkbox
+        document.getElementById('terms').addEventListener('change', () => this.updateOrderButton());
+
+        // Card number formatting
+        document.getElementById('cardNumber').addEventListener('input', (e) => this.formatCardNumber(e));
+        document.getElementById('expiryDate').addEventListener('input', (e) => this.formatExpiryDate(e));
+        document.getElementById('cvv').addEventListener('input', (e) => this.formatCVV(e));
+    }
+
+    handleQuantityChange(e) {
+        const action = e.target.dataset.action;
+        const orderItem = e.target.closest('.order-item');
+        const qtyElement = orderItem.querySelector('.qty-value');
+        const itemIndex = Array.from(document.querySelectorAll('.order-item')).indexOf(orderItem);
+        
+        let currentQty = parseInt(qtyElement.textContent);
+        
+        if (action === 'increase') {
+            currentQty++;
+        } else if (action === 'decrease' && currentQty > 1) {
+            currentQty--;
+        }
+        
+        qtyElement.textContent = currentQty;
+        this.cart.items[itemIndex].quantity = currentQty;
+        this.updatePricing();
+        this.showToast('Cart updated successfully', 'success');
+    }
+
+    applyPromoCode() {
+        const promoInput = document.getElementById('promoCode');
+        const promoCode = promoInput.value.trim().toUpperCase();
+        
+        const validCodes = {
+            'SAVE10': 0.10,
+            'WELCOME20': 0.20,
+            'STUDENT15': 0.15
+        };
+        
+        if (validCodes[promoCode]) {
+            this.cart.discount = validCodes[promoCode];
+            this.updatePricing();
+            this.showToast(`Promo code applied! ${(validCodes[promoCode] * 100)}% discount`, 'success');
+            promoInput.disabled = true;
+            document.querySelector('.apply-btn').textContent = 'Applied';
+            document.querySelector('.apply-btn').disabled = true;
+        } else {
+            this.showToast('Invalid promo code', 'error');
+        }
+    }
+
+    updatePricing() {
+        const subtotal = this.cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const discountAmount = subtotal * this.cart.discount;
+        const taxableAmount = subtotal - discountAmount;
+        const tax = taxableAmount * this.cart.tax;
+        const total = taxableAmount + tax + this.cart.shipping;
+
+        document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('shipping').textContent = `$${this.cart.shipping.toFixed(2)}`;
+        document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+        document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        
+        const discountRow = document.querySelector('.discount-row');
+        if (this.cart.discount > 0) {
+            document.getElementById('discount').textContent = `-$${discountAmount.toFixed(2)}`;
+            discountRow.style.display = 'flex';
+        } else {
+            discountRow.style.display = 'none';
+        }
+
+        // Update order button
+        document.getElementById('placeOrderBtn').innerHTML = `
+            <i class="fas fa-lock"></i>
+            Complete Order - $${total.toFixed(2)}
+        `;
+    }
+
+    setupFormValidation() {
+        const validators = {
+            firstName: (value) => value.length >= 2 ? null : 'First name must be at least 2 characters',
+            lastName: (value) => value.length >= 2 ? null : 'Last name must be at least 2 characters',
+            email: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? null : 'Please enter a valid email address',
+            phone: (value) => /^\+?[\d\s\-\(\)]{10,}$/.test(value) ? null : 'Please enter a valid phone number',
+            address: (value) => value.length >= 5 ? null : 'Please enter a complete address',
+            city: (value) => value.length >= 2 ? null : 'Please enter a valid city',
+            state: (value) => value ? null : 'Please select a state',
+            zipCode: (value) => /^\d{5}(-\d{4})?$/.test(value) ? null : 'Please enter a valid ZIP code',
+            country: (value) => value ? null : 'Please select a country',
+            cardNumber: (value) => /^\d{4}\s\d{4}\s\d{4}\s\d{4}$/.test(value) ? null : 'Please enter a valid card number',
+            expiryDate: (value) => /^(0[1-9]|1[0-2])\/\d{2}$/.test(value) ? null : 'Please enter a valid expiry date (MM/YY)',
+            cvv: (value) => /^\d{3,4}$/.test(value) ? null : 'Please enter a valid CVV',
+            cardName: (value) => value.length >= 2 ? null : 'Please enter the cardholder name'
+        };
+
+        this.validators = validators;
+    }
+
+    validateField(field) {
+        const validator = this.validators[field.name];
+        if (!validator) return true;
+
+        const error = validator(field.value);
+        const errorElement = field.parentNode.querySelector('.error-message');
+        
+        if (error) {
+            field.classList.add('error');
+            errorElement.textContent = error;
+            errorElement.classList.add('show');
+            return false;
+        } else {
+            field.classList.remove('error');
+            errorElement.classList.remove('show');
+            return true;
+        }
+    }
+
+    clearError(field) {
+        field.classList.remove('error');
+        const errorElement = field.parentNode.querySelector('.error-message');
+        if (errorElement) {
+            errorElement.classList.remove('show');
+        }
+    }
+
+    validateAllFields() {
+        const requiredFields = document.querySelectorAll('input[required], select[required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+            if (!this.validateField(field)) {
+                isValid = false;
+            }
+        });
+
+        // Check terms checkbox
+        const termsCheckbox = document.getElementById('terms');
+        if (!termsCheckbox.checked) {
+            this.showToast('Please accept the terms and conditions', 'error');
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    setupPaymentMethods() {
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        const paymentForms = document.querySelectorAll('.payment-form');
+
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove active class from all options
+                paymentOptions.forEach(opt => opt.classList.remove('active'));
+                paymentForms.forEach(form => form.classList.remove('active'));
+
+                // Add active class to selected option
+                option.classList.add('active');
+                
+                // Show corresponding form
+                const method = option.dataset.method;
+                const targetForm = document.querySelector(`.payment-form[data-method="${method}"]`) || 
+                                 document.querySelector('.payment-form:first-child');
+                targetForm.classList.add('active');
+            });
+        });
+    }
+
+    selectPaymentMethod(e) {
+        const method = e.currentTarget.dataset.method;
+        this.selectedPaymentMethod = method;
+    }
+
+    formatCardNumber(e) {
+        let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+        let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+        if (formattedValue.length > 19) formattedValue = formattedValue.substr(0, 19);
+        e.target.value = formattedValue;
+    }
+
+    formatExpiryDate(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        e.target.value = value;
+    }
+
+    formatCVV(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        e.target.value = value.substring(0, 4);
+    }
+
+    updateOrderButton() {
+        const termsChecked = document.getElementById('terms').checked;
+        const orderBtn = document.getElementById('placeOrderBtn');
+        orderBtn.disabled = !termsChecked;
+    }
+
+    async processOrder() {
+        // Validate all fields
+        if (!this.validateAllFields()) {
+            this.showToast('Please fill in all required fields correctly', 'error');
+            return;
+        }
+
+        // Show loading overlay
+        this.showLoading(true);
+
+        try {
+            // Simulate payment processing
+            await this.simulatePaymentProcessing();
+            
+            // Generate order ID
+            const orderId = this.generateOrderId();
+            
+            // Calculate final total
+            const subtotal = this.cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const discountAmount = subtotal * this.cart.discount;
+            const taxableAmount = subtotal - discountAmount;
+            const tax = taxableAmount * this.cart.tax;
+            const total = taxableAmount + tax + this.cart.shipping;
+
+            // Hide loading and show success modal
+            this.showLoading(false);
+            this.showSuccessModal(orderId, total);
+            
+            // Update progress bar
+            this.updateProgressBar();
+            
+        } catch (error) {
+            this.showLoading(false);
+            this.showToast('Payment failed. Please try again.', 'error');
+        }
+    }
+
+    async simulatePaymentProcessing() {
+        // Simulate different payment processing times
+        const processingTime = Math.random() * 2000 + 1000; // 1-3 seconds
+        
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // Simulate 95% success rate
+                if (Math.random() > 0.05) {
+                    resolve();
+                } else {
+                    reject(new Error('Payment failed'));
+                }
+            }, processingTime);
+        });
+    }
+
+    generateOrderId() {
+        const timestamp = Date.now();
+        const random = Math.floor(Math.random() * 1000);
+        return `ORD-${timestamp}-${random}`;
+    }
+
+    updateProgressBar() {
+        const steps = document.querySelectorAll('.progress-step');
+        const lines = document.querySelectorAll('.progress-line');
+        
+        // Mark all steps as completed
+        steps.forEach(step => {
+            step.classList.remove('active');
+            step.classList.add('completed');
+        });
+        
+        // Mark all lines as completed
+        lines.forEach(line => {
+            line.classList.add('completed');
+        });
+    }
+
+    showSuccessModal(orderId, total) {
+        const modal = document.getElementById('successModal');
+        document.getElementById('orderId').textContent = orderId;
+        document.getElementById('orderTotal').textContent = `$${total.toFixed(2)}`;
+        modal.classList.add('show');
+    }
+
+    showLoading(show) {
+        const overlay = document.getElementById('loadingOverlay');
+        if (show) {
+            overlay.classList.add('show');
+        } else {
+            overlay.classList.remove('show');
+        }
+    }
+
+    showToast(message, type = 'info') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        
+        container.appendChild(toast);
+        
+        // Remove toast after 3 seconds
+        setTimeout(() => {
+            toast.style.animation = 'toastSlideOut 0.3s ease forwards';
+            setTimeout(() => {
+                container.removeChild(toast);
+            }, 300);
+        }, 3000);
+    }
+}
+
+// Global functions for modal actions
+function downloadReceipt() {
+    // Simulate receipt download
+    const link = document.createElement('a');
+    link.href = 'data:text/plain;charset=utf-8,Receipt for Order ' + document.getElementById('orderId').textContent + '\nTotal: ' + document.getElementById('orderTotal').textContent + '\nThank you for your purchase!';
+    link.download = 'receipt.txt';
+    link.click();
+    
+    // Show toast
+    checkout.showToast('Receipt downloaded successfully!', 'success');
+}
+
+function goToHome() {
+    // Simulate navigation to home page
+    checkout.showToast('Redirecting to home page...', 'info');
+    setTimeout(() => {
+        window.location.href = '#home';
+    }, 1000);
+}
+
+// Add CSS for toast slide out animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes toastSlideOut {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Initialize checkout when DOM is loaded
+let checkout;
+document.addEventListener('DOMContentLoaded', () => {
+    checkout = new CheckoutManager();
+});
+
+// Close modal when clicking outside
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('successModal');
+    if (e.target === modal) {
+        modal.classList.remove('show');
+    }
+});
+
+// Handle escape key to close modal
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('successModal');
+        modal.classList.remove('show');
+    }
+});
+
+
+    </script>
 </body>
 </html>

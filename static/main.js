@@ -1,39 +1,31 @@
-// Connect to Socket.IO server
-const socket = io('http://127.0.0.1:5000');
 
-// Elements
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
-const chatMessages = document.getElementById('chatMessages');
 
-// Send message
-chatForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const message = chatInput.value.trim();
-    if (message) {
-        socket.emit('send_message', { message: message });
-        chatInput.value = '';
-    }
-});
+//         navButtons.innerHTML = `
+//             <div class="user-menu">
+//                 <span class="user-email">${email}</span>
+//                 <button class="btn-outline" onclick="logout()">Logout</button>
+//                 ${email === 'mamishovrasul028@gmail.com' ? '<a href="admin.html" class="btn-outline" id="admin-panel-link" style="margin-left:10px;">Admin Panel</a>' : ''}
+//             </div>
+//         `;
+//     }
+// }
 
-// Receive message
-socket.on('receive_message', function(data) {
-    const msgDiv = document.createElement('div');
-    msgDiv.className = 'chat-message';
-    msgDiv.textContent = data.message;
-    chatMessages.appendChild(msgDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}); 
-// Original bookEvent function
-function bookEvent(eventId) {
-    const event = sampleEvents.find(e => e.id === eventId);
-    if (event) {
-        showToast(`Redirecting to seat selection...`, "success");
-        // Store event data for seat selection page
-        localStorage.setItem('selectedEvent', JSON.stringify(event));
-        // Redirect to seat selection page
-        setTimeout(() => {
-            window.location.href = 'seat-selection.html';
-        }, 1000);
-    }
-}
+// function logout() {
+//     localStorage.removeItem('access_token');
+//     localStorage.removeItem('user');
+//     showToast("Logged out successfully!", "success");
+//     const navButtons = document.querySelector(".nav-buttons");
+//     if (navButtons) {
+//         navButtons.innerHTML = `
+//             <a href="login.html" class="btn-outline">Login</a>
+//             <a href="register.html" class="btn-primary">Sign Up</a>
+//             <button class="mobile-menu-btn" id="mobile-menu-btn">
+//                 <i class="fas fa-bars"></i>
+//             </button>
+//         `;
+//         initializeNavigation();
+//     }
+// }
+
+// // Ensure admin user (optional, comment out if no backend at port 5000)
+// /*(async function ensureAdminUser() {

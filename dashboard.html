@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Account - SportsSeat</title>
+
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="static/styles.css">3
+
     <link rel="stylesheet" href="static/dashboard.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +16,7 @@
 </head>
 <body class="dashboard-body">
     <!-- Email Confirmation Banner -->
-    <div class="email-confirmation-banner" id="emailBanner" style="display: none;">
+    <div class="email-confirmation-banner" id="emailBanner">
         <div class="banner-content">
             <div class="banner-icon">
                 <i class="fas fa-exclamation-triangle"></i>
@@ -22,7 +26,7 @@
                 <span>We've sent a verification link to your email. Click the link to complete your account setup.</span>
             </div>
             <div class="banner-actions">
-                <button class="btn-resend" onclick="resendVerificationEmail()">Resend Email</button>
+                <button class="btn-resend">Resend Email</button>
                 <button class="btn-close" onclick="closeBanner()">
                     <i class="fas fa-times"></i>
                 </button>
@@ -43,8 +47,11 @@
             <div class="nav-actions">
                 <div class="user-menu">
                     <button class="user-menu-btn" id="userMenuBtn">
-                        <img src="https://via.placeholder.com/40x40/4F46E5/FFFFFF?text=U" alt="Profile" class="user-avatar" id="userAvatar">
-                        <span class="user-name" id="userName">Loading...</span>
+                        <img src="https://via.placeholder.com/40x40/4F46E5/FFFFFF?text=JD" alt="Profile" class="user-avatar">
+      <span class="user-name">Rasul Mamishov</span>
+
+                        <span class="user-name">Rasul Mamishov</span>
+
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="user-dropdown" id="userDropdown">
@@ -61,7 +68,7 @@
                             <span>Help</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item logout-btn" onclick="handleLogout()">
+                        <a href="#" class="dropdown-item logout-btn">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Logout</span>
                         </a>
@@ -101,7 +108,7 @@
                     </a>
                 </nav>
                 <div class="sidebar-footer">
-                    <button class="btn-danger-outline delete-account-btn" onclick="handleDeleteAccount()">
+                    <button class="btn-danger-outline delete-account-btn">
                         <i class="fas fa-trash"></i>
                         <span>Delete Account</span>
                     </button>
@@ -115,7 +122,7 @@
             <section class="dashboard-section active" id="profile">
                 <div class="section-header">
                     <h2>User Profile</h2>
-                    <button class="btn-primary edit-profile-btn" onclick="toggleEditProfile()">
+                    <button class="btn-primary edit-profile-btn">
                         <i class="fas fa-edit"></i>
                         Edit Profile
                     </button>
@@ -123,26 +130,35 @@
                 <div class="profile-card">
                     <div class="profile-header">
                         <div class="profile-avatar">
-                            <img src="https://via.placeholder.com/120x120/4F46E5/FFFFFF?text=U" alt="Profile Picture" id="profileImage">
-                            <button class="avatar-edit-btn" onclick="uploadAvatar()">
+                            <img src="" alt="Profile Picture" id="profileImage">
+                            <button class="avatar-edit-btn">
                                 <i class="fas fa-camera"></i>
                             </button>
                         </div>
                         <div class="profile-info">
-                            <h3 class="profile-name" id="profileName">Loading...</h3>
+
+                            <h3 class="profile-name">Rasul Mamishov</h3>
                             <div class="profile-details">
-                                <span class="detail-item" id="profileAge">
+                                <span class="detail-item">
+                                
+                    
+                            <div class="profile-details">
+                                <span class="detail-item">
                                     <i class="fas fa-birthday-cake"></i>
-                                    <span id="ageText">-</span>
+                                    25 years old
+
                                 </span>
-                                <span class="detail-item" id="profileGender">
+                                <span class="detail-item">
                                     <i class="fas fa-venus-mars"></i>
-                                    <span id="genderText">-</span>
+                                    Male
                                 </span>
-                                <span class="detail-item" id="profileEmail">
+                                <span class="detail-item">
                                     <i class="fas fa-envelope"></i>
-                                    <span id="emailText">Loading...</span>
-                                    <span class="verified-badge" id="verifiedBadge" style="display: none;">
+
+                                    example123@gmail.com
+                               
+
+                                    <span class="verified-badge">
                                         <i class="fas fa-check-circle"></i>
                                         Verified
                                     </span>
@@ -152,15 +168,15 @@
                     </div>
                     <div class="profile-stats">
                         <div class="stat-item">
-                            <span class="stat-number" id="totalBookings">0</span>
+                            <span class="stat-number">1</span>
                             <span class="stat-label">Total Bookings</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-number" id="upcomingEvents">0</span>
+                            <span class="stat-number">0</span>
                             <span class="stat-label">Upcoming Events</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-number" id="totalSpent">$0</span>
+                            <span class="stat-number">$690</span>
                             <span class="stat-label">Total Spent</span>
                         </div>
                     </div>
@@ -176,54 +192,36 @@
                 <div class="info-grid">
                     <div class="info-card">
                         <h3>Personal Details</h3>
-                        <form id="personalDetailsForm">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" id="fullNameInput" readonly>
+                        <div class="form-group">
+                            <label>Full Name:</label>
+                            <span style="border: 1px solid var(--border-color); border-radius: 7px;padding: 10px;">Rasul Mamishov</span>
+                         
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <div class="input-with-action">
+                                <input type="email" value="john.doe@email.com" id="emailInput">
+                                <button class="btn-outline edit-email-btn">Edit</button>
                             </div>
-                            <div class="form-group">
-                                <label>Email Address</label>
-                                <div class="input-with-action">
-                                    <input type="email" id="emailInput" readonly>
-                                    <button type="button" class="btn-outline edit-email-btn" onclick="toggleEmailEdit()">Edit</button>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Phone Number</label>
-                                <input type="tel" id="phoneInput" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Date of Birth</label>
-                                <input type="date" id="dobInput" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <select id="genderInput" disabled>
-                                    <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Country</label>
-                                <input type="text" id="countryInput" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Bio</label>
-                                <textarea id="bioInput" rows="3" readonly placeholder="Tell us about yourself..."></textarea>
-                            </div>
-                            <div class="form-actions" id="personalDetailsActions" style="display: none;">
-                                <button type="button" class="btn-outline" onclick="cancelPersonalDetailsEdit()">Cancel</button>
-                                <button type="submit" class="btn-primary">Save Changes</button>
-                            </div>
-                        </form>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                           <span style="border: 1px solid var(--border-color); border-radius: 7px;padding: 10px;">055-556-10-07</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <span style="border: 1px solid var(--border-color); border-radius: 7px;padding: 10px;">2000-04-08</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Nationality</label>
+                             <span style="border: 1px solid var(--border-color); border-radius: 7px;padding: 10px;">Azerbaijan</span>
+                        </div>
                     </div>
                     <div class="info-card">
                         <h3>Account Details</h3>
                         <div class="detail-row">
                             <span class="detail-label">Account Created</span>
-                            <span class="detail-value" id="accountCreated">Loading...</span>
+                            <span class="detail-value">27 August, 2025</span>
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">Account Status</span>
@@ -233,11 +231,11 @@
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">Member Since</span>
-                            <span class="detail-value" id="memberSince">Loading...</span>
+                            <span class="detail-value">1 year</span>
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">Last Login</span>
-                            <span class="detail-value" id="lastLogin">Today</span>
+                            <span class="detail-value">Today</span>
                         </div>
                     </div>
                 </div>
@@ -253,11 +251,11 @@
                     <div class="security-card">
                         <h3>Password Management</h3>
                         <div class="security-actions">
-                            <button class="btn-primary" onclick="showChangePasswordModal()">
+                            <button class="btn-primary">
                                 <i class="fas fa-key"></i>
                                 Change Password
                             </button>
-                            <button class="btn-outline" onclick="showResetPasswordModal()">
+                            <button class="btn-outline">
                                 <i class="fas fa-undo"></i>
                                 Reset Password
                             </button>
@@ -278,7 +276,7 @@
                                 <p>Receive verification codes via text message</p>
                             </div>
                             <div class="toggle-switch">
-                                <input type="checkbox" id="smsToggle">
+                                <input type="checkbox" id="smsToggle" checked>
                                 <label for="smsToggle"></label>
                             </div>
                         </div>
@@ -300,663 +298,164 @@
             <section class="dashboard-section" id="payment">
                 <div class="section-header">
                     <h2>Payment Information</h2>
-                    <p class="section-description">Manage your payment methods and transaction history</p>
+                    <p class="section-description">Manage your payment methods and billing information</p>
                 </div>
                 <div class="payment-grid">
                     <div class="payment-card">
-                        <h3>Payment History</h3>
-                        <div class="payment-list" id="paymentList">
-                            <div class="loading-state">
-                                <i class="fas fa-spinner fa-spin"></i>
-                                <span>Loading payment history...</span>
+                        <h3>Saved Cards</h3>
+                        <div class="card-list">
+                            <div class="payment-method">
+                                <div class="card-info">
+                                    <div class="card-icon">
+                                        <i class="fab fa-cc-visa"></i>
+                                    </div>
+                                    <div class="card-details">
+                                        <span class="card-number">•••• •••• •••• 4242</span>
+                                        <span class="card-expiry">Expires 06/26</span>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <span class="default-badge">Default</span>
+                                    <button class="btn-text">Edit</button>
+                                    <button class="btn-text danger">Remove</button>
+                                </div>
+                            </div>
+                          
+                        </div>
+                        <button class="btn-outline add-card-btn">
+                            <i class="fas fa-plus"></i>
+                            Add New Card
+                        </button>
+                    </div>
+                    <div class="payment-card">
+                        <h3>Billing Information</h3>
+                        <div class="billing-address">
+                            <h4>Billing Address</h4>
+                            <div class="address-details">
+
+                                <p>Mamishov Rasul</p>
+                
+ <p>Azerbaijan,Baku</p>
+                                <p>Mahammad Hadi</p>
+                               
+                             
+                            </div>
+                            <button class="btn-text">Edit Address</button>
+                        </div>
+                        <div class="emi-status">
+                            <h4>EMI Status</h4>
+                            <div class="status-info">
+                                <span class="status-badge inactive">No Active EMI</span>
+                                <p>You don't have any active EMI plans</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Bookings Section -->
+            <!-- Booking History Section -->
             <section class="dashboard-section" id="bookings">
                 <div class="section-header">
-                    <h2>My Bookings</h2>
-                    <p class="section-description">View and manage your event bookings</p>
+                    <h2>Booking History</h2>
+                    <p class="section-description">View your past and upcoming bookings</p>
                 </div>
-                
-                <div class="bookings-filters">
+                <div class="booking-filters">
                     <div class="filter-tabs">
                         <button class="filter-tab active" data-filter="all">All Bookings</button>
                         <button class="filter-tab" data-filter="upcoming">Upcoming</button>
                         <button class="filter-tab" data-filter="past">Past Events</button>
                         <button class="filter-tab" data-filter="cancelled">Cancelled</button>
                     </div>
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search bookings..." id="bookingSearch">
+                    <div class="filter-actions">
+                        <input type="text" placeholder="Search bookings..." class="search-input">
+                        <select class="filter-select">
+                            <option value="">All Sports</option>
+                            <option value="football">Football</option>
+                            <option value="basketball">Basketball</option>
+                            <option value="baseball">Baseball</option>
+                        </select>
                     </div>
                 </div>
-                
-                <div class="bookings-list" id="bookingsList">
-                    <div class="loading-state">
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <span>Loading your bookings...</span>
+                <div class="booking-list">
+                    <div class="booking-item upcoming">
+                        <div class="booking-image">
+                            <img src="https://via.placeholder.com/80x80/4F46E5/FFFFFF?text=FB" alt="Event">
+                        </div>
+                        <div class="booking-details">
+                            <h4>NFL:Patriots vs .Jets</h4.></h4>
+                            <p class="event-venue">Gilette Stadium</p>
+                            <p class="event-date">August 15, 2025 • 8:00 PM</p>
+                            <div class="booking-meta">
+                                <span class="seat-info">South Section, Row 2, Seat 3;South Section, Row 2, Seat 2;
+                                    North Section, Row 2, Seat 2;North Section, Row 10, Seat 8</span>
+                                <span class="booking-id">#BK-2025-001</span>
+                            </div>
+                        </div>
+                        <div class="booking-status">
+                            <span class="status-badge confirmed">Confirmed</span>
+                            <span class="booking-price">$690.00</span>
+                        </div>
+                        <div class="booking-actions">
+                            <button class="btn-outline">View Tickets</button>
+                            <button class="btn-text download-invoice-btn">
+                                <i class="fas fa-download"></i>
+                                Invoice
+                            </button>
+                        </div>
                     </div>
+                  
+                <div class="pagination">
+                    <button class="btn-outline" disabled>Previous</button>
+                    <span class="page-info">Page 1 of 3</span>
+                    <button class="btn-outline">Next</button>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Change Password Modal -->
-    <div class="modal-overlay" id="changePasswordModal">
-        <div class="modal-content">
+    <!-- Add Card Modal -->
+    <div class="modal-overlay" id="addCardModal">
+        <div class="modal-box">
             <div class="modal-header">
-                <h3>Change Password</h3>
-                <button class="close-btn" onclick="hideModal('changePasswordModal')">
+                <h2>Add New Card</h2>
+                <button class="close-btn" onclick="closeModal('addCardModal')">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <form id="changePasswordForm">
-                <div class="form-group">
-                    <label>Current Password</label>
-                    <input type="password" id="currentPassword" required>
-                </div>
-                <div class="form-group">
-                    <label>New Password</label>
-                    <input type="password" id="newPassword" required>
-                </div>
-                <div class="form-group">
-                    <label>Confirm New Password</label>
-                    <input type="password" id="confirmNewPassword" required>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-outline" onclick="hideModal('changePasswordModal')">Cancel</button>
-                    <button type="submit" class="btn-primary">Change Password</button>
-                </div>
-            </form>
+            <div class="modal-body">
+                <form id="add-card-form">
+                    <div class="input-group">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="expiry-date">Expiry Date</label>
+                            <input type="text" id="expiry-date" placeholder="MM/YY" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="cardholder-name">Cardholder Name</label>
+                        <input type="text" id="cardholder-name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="set-default">
+                            <span>Set as default payment method</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Add Card</button>
+                </form>
+            </div>
         </div>
     </div>
 
+    <script src="static/main.js"></script>
     <script src="static/account.js"></script>
-    <script>
-        // Global variables
-        let currentUser = null;
-        let userBookings = [];
-        let userPayments = [];
-        let isEditingProfile = false;
-
-        // Initialize dashboard on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeDashboard();
-        });
-
-        async function initializeDashboard() {
-            try {
-                // Check if user is logged in
-                const token = localStorage.getItem('access_token');
-                if (!token) {
-                    window.location.href = 'login.html';
-                    return;
-                }
-
-                // Load user data
-                await loadUserData();
-                await loadUserBookings();
-                await loadUserPayments();
-                
-                // Initialize UI components
-                initializeNavigation();
-                initializeMobileMenu();
-                initializeUserDropdown();
-                initializeFormHandlers();
-                
-            } catch (error) {
-                console.error('Dashboard initialization error:', error);
-                showNotification('Failed to load dashboard data', 'error');
-            }
-        }
-
-        async function loadUserData() {
-            try {
-                const token = localStorage.getItem('access_token');
-                const response = await fetch('http://127.0.0.1:5000/api/me', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    currentUser = data.user;
-                    updateUserInterface();
-                } else {
-                    throw new Error('Failed to load user data');
-                }
-            } catch (error) {
-                console.error('Load user data error:', error);
-                // Redirect to login if token is invalid
-                localStorage.removeItem('access_token');
-                window.location.href = 'login.html';
-            }
-        }
-
-        async function loadUserBookings() {
-            try {
-                const token = localStorage.getItem('access_token');
-                const response = await fetch('http://127.0.0.1:5000/api/me/bookings', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    userBookings = data.bookings;
-                    updateBookingsInterface();
-                }
-            } catch (error) {
-                console.error('Load bookings error:', error);
-            }
-        }
-
-        async function loadUserPayments() {
-            try {
-                const token = localStorage.getItem('access_token');
-                const response = await fetch('http://127.0.0.1:5000/api/me/payments', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    userPayments = data.payments;
-                    updatePaymentsInterface();
-                }
-            } catch (error) {
-                console.error('Load payments error:', error);
-            }
-        }
-
-        function updateUserInterface() {
-            if (!currentUser) return;
-
-            const profile = currentUser.profile || {};
-            
-            // Update navigation
-            document.getElementById('userName').textContent = profile.full_name || 'User';
-            
-            // Update profile section
-            document.getElementById('profileName').textContent = profile.full_name || 'User';
-            document.getElementById('emailText').textContent = currentUser.email;
-            
-            // Update profile details
-            if (profile.date_of_birth) {
-                const age = calculateAge(profile.date_of_birth);
-                document.getElementById('ageText').textContent = `${age} years old`;
-            }
-            
-            if (profile.gender) {
-                document.getElementById('genderText').textContent = profile.gender;
-            }
-            
-            // Show verified badge if email is verified
-            if (profile.email_verified) {
-                document.getElementById('verifiedBadge').style.display = 'inline-flex';
-            } else {
-                document.getElementById('emailBanner').style.display = 'block';
-            }
-            
-            // Update form fields
-            document.getElementById('fullNameInput').value = profile.full_name || '';
-            document.getElementById('emailInput').value = currentUser.email;
-            document.getElementById('phoneInput').value = profile.phone || '';
-            document.getElementById('dobInput').value = profile.date_of_birth || '';
-            document.getElementById('genderInput').value = profile.gender || '';
-            document.getElementById('countryInput').value = profile.country || '';
-            document.getElementById('bioInput').value = profile.bio || '';
-            
-            // Update account details
-            if (currentUser.created_at) {
-                const createdDate = new Date(currentUser.created_at);
-                document.getElementById('accountCreated').textContent = createdDate.toLocaleDateString();
-                document.getElementById('memberSince').textContent = calculateMembershipDuration(createdDate);
-            }
-            
-            // Update 2FA toggles
-            document.getElementById('smsToggle').checked = profile.sms_2fa_enabled || false;
-            document.getElementById('appguibToggle').checked = profile.app_2fa_enabled || false;
-        }
-
-        function updateBookingsInterface() {
-            const bookingsList = document.getElementById('bookingsList');
-            
-            if (userBookings.length === 0) {
-                bookingsList.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-ticket-alt"></i>
-                        <h3>No bookings yet</h3>
-                        <p>Start exploring events and make your first booking!</p>
-                        <a href="index.html" class="btn-primary">Browse Events</a>
-                    </div>
-                `;
-                return;
-            }
-
-            // Update stats
-            document.getElementById('totalBookings').textContent = userBookings.length;
-            
-            const upcomingBookings = userBookings.filter(booking => {
-                const eventDate = new Date(booking.event_date);
-                return eventDate > new Date() && booking.status === 'confirmed';
-            });
-            document.getElementById('upcomingEvents').textContent = upcomingBookings.length;
-            
-            const totalSpent = userBookings.reduce((sum, booking) => sum + booking.total_amount, 0);
-            document.getElementById('totalSpent').textContent = `$${totalSpent.toFixed(2)}`;
-
-            // Render bookings
-            bookingsList.innerHTML = userBookings.map(booking => `
-                <div class="booking-item ${getBookingStatusClass(booking)}">
-                    <div class="booking-info">
-                        <h4>${booking.event_title}</h4>
-                        <div class="booking-details">
-                            <span class="booking-id">Booking: ${booking.booking_reference}</span>
-                            <span class="event-venue">${booking.event_venue}</span>
-                            <span class="event-date">${formatDate(booking.event_date)} at ${booking.event_time}</span>
-                            <span class="seat-info">Section ${booking.seat_section}, Row ${booking.seat_row}, Seat ${booking.seat_number}</span>
-                        </div>
-                    </div>
-                    <div class="booking-status">
-                        <span class="status-badge ${booking.status}">${booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}</span>
-                        <span class="booking-amount">$${booking.total_amount.toFixed(2)}</span>
-                    </div>
-                    <div class="booking-actions">
-                        <button class="btn-outline download-invoice-btn" onclick="downloadInvoice('${booking.booking_reference}')">
-                            <i class="fas fa-download"></i>
-                            Invoice
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function updatePaymentsInterface() {
-            const paymentList = document.getElementById('paymentList');
-            
-            if (userPayments.length === 0) {
-                paymentList.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-credit-card"></i>
-                        <h3>No payment history</h3>
-                        <p>Your payment transactions will appear here.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            paymentList.innerHTML = userPayments.map(payment => `
-                <div class="payment-item">
-                    <div class="payment-info">
-                        <div class="payment-method">
-                            <i class="fab fa-cc-${payment.card_brand}"></i>
-                            <span>•••• •••• •••• ${payment.card_last_four}</span>
-                        </div>
-                        <div class="payment-details">
-                            <span class="payment-reference">${payment.payment_reference}</span>
-                            <span class="payment-date">${formatDate(payment.created_at)}</span>
-                        </div>
-                    </div>
-                    <div class="payment-amount">
-                        <span class="amount">$${payment.amount.toFixed(2)}</span>
-                        <span class="status-badge ${payment.status}">${payment.status}</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Helper functions
-        function calculateAge(birthDate) {
-            const today = new Date();
-            const birth = new Date(birthDate);
-            let age = today.getFullYear() - birth.getFullYear();
-            const monthDiff = today.getMonth() - birth.getMonth();
-            
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-                age--;
-            }
-            
-            return age;
-        }
-
-        function calculateMembershipDuration(createdDate) {
-            const now = new Date();
-            const diffTime = Math.abs(now - createdDate);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            if (diffDays < 30) {
-                return `${diffDays} days`;
-            } else if (diffDays < 365) {
-                const months = Math.floor(diffDays / 30);
-                return `${months} month${months > 1 ? 's' : ''}`;
-            } else {
-                const years = Math.floor(diffDays / 365);
-                return `${years} year${years > 1 ? 's' : ''}`;
-            }
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
-            });
-        }
-
-        function getBookingStatusClass(booking) {
-            const eventDate = new Date(booking.event_date);
-            const now = new Date();
-            
-            if (booking.status === 'cancelled') return 'cancelled';
-            if (eventDate < now) return 'past';
-            return 'upcoming';
-        }
-
-        // Event handlers
-        function toggleEditProfile() {
-            isEditingProfile = !isEditingProfile;
-            const form = document.getElementById('personalDetailsForm');
-            const inputs = form.querySelectorAll('input, select, textarea');
-            const actions = document.getElementById('personalDetailsActions');
-            const editBtn = document.querySelector('.edit-profile-btn');
-            
-            if (isEditingProfile) {
-                inputs.forEach(input => {
-                    if (input.id !== 'emailInput') { // Keep email readonly for now
-                        input.removeAttribute('readonly');
-                        input.removeAttribute('disabled');
-                    }
-                });
-                actions.style.display = 'flex';
-                editBtn.innerHTML = '<i class="fas fa-times"></i> Cancel';
-            } else {
-                inputs.forEach(input => {
-                    input.setAttribute('readonly', true);
-                    if (input.tagName === 'SELECT') {
-                        input.setAttribute('disabled', true);
-                    }
-                });
-                actions.style.display = 'none';
-                editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
-            }
-        }
-
-        function cancelPersonalDetailsEdit() {
-            toggleEditProfile();
-            updateUserInterface(); // Reset form values
-        }
-
-        async function handlePersonalDetailsSubmit(event) {
-            event.preventDefault();
-            
-            try {
-                const formData = {
-                    full_name: document.getElementById('fullNameInput').value,
-                    phone: document.getElementById('phoneInput').value,
-                    date_of_birth: document.getElementById('dobInput').value,
-                    gender: document.getElementById('genderInput').value,
-                    country: document.getElementById('countryInput').value,
-                    bio: document.getElementById('bioInput').value
-                };
-
-                const token = localStorage.getItem('access_token');
-                const response = await fetch('http://127.0.0.1:5000/api/me', {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    currentUser = data.user;
-                    updateUserInterface();
-                    toggleEditProfile();
-                    showNotification('Profile updated successfully!', 'success');
-                } else {
-                    throw new Error('Failed to update profile');
-                }
-            } catch (error) {
-                console.error('Update profile error:', error);
-                showNotification('Failed to update profile', 'error');
-            }
-        }
-
-        function initializeFormHandlers() {
-            document.getElementById('personalDetailsForm').addEventListener('submit', handlePersonalDetailsSubmit);
-            
-            // 2FA toggle handlers
-            document.getElementById('smsToggle').addEventListener('change', async function() {
-                await update2FASettings('sms_2fa_enabled', this.checked);
-            });
-            
-            document.getElementById('appToggle').addEventListener('change', async function() {
-                await update2FASettings('app_2fa_enabled', this.checked);
-            });
-        }
-
-        async function update2FASettings(setting, enabled) {
-            try {
-                const token = localStorage.getItem('access_token');
-                const response = await fetch('http://127.0.0.1:5000/api/me', {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ [setting]: enabled })
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    currentUser = data.user;
-                    const settingName = setting === 'sms_2fa_enabled' ? 'SMS Authentication' : 'Authenticator App';
-                    showNotification(`${settingName} ${enabled ? 'enabled' : 'disabled'}`, 'success');
-                } else {
-                    throw new Error('Failed to update 2FA settings');
-                }
-            } catch (error) {
-                console.error('Update 2FA error:', error);
-                showNotification('Failed to update security settings', 'error');
-            }
-        }
-
-        function handleLogout() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('access_token');
-                localStorage.removeItem('user');
-                window.location.href = 'login.html';
-            }
-        }
-
-        function closeBanner() {
-            document.getElementById('emailBanner').style.display = 'none';
-        }
-
-        async function resendVerificationEmail() {
-            showNotification('Verification email sent!', 'success');
-        }
-
-        function downloadInvoice(bookingReference) {
-            showNotification(`Downloading invoice for ${bookingReference}`, 'info');
-        }
-
-        // Navigation and UI functions (from account.js)
-        function initializeNavigation() {
-            const navItems = document.querySelectorAll('.nav-item[data-section]');
-            const sections = document.querySelectorAll('.dashboard-section');
-            
-            navItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetSection = this.getAttribute('data-section');
-                    
-                    navItems.forEach(nav => nav.classList.remove('active'));
-                    sections.forEach(section => section.classList.remove('active'));
-                    
-                    this.classList.add('active');
-                    const targetElement = document.getElementById(targetSection);
-                    if (targetElement) {
-                        targetElement.classList.add('active');
-                    }
-                    
-                    const sidebar = document.getElementById('dashboardSidebar');
-                    if (sidebar) {
-                        sidebar.classList.remove('show');
-                    }
-                });
-            });
-        }
-
-        function initializeMobileMenu() {
-            const mobileToggle = document.getElementById('mobileMenuToggle');
-            const sidebar = document.getElementById('dashboardSidebar');
-            
-            if (mobileToggle && sidebar) {
-                mobileToggle.addEventListener('click', function() {
-                    sidebar.classList.toggle('show');
-                });
-                
-                document.addEventListener('click', function(e) {
-                    if (!sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
-                        sidebar.classList.remove('show');
-                    }
-                });
-            }
-        }
-
-        function initializeUserDropdown() {
-            const userMenuBtn = document.getElementById('userMenuBtn');
-            const userDropdown = document.getElementById('userDropdown');
-            
-            if (userMenuBtn && userDropdown) {
-                userMenuBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    userDropdown.classList.toggle('show');
-                });
-                
-                document.addEventListener('click', function() {
-                    userDropdown.classList.remove('show');
-                });
-            }
-        }
-
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.innerHTML = `
-                <div class="notification-content">
-                    <i class="fas fa-${getNotificationIcon(type)}"></i>
-                    <span>${message}</span>
-                </div>
-                <button class="notification-close" onclick="this.parentElement.remove()">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            
-            if (!document.querySelector('#notification-styles')) {
-                const styles = document.createElement('style');
-                styles.id = 'notification-styles';
-                styles.textContent = `
-                    .notification {
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        background: white;
-                        border-radius: 0.75rem;
-                        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-                        padding: 1rem;
-                        display: flex;
-                        align-items: center;
-                        gap: 1rem;
-                        z-index: 3000;
-                        min-width: 300px;
-                        animation: slideIn 0.3s ease;
-                    }
-                    .notification-success { border-left: 4px solid #10B981; }
-                    .notification-error { border-left: 4px solid #EF4444; }
-                    .notification-info { border-left: 4px solid #4F46E5; }
-                    .notification-warning { border-left: 4px solid #F59E0B; }
-                    .notification-content { display: flex; align-items: center; gap: 0.5rem; flex: 1; }
-                    .notification-close { background: none; border: none; cursor: pointer; color: #6B7280; }
-                    @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-                `;
-                document.head.appendChild(styles);
-            }
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.remove();
-                }
-            }, 5000);
-        }
-
-        function getNotificationIcon(type) {
-            const icons = {
-                success: 'check-circle',
-                error: 'exclamation-circle',
-                info: 'info-circle',
-                warning: 'exclamation-triangle'
-            };
-            return icons[type] || 'info-circle';
-        }
-
-        // Modal functions
-        function showModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('show');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function hideModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('show');
-                document.body.style.overflow = '';
-            }
-        }
-
-        function showChangePasswordModal() {
-            showModal('changePasswordModal');
-        }
-
-        function showResetPasswordModal() {
-            showNotification('Password reset feature coming soon!', 'info');
-        }
-
-        function handleDeleteAccount() {
-            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-                showNotification('Account deletion request submitted', 'info');
-            }
-        }
-
-        function toggleEmailEdit() {
-            showNotification('Email change feature coming soon!', 'info');
-        }
-
-        function uploadAvatar() {
-            showNotification('Avatar upload feature coming soon!', 'info');
-        }
-    </script>
 </body>
 </html>
 

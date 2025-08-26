@@ -841,3 +841,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // Make functions globally accessible for onclick handlers
 window.shopManager = shopManager;
 
+  document.getElementById("checkout-btn").addEventListener("click", function () {
+    alert("✅ Payment Successful!");
+    window.open("index.html"); // closes the current window/tab
+    // OR redirect to home page instead of closing:
+    // window.location.href = "index.html";
+  });
